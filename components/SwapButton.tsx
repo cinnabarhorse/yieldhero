@@ -5,6 +5,9 @@ import { Row, Col } from "react-bootstrap";
 import { buttonInactive, themeBlack } from "../theme";
 import BPoolABI from '../web3/BPool.json'
 import NextStyledInput from "./NextStyledInput";
+import ATokenABI from '../web3/ATokenABI.json'
+
+import BigNumber from 'bignumber.js'
 
 interface SwapButtonProps {
 
@@ -32,8 +35,9 @@ const SwapButton = (props: SwapButtonProps) => {
     const [error, setError] = useState(undefined)
 
     const [swapAmount, setSwapAmount] = useState(undefined)
-
     const [tradeState, setTradeState] = useState<TradeState>(undefined)
+
+    const [allowance, setAllowance] = useState(undefined)
 
 
     function sameSelected() {
@@ -61,6 +65,29 @@ const SwapButton = (props: SwapButtonProps) => {
 
     }, [selectedIn, selectedOut, swapAmount])
 
+
+    useEffect(() => {
+
+        if (selectedIn) {
+            fetchAllowance()
+        }
+
+
+    }, [selectedIn])
+
+    async function fetchAllowance() {
+
+        const poolAddress = "0x7d3fd22fbc32fd112696e8e7cfc7eb7f50c657b2"
+
+        //First check if this token is approved
+        const ERC20 = new globalWeb3.eth.Contract(ATokenABI, selectedIn.reserve.aToken.id)
+
+        console.log('erc 20:', ERC20)
+
+        const allowance = await ERC20.methods.allowance(currentAccount, poolAddress).call({ from: currentAccount })
+
+        setAllowance(allowance)
+    }
 
     async function getSwap() {
 
@@ -171,40 +198,79 @@ const SwapButton = (props: SwapButtonProps) => {
 
     async function performSwap() {
 
-        setTradeState("waitingConfirm")
+        const poolAddress = "0x7d3fd22fbc32fd112696e8e7cfc7eb7f50c657b2"
 
-        const pool = new globalWeb3.eth.Contract(BPoolABI, "0x7d3fd22fbc32fd112696e8e7cfc7eb7f50c657b2")
+        if (Number(allowance) === 0) {
 
-        const tokenInAddress = selectedIn.reserve.aToken.id
-        const tokenOutAddress = selectedOut.aToken.id
+            const ERC20 = new globalWeb3.eth.Contract(ATokenABI, selectedIn.reserve.aToken.id)
 
-        pool.methods.swapExactAmountIn(
-            // availableSwaps, //All swaps from the SOR
-            tokenInAddress,
-            currentSwap.amountIn.toString(),
-            tokenOutAddress,
-            currentSwap.amountOut.toString(),
-            availableSwaps[0].maxPrice
-        ).send({
-            from: currentAccount
-        })
-            .on('transactionHash', async function (newHash) {
+            const approveValue = new BigNumber(1000 * Math.pow(10, selectedIn.reserve.decimals))
+            console.log('approve value:', approveValue)
 
-                setTradeState("trading")
+            setTradeState("waitingConfirm")
 
+            ERC20.methods.approve(poolAddress, approveValue)
+                .send({
+                    from: currentAccount
+                })
+                .on('transactionHash', async function (newHash) {
+                    setTradeState("approving")
+                })
+
+                .on('receipt', async function (receipt) {
+
+                    alert("Transaction complete!")
+                    setTradeState(undefined)
+                    setAllowance(approveValue)
+
+                })
+                .on('error', async function (error) {
+
+                    setTradeState(undefined)
+                    alert(error.message)
+                })
+
+        }
+
+        else {
+
+            setTradeState("waitingConfirm")
+
+            const pool = new globalWeb3.eth.Contract(BPoolABI, poolAddress)
+
+            const tokenInAddress = selectedIn.reserve.aToken.id
+            const tokenOutAddress = selectedOut.aToken.id
+
+            pool.methods.swapExactAmountIn(
+                // availableSwaps, //All swaps from the SOR
+                tokenInAddress,
+                currentSwap.amountIn.toString(),
+                tokenOutAddress,
+                currentSwap.amountOut.toString(),
+                availableSwaps[0].maxPrice
+            ).send({
+                from: currentAccount
             })
+                .on('transactionHash', async function (newHash) {
 
-            .on('receipt', async function (receipt) {
+                    setTradeState("trading")
 
-                alert("Swap complete!")
-                setTradeState(undefined)
+                })
 
-            })
-            .on('error', async function (error) {
+                .on('receipt', async function (receipt) {
 
-                setTradeState(undefined)
-                alert(error.message)
-            })
+                    alert("Swap complete!")
+                    setTradeState(undefined)
+
+
+                })
+                .on('error', async function (error) {
+
+                    setTradeState(undefined)
+                    alert(error.message)
+                })
+
+        }
 
 
     }
@@ -213,7 +279,10 @@ const SwapButton = (props: SwapButtonProps) => {
 
         if (oneSelected()) return <div>Select a pair to swap</div>
         else if (bothSelected() && !swapAmount || swapAmount === "0") return <div>Input amount to swap</div>
-        else if (!tradeState && bothSelected() && currentSwap && !loading && !sameSelected()) return (
+        else if (!tradeState && bothSelected() && currentSwap && !loading && !sameSelected() && Number(allowance) <= 0) return (
+            <div>Unlock {selectedIn.reserve.symbol} to swap</div>
+        )
+        else if (!tradeState && bothSelected() && currentSwap && !loading && !sameSelected() && Number(allowance) > 0) return (
             <div>
                 Swap {(currentSwap.amountIn / Math.pow(10, selectedIn.reserve.decimals)).toFixed(3)} {selectedIn.reserve.symbol} for {(currentSwap.amountOut / Math.pow(10, selectedOut.decimals)).toFixed(3)} {selectedOut.symbol}
             </div>
@@ -231,6 +300,8 @@ const SwapButton = (props: SwapButtonProps) => {
         else if (tradeState === "trading") return (
             <div>Swapping in progress...</div>
         )
+        else if (tradeState === "approving") return <div>Approving {selectedIn.reserve.symbol}...</div>
+
 
     }
 

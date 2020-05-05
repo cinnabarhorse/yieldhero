@@ -22,8 +22,8 @@ export default function UserReserve() {
   const [{ userReserves, reservePools, highestAPY, globalWeb3, currentAccount, selectedIn }, dispatch]:
     [{ userReserves: any, reservePools: any, highestAPY: any, globalWeb3: any, currentAccount: any, selectedIn: UserReserveType }, (type) => void] = useStateValue()
 
-  const { called, loading, error, data, } = useQuery(
-    USER_RESERVES,
+  const { loading, error, data, } = useSubscription(
+    USER_RESERVES_SUBSCRIPTION,
     {
       variables: {
         id: currentAccount ? currentAccount.toLowerCase() : undefined
@@ -34,7 +34,7 @@ export default function UserReserve() {
       //  onSubscriptionData: (data) => {
       //    console.log('data:', data)
       //  },
-      notifyOnNetworkStatusChange: true,
+      // notifyOnNetworkStatusChange: true,
     }
   )
 
@@ -251,7 +251,6 @@ export default function UserReserve() {
 
 
   if (error) return <ErrorMessage message="Error loading posts." />
-  if (called && loading) return _box()
 
   //  const { user } = data
 

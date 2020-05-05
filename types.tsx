@@ -30,4 +30,4 @@ export interface User {
     reserves: UserReserveType[]
 }
 
-export type TradeState = "waitingConfirm" | "trading" 
+export type TradeState = "waitingConfirm" | "trading" | "approving"
