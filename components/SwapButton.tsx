@@ -244,9 +244,9 @@ const SwapButton = (props: SwapButtonProps) => {
             pool.methods.swapExactAmountIn(
                 // availableSwaps, //All swaps from the SOR
                 tokenInAddress,
-                currentSwap.amountIn.toString(),
+                currentSwap.amountIn.toFixed(),
                 tokenOutAddress,
-                currentSwap.amountOut.toString(),
+                currentSwap.amountOut.toFixed(),
                 availableSwaps[0].maxPrice
             ).send({
                 from: currentAccount
@@ -324,6 +324,7 @@ const SwapButton = (props: SwapButtonProps) => {
                 <NextStyledInput
                     placeHolderText="Swap amount"
                     value={swapAmount}
+                    disabled={!selectedIn || !selectedOut}
                     onChangeText={(text) => {
 
                         const currentBalance = Number(selectedIn.principalATokenBalance) / Math.pow(10, selectedIn.reserve.decimals)
