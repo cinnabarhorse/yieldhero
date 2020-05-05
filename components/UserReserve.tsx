@@ -56,7 +56,7 @@ export default function UserReserve() {
       })
     }
 
-    if (data && data.user && !highestAPY) {
+    if (data && data.user && data.user !== null && data.user.reserves !== null && !highestAPY) {
 
       const userObject: User = data.user
 
@@ -64,7 +64,6 @@ export default function UserReserve() {
         return (prev.reserve.liquidityRate > current.reserve.liquidityRate) ? prev : current
       }) //
 
-      console.log('max:', max)
 
       dispatch({
         type: "updateHighestAPY",
@@ -77,6 +76,8 @@ export default function UserReserve() {
 
   function _box() {
 
+
+    console.log('data:', data)
 
 
     // if (!data) return <div>Loading</div>
@@ -113,7 +114,7 @@ export default function UserReserve() {
             </Col>
           </div>
 
-          {data && data.user.reserves && data.user.reserves.map((reserve, index) => {
+          {data && data.user !== null && data.user.reserves && data.user.reserves !== null && data.user.reserves.map((reserve, index) => {
 
             const name = reserve.reserve.name
             const amount = (Number(reserve.principalATokenBalance) / Math.pow(10, reserve.reserve.decimals))

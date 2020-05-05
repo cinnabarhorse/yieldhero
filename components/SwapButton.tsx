@@ -204,7 +204,7 @@ const SwapButton = (props: SwapButtonProps) => {
 
             const ERC20 = new globalWeb3.eth.Contract(ATokenABI, selectedIn.reserve.aToken.id)
 
-            const approveValue = new BigNumber(1000 * Math.pow(10, selectedIn.reserve.decimals))
+            const approveValue = new BigNumber(swapAmount * Math.pow(10, selectedIn.reserve.decimals))
             console.log('approve value:', approveValue)
 
             setTradeState("waitingConfirm")
