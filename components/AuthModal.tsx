@@ -176,12 +176,13 @@ Connect with Metamask
                         Metamask
                         </button>
 
-                    <button
+                    {/*}     <button
                         disabled={loadingFortmatic}
                         onClick={() => handleConnectFortmatic()}
                         className="boost">
                         {loadingFortmatic ? "Loading..." : "Fortmatic"}
                     </button>
+        {*/}
                 </div>
 
             </Modal.Body>
