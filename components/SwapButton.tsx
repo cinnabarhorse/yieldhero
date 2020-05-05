@@ -278,7 +278,7 @@ const SwapButton = (props: SwapButtonProps) => {
     function _buttonTitle() {
 
         if (oneSelected()) return <div>Select a pair to swap</div>
-        else if (bothSelected() && !swapAmount || swapAmount === "0") return <div>Input amount to swap</div>
+        else if (bothSelected() && !swapAmount || Number(swapAmount) <= 0) return <div>Input amount to swap</div>
         else if (!tradeState && bothSelected() && currentSwap && !loading && !sameSelected() && Number(allowance) <= 0) return (
             <div>Unlock {selectedIn.reserve.symbol} to swap</div>
         )
@@ -311,7 +311,7 @@ const SwapButton = (props: SwapButtonProps) => {
         if (!currentSwap) return true
         if (tradeState !== undefined) return true
         if (!swapAmount || swapAmount === "") return true
-        if (swapAmount === "0") return true
+        if (Number(swapAmount) <= 0) return true
         return false
     }
 
@@ -324,7 +324,23 @@ const SwapButton = (props: SwapButtonProps) => {
                 <NextStyledInput
                     placeHolderText="Swap amount"
                     value={swapAmount}
-                    onChangeText={(text) => setSwapAmount(text)}
+                    onChangeText={(text) => {
+
+                        const currentBalance = Number(selectedIn.principalATokenBalance) / Math.pow(10, selectedIn.reserve.decimals)
+
+                        console.log('text:', text)
+                        console.log('principal balance:', currentBalance)
+
+                        //Set maximum balance if exceeds
+                        if (Number(text) > currentBalance) {
+                            setSwapAmount((currentBalance - 0.0001).toFixed(4))
+                        }
+                        else {
+                            setSwapAmount(text)
+                        }
+
+
+                    }}
                     inputFieldStyles={`
                     background:white;
                    

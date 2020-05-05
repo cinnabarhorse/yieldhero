@@ -161,7 +161,7 @@ Connect with Metamask
                 showAuthModal: false
             })}>
                 <Modal.Title style={{ display: 'flex', flex: 1, justifyContent: 'center', fontWeight: 800, textAlign: 'center' }} id="contained-modal-title-vcenter">
-                    Connect Wallet to Vote
+                    Connect Wallet to Swap
                 </Modal.Title>
 
             </Modal.Header>
