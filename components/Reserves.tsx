@@ -85,58 +85,62 @@ const Reserves = (props: ReservesProps) => {
 
                         const liquidityRate = Number(reserve.liquidityRate) / Math.pow(10, 27) * 100
 
+                        const availableTokens = [
+                            "USDT", "DAI", "SUSD", "USDC", "TUSD"
+                        ]
 
 
+                        if (!availableTokens.includes(reserve.symbol)) return null
+                        //  if (selectedIn && selectedIn.reserve.symbol === reserve.symbol) return null
 
-                        if (liquidityRate < highestAPY) return null
-
-                        if (!selectedIn || (selectedOut && selectedOut.symbol === reserve.symbol) || (selectedIn && liquidityRate > Number(selectedIn.reserve.liquidityRate) / Math.pow(10, 27) * 100)) {
-
-                            return (
-                                <button
-                                    style={{ width: '100%', marginTop: 10, marginBottom: 10 }}
-
-                                    disabled={selectedIn ? false : true}
-                                    className={selectedOut && selectedOut.symbol === reserve.symbol ? "buttonSelected" : "buttonUnselected"}
-                                    onClick={() => {
-
-                                        if (selectedOut && reserve.symbol === selectedOut.symbol) {
-                                            dispatch({
-                                                type: "updateSelectedOut",
-                                                selectedOut: undefined
-                                            })
-                                        }
-                                        else {
-                                            dispatch({
-                                                type: "updateSelectedOut",
-                                                selectedOut: reserve
-                                            })
-                                        }
+                        //    if (!selectedIn || (selectedOut && selectedOut.symbol === reserve.symbol) || (selectedIn && liquidityRate > Number(selectedIn.reserve.liquidityRate) / Math.pow(10, 27) * 100)) {
 
 
+                        return (
+                            <button
+                                style={{ width: '100%', marginTop: 10, marginBottom: 10 }}
+
+                                disabled={selectedIn ? false : true}
+                                className={selectedOut && selectedOut.symbol === reserve.symbol ? "buttonSelected" : "buttonUnselected"}
+                                onClick={() => {
+
+                                    if (selectedOut && reserve.symbol === selectedOut.symbol) {
                                         dispatch({
-                                            type: "updateCurrentSwap",
-                                            currentSwap: undefined
+                                            type: "updateSelectedOut",
+                                            selectedOut: undefined
                                         })
+                                    }
+                                    else {
+                                        dispatch({
+                                            type: "updateSelectedOut",
+                                            selectedOut: reserve
+                                        })
+                                    }
+
+
+                                    dispatch({
+                                        type: "updateCurrentSwap",
+                                        currentSwap: undefined
+                                    })
 
 
 
-                                        // swap()
-                                    }}
+                                    // swap()
+                                }}
 
-                                >
-
-
-                                    <Col>
-
-                                        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-                                            {reserve.name}
-                                        </div>
-
-                                    </Col>
+                            >
 
 
-                                    {/*}
+                                <Col>
+
+                                    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                                        {reserve.name}
+                                    </div>
+
+                                </Col>
+
+
+                                {/*}
                             <Col>
                                 {((Number(reserve.stableBorrowRate) / Math.pow(10, 27)) * 100).toFixed(3)}%
                         </Col>
@@ -151,17 +155,17 @@ const Reserves = (props: ReservesProps) => {
                     {*/}
 
 
-                                    <Col>
-                                        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-                                            {liquidityRate.toFixed(3)}%  {liquidityRate > 5 && <span>🔥</span>}
-                                        </div>
+                                <Col>
+                                    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                                        {liquidityRate.toFixed(3)}%  {liquidityRate > 5 && <span>🔥</span>}
+                                    </div>
 
-                                    </Col>
+                                </Col>
 
-                                </button>
+                            </button>
 
-                            )
-                        }
+                        )
+                        // }
 
 
 

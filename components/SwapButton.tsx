@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useStateValue } from "../State/globalState";
 import { UserReserveType, ReserveType, TradeState } from "../types";
 import { Row, Col } from "react-bootstrap";
-import { buttonInactive, themeBlack } from "../theme";
+import { buttonInactive, themeBlack, themeGradient } from "../theme";
 import BPoolABI from '../web3/BPool.json'
 import NextStyledInput from "./NextStyledInput";
 import ATokenABI from '../web3/ATokenABI.json'
@@ -284,7 +284,7 @@ const SwapButton = (props: SwapButtonProps) => {
         )
         else if (!tradeState && bothSelected() && currentSwap && !loading && !sameSelected() && Number(allowance) > 0) return (
             <div>
-                Swap {(currentSwap.amountIn / Math.pow(10, selectedIn.reserve.decimals)).toFixed(3)} {selectedIn.reserve.symbol} for {(currentSwap.amountOut / Math.pow(10, selectedOut.decimals)).toFixed(3)} {selectedOut.symbol}
+                Swap {(currentSwap.amountIn / Math.pow(10, selectedIn.reserve.decimals)).toFixed(3)} a{selectedIn.reserve.symbol} for {(currentSwap.amountOut / Math.pow(10, selectedOut.decimals)).toFixed(3)} a{selectedOut.symbol}
             </div>
         )
         else if (!tradeState && bothSelected() && sameSelected()) return (
@@ -319,9 +319,21 @@ const SwapButton = (props: SwapButtonProps) => {
 
         <Row style={{ marginTop: 30 }}>
 
-            <Col xl={2} lg={2} md={3} sm={12} xs={12}>
+            <Col xl={3} lg={3} md={3} sm={12} xs={12}>
 
                 <NextStyledInput
+                    connectButton
+                    buttonTitle="Max"//{selectedIn && selectedOut ? "Max" : undefined}
+                    buttonStyles={`
+                        margin-left:-40px;
+                        width:20px;
+                        height:60px;
+                        margin-right:0;
+                    `}
+                    buttonHoverStyle={`
+                        text-decoration:none;
+                    `}
+                    onSubmit={() => setSwapAmount(Number(selectedIn.principalATokenBalance) / Math.pow(10, selectedIn.reserve.decimals))}
                     placeHolderText="Swap amount"
                     value={swapAmount}
                     disabled={!selectedIn || !selectedOut}
@@ -344,15 +356,19 @@ const SwapButton = (props: SwapButtonProps) => {
                     }}
                     inputFieldStyles={`
                     background:white;
-                   
+                   padding-right:60px;
+                  
                     height:60px;
                     font-size:16px;
                     width:100%;
                `}
                 />
+
+                {/*} <button style={{ background: 'none', color: themeBlack, padding: 0, margin: 0 }}>Max</button>
+               {*/}
             </Col>
 
-            <Col xl={10} lg={10} md={9} sm={12} xs={12}>
+            <Col xl={9} lg={9} md={9} sm={12} xs={12}>
 
 
                 <button disabled={_buttonDisabled()}
@@ -365,7 +381,7 @@ const SwapButton = (props: SwapButtonProps) => {
                     <style jsx>
                         {`
                     button {
-                        background:#303952;
+                        background:${themeBlack};
                         display:flex;
                         align-items:center;
                         justify-content:center;
