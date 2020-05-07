@@ -16,6 +16,11 @@ export default ({ children }) => (
       a {
         color: #22bad9;
       }
+
+      a:hover {
+        text-decoration:none;
+      }
+
       p {
         font-size: 14px;
         line-height: 24px;

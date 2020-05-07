@@ -1,6 +1,6 @@
-import { useQuery, useLazyQuery, useSubscription } from '@apollo/react-hooks'
+import { useQuery, } from '@apollo/react-hooks'
 import ErrorMessage from './ErrorMessage'
-import { USER_RESERVES, USER_RESERVES_SUBSCRIPTION } from '../graphql/queries'
+import { USER_RESERVES } from '../graphql/queries'
 
 import { Container, Row, Col } from 'react-bootstrap'
 import { useEffect } from 'react'
@@ -19,33 +19,18 @@ const aaveRateDecimals = 27
 
 export default function UserReserve() {
 
-  const [{ userReserves, reservePools, highestAPY, globalWeb3, currentAccount, selectedIn }, dispatch]:
+  const [{ userReserves, highestAPY, currentAccount, selectedIn }, dispatch]:
     [{ userReserves: any, reservePools: any, highestAPY: any, globalWeb3: any, currentAccount: any, selectedIn: UserReserveType }, (type) => void] = useStateValue()
 
-  const { loading, error, data, } = useSubscription(
-    USER_RESERVES_SUBSCRIPTION,
+  const { loading, error, data, refetch } = useQuery(
+    USER_RESERVES,
     {
       variables: {
         id: currentAccount ? currentAccount.toLowerCase() : undefined
       },
-      // Setting this value to true will make the component rerender when
-      // the "networkStatus" changes, so we are able to know if it is fetching
-      // more data
-      //  onSubscriptionData: (data) => {
-      //    console.log('data:', data)
-      //  },
-      // notifyOnNetworkStatusChange: true,
+      pollInterval: 1000
     }
   )
-
-
-  /*
-  useEffect(() => {
-    if (currentAccount) {
-      loadReserves()
-    }
-  }, [currentAccount])
-  */
 
   useEffect(() => {
 
@@ -75,10 +60,6 @@ export default function UserReserve() {
   }, [data])
 
   function _box() {
-
-
-    console.log('data:', data)
-
 
     // if (!data) return <div>Loading</div>
     return (
@@ -116,7 +97,7 @@ export default function UserReserve() {
 
           {data && data.user !== null && data.user.reserves && data.user.reserves !== null && data.user.reserves.map((reserve, index) => {
 
-            const name = reserve.reserve.name
+            const name = "a" + reserve.reserve.symbol
             const amount = (Number(reserve.principalATokenBalance) / Math.pow(10, reserve.reserve.decimals))
             const amountInEth = convertFromPower(reserve.reserve.price.priceInEth, 18) * amount
 

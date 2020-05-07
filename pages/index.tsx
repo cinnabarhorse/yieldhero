@@ -8,6 +8,7 @@ import AuthModal from '../components/AuthModal'
 import SwapButton from '../components/SwapButton'
 import { Row, Col } from 'react-bootstrap'
 import { buttonInactive, themeBlack } from '../theme'
+import NextStyledFooter from '../components/NextStyledFooter'
 
 const IndexPage = () => {
 
@@ -90,6 +91,8 @@ const IndexPage = () => {
           }
         `}
       </style>
+
+      <NextStyledFooter />
 
     </App>
   )

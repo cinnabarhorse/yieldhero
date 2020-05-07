@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { ALL_RESERVES } from "../graphql/queries";
 import ErrorMessage from "./ErrorMessage";
-import { Row, Col, Container } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import { useStateValue } from '../State/globalState'
 import { ReserveType, UserReserveType } from '../types'
 import { themeGradient } from "../theme";
@@ -26,14 +26,10 @@ const Reserves = (props: ReservesProps) => {
 
     const [{ selectedIn, currentAccount, userReserves, reservePools, highestAPY, selectedOut }, dispatch]: [{ selectedIn: UserReserveType, currentAccount: string, userReserves: any, reservePools: any, highestAPY: any, selectedOut: ReserveType }, (type) => void] = useStateValue()
 
-    const { loading, error, data, fetchMore, networkStatus } = useQuery(
+    const { error, data } = useQuery(
         ALL_RESERVES,
         {
             context: { clientName: "aave" },
-            //variables: allPostsQueryVars,
-            // Setting this value to true will make the component rerender when
-            // the "networkStatus" changes, so we are able to know if it is fetching
-            // more data
             notifyOnNetworkStatusChange: true,
         }
     )
@@ -68,7 +64,7 @@ const Reserves = (props: ReservesProps) => {
 
                         <Col>
                             <strong>
-                                Reserve Name
+                                Token Name
     </strong>
                         </Col>
 
@@ -134,7 +130,7 @@ const Reserves = (props: ReservesProps) => {
                                 <Col>
 
                                     <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-                                        {reserve.name}
+                                        {"a" + reserve.symbol}
                                     </div>
 
                                 </Col>

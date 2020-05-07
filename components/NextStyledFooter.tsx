@@ -67,7 +67,8 @@ const Footer = (props: FooterProps) => {
                     <Col style={{ marginBottom: 20 }} xl={6} lg={6} md={12} sm={12} xs={12}>
                         <h3>Gobbl</h3>
 
-                        <p>Created by @coderdannn</p>
+                        <p>Created by <a href="https://twitter.com/@coderdannn">@coderdannn
+                            </a> during ETHGlobal 2020.</p>
 
                     </Col>
 
@@ -77,7 +78,14 @@ const Footer = (props: FooterProps) => {
                         <h4>PROJECT</h4>
 
                         <div><Link href="/about"><a>About</a></Link></div>
-                        <div><Link href="/contact-us"><a>Contact</a></Link></div>
+                        <div><a href="https://github.com/cinnabarhorse/gobbl"><a>Source Code</a></a></div>
+                        <div>
+                            <a href="https://kovan.pools.balancer.exchange/#/pool/0x7d3fd22FBC32FD112696E8e7cFc7Eb7f50c657b2">Pool</a>
+                        </div>
+
+                        <div>
+                            <a href="https://testnet.aave.com/faucet">Get aTokens</a>
+                        </div>
 
 
                     </Col>
@@ -95,6 +103,15 @@ const Footer = (props: FooterProps) => {
 
 
                         <h4>Follow Us</h4>
+
+                        <div>
+                            Twitter: <a href="https://twitter.com/coderdannn">@coderdannn</a>
+                        </div>
+
+                        <div>
+                            Github: <a href="https://github.com/cinnabarhorse">cinnabarhorse</a>
+                        </div>
+
 
 
 

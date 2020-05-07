@@ -21,14 +21,14 @@ const SwapButton = (props: SwapButtonProps) => {
         globalWeb3,
         selectedIn,
         selectedOut,
-        currentAccount
+        currentAccount,
     }, dispatch]: [{
         currentSwap: any,
         availableSwaps: any,
         globalWeb3: any,
         selectedIn: UserReserveType,
         selectedOut: ReserveType,
-        currentAccount: string
+        currentAccount: string,
     }, (type) => void] = useStateValue()
 
     const [loading, setLoading] = useState(false)
@@ -198,6 +198,7 @@ const SwapButton = (props: SwapButtonProps) => {
 
     async function performSwap() {
 
+
         const poolAddress = "0x7d3fd22fbc32fd112696e8e7cfc7eb7f50c657b2"
 
         if (Number(allowance) === 0) {
@@ -262,6 +263,12 @@ const SwapButton = (props: SwapButtonProps) => {
                     alert("Swap complete!")
                     setTradeState(undefined)
 
+                    dispatch({
+                        type: "updateCurrentSwap",
+                        currentSwap: undefined
+                    })
+                    setSwapAmount(undefined)
+
 
                 })
                 .on('error', async function (error) {
@@ -323,7 +330,7 @@ const SwapButton = (props: SwapButtonProps) => {
 
                 <NextStyledInput
                     connectButton
-                    buttonTitle="Max"//{selectedIn && selectedOut ? "Max" : undefined}
+                    buttonTitle={selectedIn && selectedOut ? "Max" : undefined}
                     buttonStyles={`
                         margin-left:-40px;
                         width:20px;
