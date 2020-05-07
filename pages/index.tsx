@@ -9,6 +9,7 @@ import SwapButton from '../components/SwapButton'
 import { Row, Col } from 'react-bootstrap'
 import { buttonInactive, themeBlack } from '../theme'
 import NextStyledFooter from '../components/NextStyledFooter'
+import NextReusableHead from '../components/NextReusableHead'
 
 const IndexPage = () => {
 
@@ -18,6 +19,16 @@ const IndexPage = () => {
 
     <App>
 
+
+      <NextReusableHead
+        title="Gobbl - Hack your yield"
+        description="Easily swap your aTokens for the best yield"
+        siteName="Gobbl"
+        url="https://gobbl.now.sh"
+        image="/yieldhack.jpg"
+        faviconPath=""
+
+      />
 
 
       <Header />
