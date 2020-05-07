@@ -25,8 +25,8 @@ const IndexPage = () => {
         description="Easily swap your aTokens for the best yield"
         siteName="Gobbl"
         url="https://gobbl.now.sh"
-        image="https://gobbl.now.sh/yieldhack.jpg"
-        faviconPath="https://gobbl.now.sh/favicon.ico"
+        image="/yieldhack.jpg"
+        faviconPath="/favicon.ico"
 
       />
 
