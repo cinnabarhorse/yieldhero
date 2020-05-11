@@ -69,7 +69,7 @@ const RedirectButton = (props: SwapButtonProps) => {
 
     async function fetchAllowance() {
 
-        const poolAddress = "0x7d3fd22fbc32fd112696e8e7cfc7eb7f50c657b2"
+        const poolAddress = process.env.POOL_ADDRESS
 
         //First check if this token is approved
         const ERC20 = new globalWeb3.eth.Contract(ATokenABI, selectedToken.reserve.aToken.id)
@@ -108,15 +108,18 @@ const RedirectButton = (props: SwapButtonProps) => {
 
                 .on('receipt', async function (receipt) {
 
-                    alert("Swap complete!")
+                    alert("Redirect complete!")
                     setTradeState(undefined)
 
                     dispatch({
-                        type: "updateCurrentSwap",
-                        currentSwap: undefined
+                        type: "updateSelectedCreator",
+                        selectedCreator: undefined
                     })
-                    setSwapAmount(undefined)
 
+                    dispatch({
+                        type: 'updatedSelectedToken',
+                        selectedToken: undefined
+                    })
 
                 })
                 .on('error', async function (error) {

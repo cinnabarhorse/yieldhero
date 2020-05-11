@@ -80,7 +80,7 @@ const Footer = (props: FooterProps) => {
                         <div><Link href="/about"><a>About</a></Link></div>
                         <div><a href="https://github.com/cinnabarhorse/gobbl"><a>Source Code</a></a></div>
                         <div>
-                            <a href="https://kovan.pools.balancer.exchange/#/pool/0x7d3fd22FBC32FD112696E8e7cFc7Eb7f50c657b2">Pool</a>
+                            <a href={`${process.env.BALANCER_POOLS_URL}/${process.env.POOL_ADDRESS}`}>Pool</a>
                         </div>
 
                         <div>

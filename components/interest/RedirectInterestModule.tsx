@@ -26,21 +26,6 @@ export default function RedirectInterestModule() {
         }
     )
 
-    async function setRedirectAddress(reserve: UserReserveType) {
-
-
-        const ERC20 = new globalWeb3.eth.Contract(ATokenABI, reserve.reserve.aToken.id)
-
-        ERC20.methods.redirectInterestStream("0x94cb5C277FCC64C274Bd30847f0821077B231022").send({
-            from: currentAccount
-        })
-
-        console.log('erc30:', ERC20)
-
-
-
-    }
-
     useEffect(() => {
 
         if (!userReserves && data) {

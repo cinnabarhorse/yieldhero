@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "env-cmd -f .env next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "deploy:staging": "export NOW_PROJECT_ID=QmUgGMgxukaXYBvzW3hCp3bJ94Vd2214pBVbP84LQpkwHv && export NOW_ORG_ID=1c3hZezLhRKFGu3HeZhxIyYn && now -f --prod",
+    "deploy:prod": "export NOW_PROJECT_ID=QmVBujTAFAeXSNkYGyzSEh8vLcRwKfnUiCEhLdPrZT4dSt && export NOW_ORG_ID=1c3hZezLhRKFGu3HeZhxIyYn && now --prod"
   },
   "dependencies": {
     "@apollo/react-hooks": "3.1.3",

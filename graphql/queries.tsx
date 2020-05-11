@@ -85,6 +85,7 @@ export const USER_RESERVES_INTEREST = gql`
 `
 
 export const USERS_BY_REDIRECT_BALANCE = gql`
+
 {
   userReserves(orderBy:principalATokenBalance, orderDirection:desc, where: {
       interestRedirectionAddress_not:"0x0000000000000000000000000000000000000000"
@@ -111,7 +112,12 @@ export const USERS_BY_REDIRECT_BALANCE = gql`
 `
 
 export const RECIPIENT_REDIRECTS = gql`
-{userReserves(where:{interestRedirectionAddress_in: ["0xc3c2e1cf099bc6e1fa94ce358562bcbd5cc59fe5","0x94cb5c277fcc64c274bd30847f0821077b231022","0x51208e5cc9215c6360210c48f81c8270637a5218"]}) {
+
+query getUserReserves(
+  $addressArray:[String]!
+  ) 
+
+{userReserves(where:{interestRedirectionAddress_in: $addressArray}) {
   user{
     id
   }

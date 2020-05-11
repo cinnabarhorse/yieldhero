@@ -11,7 +11,7 @@ const AboutPage = () => (
 
 
       <p>
-        Yield Hero is powered by a Balancer pool. You can view details <a href="https://kovan.pools.balancer.exchange/#/pool/0x7d3fd22FBC32FD112696E8e7cFc7Eb7f50c657b2">here.</a>
+        Yield Hero is powered by a Balancer pool. You can view details <a href={`${process.env.BALANCER_POOLS_URL}/#/pool/${process.env.POOL_ADDRESS}`}>here.</a>
       </p>
 
 

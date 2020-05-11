@@ -9,8 +9,7 @@ export default function createApolloClient(initialState, ctx) {
   return new ApolloClient({
     ssrMode: Boolean(ctx),
     link: new HttpLink({
-      uri: 'https://api.thegraph.com/subgraphs/name/aave/protocol-kovan',
-      //uri: 'https://api.thegraph.com/subgraphs/name/aave/protocol-raw',
+      uri: process.env.AAVE_URI,
       fetch,
     }),
     cache: new InMemoryCache().restore(initialState),

@@ -17,8 +17,6 @@ import '../fonts.css'
 
 class MyApp extends App {
 
-
-
     render() {
         const { Component, pageProps } = this.props
 

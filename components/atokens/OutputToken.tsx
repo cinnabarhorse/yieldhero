@@ -130,7 +130,7 @@ const Reserves = (props: ReservesProps) => {
                                 <Col>
 
                                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                                        <img style={{ height: 40, marginLeft: -10, marginRight: 8 }} src={`/coins/${reserve.symbol}.webp`} />
+                                        <img style={{ height: 40, marginLeft: -10, marginRight: 8 }} src={`/coins/${reserve.symbol.toLowerCase()}.webp`} />
                                         <div style={{ textAlign: 'left' }}>{"a" + reserve.symbol}</div>
                                     </div>
 

@@ -77,7 +77,7 @@ const SwapButton = (props: SwapButtonProps) => {
 
     async function fetchAllowance() {
 
-        const poolAddress = "0x7d3fd22fbc32fd112696e8e7cfc7eb7f50c657b2"
+        const poolAddress = process.env.POOL_ADDRESS
 
         //First check if this token is approved
         const ERC20 = new globalWeb3.eth.Contract(ATokenABI, selectedIn.reserve.aToken.id)
@@ -162,7 +162,7 @@ const SwapButton = (props: SwapButtonProps) => {
 
                 setLoading(false)
 
-                //   alert(`Trade ${inputAmount / Math.pow(10, selectedIn.reserve.decimals)} ${selectedIn.reserve.symbol} for ${(expectedOut / Math.pow(10, selectedOut.decimals)).toFixed(3)} ${selectedOut.symbol}?`)
+
             }
             else {
                 setError("No available trade.")
@@ -199,7 +199,7 @@ const SwapButton = (props: SwapButtonProps) => {
     async function performSwap() {
 
 
-        const poolAddress = "0x7d3fd22fbc32fd112696e8e7cfc7eb7f50c657b2"
+        const poolAddress = process.env.POOL_ADDRESS
 
         if (Number(allowance) === 0) {
 

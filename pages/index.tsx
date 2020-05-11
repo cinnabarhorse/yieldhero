@@ -42,7 +42,7 @@ const IndexPage = () => {
                     <button onClick={() => {
 
 
-                        Router.push("/atokens").then(() => {
+                        Router.push("/swap").then(() => {
                             dispatch({
                                 type: 'updateCurrentHeader',
                                 currentHeader: "Swap aTokens"

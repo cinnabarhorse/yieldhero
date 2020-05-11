@@ -23,9 +23,11 @@ export default function RecipientList() {
     const { loading, error, data, refetch } = useQuery(
         RECIPIENT_REDIRECTS,
         {
-            //variables: {
-            //    id: currentAccount ? currentAccount.toLowerCase() : undefined
-            //},
+            variables: {
+                addressArray: ["0xc3c2e1cf099bc6e1fa94ce358562bcbd5cc59fe5", "0x94cb5c277fcc64c274bd30847f0821077b231022", "0x51208e5cc9215c6360210c48f81c8270637a5218",
+                    "0x77dcb3ac387f7da0737948ac897d8eadd4ce4264"
+                ]
+            },
             //pollInterval: 5000
         }
     )

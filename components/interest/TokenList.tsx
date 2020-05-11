@@ -113,7 +113,7 @@ export default function TokenList() {
                                         {reserve.interestRedirectionAddress === "0x0000000000000000000000000000000000000000" ?
                                             <div>No Redirect</div>
                                             :
-                                            reserve.interestRedirectionAddress
+                                            smartTrim(reserve.interestRedirectionAddress, 12)
                                         }
 
 
