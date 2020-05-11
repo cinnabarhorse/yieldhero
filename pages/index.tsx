@@ -1,112 +1,200 @@
-import App from '../components/App'
-import Header from '../components/Header'
+import App from '../components/Layout'
 import { withApollo } from '../lib/apollo'
-import Reserves from '../components/Reserves'
-import UserReserve from '../components/UserReserve'
+
 import { useStateValue } from '../State/globalState'
-import AuthModal from '../components/AuthModal'
-import SwapButton from '../components/SwapButton'
+
 import { Row, Col } from 'react-bootstrap'
-import { buttonInactive, themeBlack } from '../theme'
+
 import NextStyledFooter from '../components/NextStyledFooter'
-import NextReusableHead from '../components/NextReusableHead'
+import Router from 'next/router'
+import AuthModal from '../components/AuthModal'
+import { donateGradient, flashGradient, poolGradient, swapGradient, themeBlack } from '../theme'
+import { useEffect } from 'react'
 
 const IndexPage = () => {
 
-  const [{ showAuthModal, currentAccount, currentNetwork, selectedIn }, dispatch] = useStateValue()
+    const [{ currentAccount, showAuthModal, currentNetwork }, dispatch] = useStateValue()
 
-  return (
+    useEffect(() => {
+        dispatch({
+            type: 'updateCurrentHeader',
+            currentHeader: "🦸‍♂️ Yield Hero"
+        })
+    }, [])
 
-    <App>
+    return (
 
+        <div>
 
-      <NextReusableHead
-        title="Gobbl - Hack your yield"
-        description="Easily swap your aTokens for the best yield"
-        siteName="Gobbl"
-        url="https://gobbl.now.sh"
-        image="/yieldhack.jpg"
-        faviconPath="/favicon.ico"
+            <Row>
+                <Col xl={12} lg={12} md={12} sm={12} xs={12}>
+                    <div className="descContainer">
+                        <div className="desc">
+                            "With great yield comes great responsibility"
+                    </div>
+                    </div></Col>
 
-      />
-
-
-      <Header />
-
-      {currentAccount && currentNetwork === "kovan" &&
-        <Row>
-          <UserReserve />
-
-          <Col xl={1} lg={1}>
-            <div className="arrowRight">➜</div>
-            <div className="arrowDown">↓</div>
-          </Col>
-          <Reserves />
-        </Row>
-      }
+            </Row>
 
 
-      {!currentAccount &&
-        <div>Connect your wallet to begin swapping!</div>
-      }
+            <Row>
+                <Col xl={6} lg={6} md={12} sm={12} xs={12}>
+                    <button onClick={() => {
+
+
+                        Router.push("/atokens").then(() => {
+                            dispatch({
+                                type: 'updateCurrentHeader',
+                                currentHeader: "Swap aTokens"
+                            })
+                        })
+                    }
+                    } >
+                        <p>
+                            🤖 Swap aTokens
+                            </p>
+
+                        <div>Easily swap your aTokens for the highest yield</div>
+                    </button>
+                </Col>
+
+                <Col xl={6} lg={6} md={12} sm={12} xs={12}>
+                    <button onClick={() => {
+
+
+                        Router.push("/redirect").then(() => {
+
+                            window.scrollTo(0, 0)
+
+                            dispatch({
+                                type: 'updateCurrentHeader',
+                                currentHeader: "Redirect Yield"
+                            })
+                        })
+
+                    }} style={{ background: donateGradient }}>
 
 
 
-      {showAuthModal &&
-        <AuthModal />
-      }
+                        <p> 😇 Redirect Yield
+                           </p>
 
 
-      {currentAccount && currentNetwork === "kovan" &&
-        <SwapButton />
-      }
+                        <div>Redirect your Aave yield to support OSS</div>
 
 
-      {currentAccount && currentNetwork !== "kovan" &&
-        <div>This dapp currently only works on Kovan! You are connected to {currentNetwork}.</div>
-      }
+                    </button>
+                </Col>
 
 
-      <style jsx>
-        {`
-          .arrowRight {
-            display:flex;
-            justify-content: center;
-            align-items: center;
-            flex: 1;
-            height: 100%;
-            font-size: 48px;
-            color:${selectedIn ? themeBlack : buttonInactive};
-            transition:color 0.2s;
-          }
 
-          .arrowDown {
-            display:none;
-          }
 
-          @media screen and (max-width:991px) {
+                <div style={{ marginTop: 20 }}></div>
 
-            .arrowRight {
-              display:none;
+
+                <Col xl={6} lg={6} md={12} sm={12} xs={12}>
+                    <button style={{ background: poolGradient }}>
+                        <p> 🏊‍♂️ Join Pool
+                           </p>
+
+                        <div>Coming soon!</div>
+                    </button>
+                </Col>
+
+                {/*} <Col xl={6} lg={6} md={12} sm={12} xs={12}>
+                    <button style={{ background: flashGradient }}>
+
+                        <p>
+                            Flash Loans
+                        </p>
+                        <div>
+                            Coming soon!
+                        </div>
+                    </button>
+                </Col>
+                {*/}
+            </Row>
+
+
+
+            {
+                showAuthModal &&
+                <AuthModal />
             }
-            .arrowDown {
-              display:flex;
-            justify-content: center;
-            align-items: center;
-            flex: 1;
-            height: 100%;
-            font-size: 48px;
-            transition: color 0.2s;
-            color:${selectedIn ? themeBlack : buttonInactive};
-            }
-          }
-        `}
-      </style>
 
-      <NextStyledFooter />
 
-    </App>
-  )
+            {/*
+                currentAccount && currentNetwork !== "kovan" &&
+                <div>This dapp currently only works on Kovan! You are connected to {currentNetwork}.</div>
+            */}
+
+            <style jsx>
+                {`
+
+                    .descContainer {
+                        display:flex;
+                        flex:1;
+                        align-items:center;
+                        justify-content:center;
+                        margin-bottom:30px;
+                        background:ghostwhite;
+                        height:50px;
+                        margin-top:20px;
+                        border-radius:20px;
+                    }
+                    .desc {
+                        font-weight:500;
+                       color:${themeBlack};
+                        font-size:21px;
+                    }
+
+                    button {
+                        border-radius:2px;
+                        display:flex;
+                        flex-direction:column;
+                        justify-content:center;
+                        align-items:center;
+                        width:100%;
+                        height:200px;
+                        margin-bottom:20px;
+                        background:${swapGradient};
+                        transition:transform 0.2s;
+                    }
+
+                    button:hover {
+                        transform:scale(1.02);
+                    }
+
+                    button > p {
+                        font-weight:bold;
+                        font-size:32px;
+                    }
+
+                    button > div {
+                        font-size:16px;
+                        font-weight:300;
+                    }
+
+                    @media screen and (max-width:991px) {
+
+                        .descContainer {
+                            padding:15px;
+                            height:80px;
+                        }
+                        .desc {
+                            font-size:18px;
+                            text-align:center;
+                        }
+                    }
+                `}
+            </style>
+
+
+
+            <NextStyledFooter />
+
+        </div >
+    )
 
 }
 

@@ -9,10 +9,16 @@ export const initialState = {
   currentNetwork: undefined,
   showAuthModal: false,
 
-  //tokens
+  //Swap aTokens
   selectedIn: undefined,
   selectedOut: undefined,
   currentSwap: undefined,
-  availableSwaps: undefined
+  availableSwaps: undefined,
 
+  //Header
+  currentHeader: "🦸‍♂️ Yield Hero",
+
+  //Redirect Yield
+  selectedToken: undefined,
+  selectedCreator: undefined
 };

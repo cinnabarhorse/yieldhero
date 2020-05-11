@@ -65,7 +65,7 @@ const Footer = (props: FooterProps) => {
                 <Row>
 
                     <Col style={{ marginBottom: 20 }} xl={6} lg={6} md={12} sm={12} xs={12}>
-                        <h3>Gobbl</h3>
+                        <h3>Yield Hero</h3>
 
                         <p>Created by <a href="https://twitter.com/@coderdannn">@coderdannn
                             </a> during ETHGlobal 2020.</p>

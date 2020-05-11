@@ -4,12 +4,13 @@ import { useStateValue } from '../State/globalState'
 import getWeb3 from '../web3/getWeb3';
 import Fortmatic from 'fortmatic'
 import Web3 from 'web3'
+import { themeBlack } from "../theme";
 
 
 
 const AuthModal = () => {
 
-    const [{ showAuthModal, }, dispatch] = useStateValue()
+    const [{ showAuthModal }, dispatch] = useStateValue()
     const [loadingFortmatic, setLoadingFortmatic] = useState(false)
 
     function updateState(web3, address, network) {
@@ -87,6 +88,8 @@ Connect with Metamask
     }
 
 
+    if (!showAuthModal) return null;
+
     return (
         <Modal
             show={showAuthModal}
@@ -125,19 +128,19 @@ Connect with Metamask
                        font-weight:800;
                     }
 
-                    .notNow {
+                    button {
                         background:none;
-                        border:solid 4px black;
-                        color:black;
+                        border:solid 4px ${themeBlack};
+                        color:${themeBlack};
                         transition: background 0.2s, color 0.2s;
                     }
-                    .notNow:hover {
-                        background:black;
+                    button:hover {
+                        background:${themeBlack};
                         color:white;
                     }
 
                     .boost {
-                        background:#FC2E53;
+                    background:#FC2E53;
                         border:none;
                         color:white;
                         transition: background 0.2s, color 0.2s, box-shadow 0.2s;
@@ -145,11 +148,11 @@ Connect with Metamask
                     }
 
                     .boost:hover {
-                        box-shadow:0 2px 4px 0 rgba(136,144,195,0.2), 0 5px 15px 0 rgba(37,44,97,0.3);
+                    box - shadow:0 2px 4px 0 rgba(136,144,195,0.2), 0 5px 15px 0 rgba(37,44,97,0.3);
                     }
 
                     .boost:disabled {
-                        background:gray;
+                    background:gray;
                     }
                 `}
             </style>
@@ -161,7 +164,7 @@ Connect with Metamask
                 showAuthModal: false
             })}>
                 <Modal.Title style={{ display: 'flex', flex: 1, justifyContent: 'center', fontWeight: 800, textAlign: 'center' }} id="contained-modal-title-vcenter">
-                    Connect Wallet to Swap
+                    Connect Wallet to Yield Hero
                 </Modal.Title>
 
             </Modal.Header>

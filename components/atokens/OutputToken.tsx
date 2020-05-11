@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { ALL_RESERVES } from "../graphql/queries";
-import ErrorMessage from "./ErrorMessage";
+import { ALL_RESERVES } from "../../graphql/queries";
+import ErrorMessage from "../ErrorMessage";
 import { Col } from "react-bootstrap";
-import { useStateValue } from '../State/globalState'
-import { ReserveType, UserReserveType } from '../types'
-import { themeGradient } from "../theme";
+import { useStateValue } from '../../State/globalState'
+import { ReserveType, UserReserveType } from '../../types'
+import { swapGradient } from "../../theme";
 
 interface ReservesProps {
 
@@ -52,7 +52,7 @@ const Reserves = (props: ReservesProps) => {
 
                 style={{ boxShadow: '0 2px 4px 0 rgba(136,144,195,0.2), 0 5px 15px 0 rgba(37,44,97,0.15)', padding: 0, opacity: selectedIn ? 1.0 : 0.3, transition: "opacity 0.3s", minHeight: 300 }}>
 
-                <h2 style={{ textAlign: 'center', background: themeGradient, color: 'white' }}>Select Output aToken</h2>
+                <h2 style={{ textAlign: 'center', background: swapGradient, color: 'white' }}>Select Output aToken</h2>
 
                 <div style={{ display: 'block', padding: 10, }}>
 
@@ -129,9 +129,11 @@ const Reserves = (props: ReservesProps) => {
 
                                 <Col>
 
-                                    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-                                        {"a" + reserve.symbol}
+                                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                                        <img style={{ height: 40, marginLeft: -10, marginRight: 8 }} src={`/coins/${reserve.symbol}.webp`} />
+                                        <div style={{ textAlign: 'left' }}>{"a" + reserve.symbol}</div>
                                     </div>
+
 
                                 </Col>
 

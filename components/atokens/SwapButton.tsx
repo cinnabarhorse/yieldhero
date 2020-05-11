@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useStateValue } from "../State/globalState";
-import { UserReserveType, ReserveType, TradeState } from "../types";
+import { useStateValue } from "../../State/globalState";
+import { UserReserveType, ReserveType, TradeState } from "../../types";
 import { Row, Col } from "react-bootstrap";
-import { buttonInactive, themeBlack, themeGradient } from "../theme";
-import BPoolABI from '../web3/BPool.json'
-import NextStyledInput from "./NextStyledInput";
-import ATokenABI from '../web3/ATokenABI.json'
+import { buttonInactive, themeBlack } from "../../theme";
+import BPoolABI from '../../web3/BPool.json'
+import NextStyledInput from "../NextStyledInput";
+import ATokenABI from '../../web3/ATokenABI.json'
 
 import BigNumber from 'bignumber.js'
 
@@ -321,6 +321,7 @@ const SwapButton = (props: SwapButtonProps) => {
         if (Number(swapAmount) <= 0) return true
         return false
     }
+
 
     return (
 

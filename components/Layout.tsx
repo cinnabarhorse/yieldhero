@@ -6,7 +6,7 @@ export default ({ children }) => (
     {children}
     <style jsx global>{`
       * {
-        font-family: Menlo, Monaco, 'Lucida Console', 'Liberation Mono',
+        font-family: Lato, Menlo, Monaco, 'Lucida Console', 'Liberation Mono',
           'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New',
           monospace, serif;
       }
@@ -14,10 +14,11 @@ export default ({ children }) => (
         margin: 0;
       }
       a {
-        color: #22bad9;
+        color:${themeBlack};
       }
 
       a:hover {
+        color:#b6509e;
         text-decoration:none;
       }
 
@@ -71,7 +72,7 @@ export default ({ children }) => (
       input:focus {
         border:solid 2px ${themeBlack}
       }
-      
+
 
     `}</style>
   </Container>

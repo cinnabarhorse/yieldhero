@@ -5,6 +5,12 @@ import Head from 'next/head'
 import { GlobalState } from '../State/globalState'
 import { initialState } from '../State/initialState'
 import { reducer } from '../State/reducers'
+import Header from '../components/Header'
+import Layout from '../components/Layout'
+import AuthModal from '../components/AuthModal'
+import NextReusableHead from '../components/NextReusableHead'
+import RedirectButton from '../components/interest/RedirectButton'
+import '../fonts.css'
 
 
 
@@ -21,22 +27,58 @@ class MyApp extends App {
         return (
 
             <div>
-                <Head>
-                    <link
-                        rel="stylesheet"
-                        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-                        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-                        crossOrigin="anonymous"
-                    />
-
-                </Head>
-
 
                 <GlobalState initialState={initialState} reducer={reducer}>
-                    <Component {...pageProps} />
-                </GlobalState>
-            </div>
 
+                    <Layout>
+                        <Head>
+                            <link
+                                rel="stylesheet"
+                                href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                                crossOrigin="anonymous"
+                            />
+
+                        </Head>
+
+
+                        <NextReusableHead
+                            title="Yield Hero - With great yield comes great responsibility"
+                            description="Hack your yield"
+                            siteName="YieldHero"
+                            url="https://yieldhero.app"
+                            image="/yieldhack.jpg"
+                            faviconPath="/favicon.ico"
+
+                        />
+
+
+
+
+
+                        <Header
+                            title="Yield Hero"
+                            desc="With great yield comes great responsibility" />
+
+
+
+                        <AuthModal />
+
+
+                        <Component {...pageProps} />
+
+                    </Layout>
+
+
+                    <div style={{ position: 'fixed', bottom: 0, width: '100%' }}>
+                        <RedirectButton />
+                    </div>
+
+
+
+                </GlobalState>
+
+            </div>
 
 
         )

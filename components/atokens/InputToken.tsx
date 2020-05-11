@@ -1,12 +1,13 @@
 import { useQuery, } from '@apollo/react-hooks'
-import ErrorMessage from './ErrorMessage'
-import { USER_RESERVES } from '../graphql/queries'
+import ErrorMessage from '../ErrorMessage'
+import { USER_RESERVES } from '../../graphql/queries'
 
 import { Container, Row, Col } from 'react-bootstrap'
-import { useEffect } from 'react'
-import { useStateValue } from '../State/globalState'
-import { User, UserReserveType } from '../types'
-import { themeGradient } from '../theme'
+import { useEffect, useState } from 'react'
+import { useStateValue } from '../../State/globalState'
+import { User, UserReserveType } from '../../types'
+import { swapGradient } from '../../theme'
+
 
 function convertFromPower(amount: string, power: number) {
   return (Number(amount) / Math.pow(10, power))
@@ -17,9 +18,11 @@ const aaveRateDecimals = 27
 
 
 
-export default function UserReserve() {
+export default function InputToken() {
 
-  const [{ userReserves, highestAPY, currentAccount, selectedIn }, dispatch]:
+  const [ens, setEns] = useState(undefined)
+
+  const [{ userReserves, highestAPY, currentAccount, selectedIn, globalWeb3 }, dispatch]:
     [{ userReserves: any, reservePools: any, highestAPY: any, globalWeb3: any, currentAccount: any, selectedIn: UserReserveType }, (type) => void] = useStateValue()
 
   const { loading, error, data, refetch } = useQuery(
@@ -67,7 +70,7 @@ export default function UserReserve() {
         style={{ boxShadow: '0 2px 4px 0 rgba(136,144,195,0.2), 0 5px 15px 0 rgba(37,44,97,0.15)', padding: 0, minHeight: 300 }}>
 
 
-        <h2 style={{ textAlign: 'center', background: themeGradient, color: 'white' }}>Select Input aToken</h2>
+        <h2 style={{ textAlign: 'center', background: swapGradient, color: 'white' }}>Select Input aToken</h2>
 
         <div style={{ display: 'block', padding: 10 }}>
 
@@ -140,7 +143,11 @@ export default function UserReserve() {
 
 
                 <Col>
-                  <div style={{ textAlign: 'left' }}>{name}</div>
+                  <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <img style={{ height: 40, marginLeft: -10, marginRight: 8 }} src={`/coins/${reserve.reserve.symbol}.webp`} />
+                    <div style={{ textAlign: 'left' }}>{name}</div>
+                  </div>
+
                 </Col>
 
                 <Col>
@@ -171,6 +178,10 @@ export default function UserReserve() {
 
 
           })}
+
+          {data && data.user !== null && data.user.reserves.length <= 0 &&
+            <div>You don't have any aTokens!</div>
+          }
 
 
 

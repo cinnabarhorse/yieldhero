@@ -73,6 +73,24 @@ export const reducer = (state, action) => {
         availableSwaps: action.availableSwaps
       }
 
+    case "updateCurrentHeader":
+      return {
+        ...state,
+        currentHeader: action.currentHeader
+      }
+
+
+    case "updateSelectedToken":
+      return {
+        ...state,
+        selectedToken: action.selectedToken
+      }
+
+    case "updateSelectedCreator":
+      return {
+        ...state,
+        selectedCreator: action.selectedCreator
+      }
     default:
       return state;
   }
