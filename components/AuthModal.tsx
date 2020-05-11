@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from 'react-bootstrap/Modal'
 import { useStateValue } from '../State/globalState'
 import getWeb3 from '../web3/getWeb3';
 import Fortmatic from 'fortmatic'
 import Web3 from 'web3'
 import { themeBlack } from "../theme";
+import loadFirebase from "../firebase";
 
 
 
 const AuthModal = () => {
 
-    const [{ showAuthModal }, dispatch] = useStateValue()
+    const [{ showAuthModal, authUser }, dispatch] = useStateValue()
     const [loadingFortmatic, setLoadingFortmatic] = useState(false)
 
     function updateState(web3, address, network) {
@@ -36,7 +37,6 @@ const AuthModal = () => {
         })
 
     }
-
     /*
     Connects Fortmatic wallet
     */
@@ -79,13 +79,71 @@ Connect with Metamask
         const web3 = await getWeb3()
         const accounts = await web3.web3.eth.getAccounts()
         const network = await web3.web3.eth.net.getNetworkType()
-
         if (accounts.length > 0) {
+            await signInWithFirebase(accounts[0])
             updateState(web3.web3, accounts[0], network)
         }
-
-
     }
+
+    async function signInWithFirebase(account: string) {
+        const firebase = await loadFirebase()
+
+        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+
+        firebase.auth().signInAnonymously()
+            .then(async (result) => {
+
+                dispatch({
+                    type: "updateAuthUser",
+                    authUser: result.user
+                })
+
+                //Add anonymous user with wallet address as doc ID
+                firebase.firestore().collection("users").doc(account).onSnapshot((snapshot) => {
+                    if (snapshot.exists) {
+                        /*  dispatch({
+                              type: "updateUserInfo",
+                              userInfo: {
+                                  id: account,
+                                  votes: snapshot.data()!.votes
+                              }
+                          })
+                          */
+                    }
+
+                    //Doesn't exist, add new user
+                    else {
+                        firebase.firestore().collection("users").doc(account).set({
+                            createdOn: firebase.firestore.Timestamp.now()
+                        })
+                            .then(() => {
+                                /*  dispatch({
+                                      type: "updateUserInfo",
+                                      userInfo: {
+                                          id: account,
+                                          votes: []
+                                      }
+                                  })
+                                  */
+                            })
+
+
+
+                        console.log('result:', result)
+                    }
+
+                })
+
+                //Already exists, just load data
+
+
+            })
+            .catch(function (error) {
+
+                console.log('error:', error.message)
+            });
+    }
+
 
 
     if (!showAuthModal) return null;

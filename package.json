@@ -21,6 +21,7 @@
     "env-cmd": "^10.1.0",
     "ethereum-ens": "^0.8.0",
     "ethers": "^4.0.47",
+    "firebase": "^7.14.3",
     "fortmatic": "^2.0.6",
     "graphql": "^14.0.2",
     "graphql-tag": "2.10.3",

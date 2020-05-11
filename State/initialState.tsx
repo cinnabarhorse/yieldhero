@@ -1,4 +1,6 @@
 export const initialState = {
+  authUser: undefined,
+
   userReserves: undefined,
   reservePools: undefined,
   currentPool: undefined,

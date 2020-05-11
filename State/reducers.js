@@ -1,6 +1,13 @@
 export const reducer = (state, action) => {
 
   switch (action.type) {
+
+    case "updateAuthUser":
+      return {
+        ...state,
+        authUser: action.authUser
+      }
+
     case "updateUserReserves":
       return {
         ...state,

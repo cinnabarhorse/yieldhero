@@ -7,6 +7,8 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import { themeBlack } from '../theme'
 import Router from 'next/router'
 import { superHero } from '../icons'
+import loadFirebase from '../firebase'
+import getWeb3 from '../web3/getWeb3'
 
 
 interface HeaderProps {
@@ -18,7 +20,68 @@ const Header = (props: HeaderProps) => {
 
   const { title, desc } = props
 
-  const [{ currentAccount, currentNetwork, currentHeader }, dispatch] = useStateValue()
+  const [{ currentAccount, authUser, currentNetwork, currentHeader }, dispatch] = useStateValue()
+
+
+  useEffect(() => {
+    checkUser()
+  }, [authUser])
+
+  function updateState(web3, address, network) {
+    dispatch({
+      type: "updateCurrentAccount",
+      currentAccount: address
+    })
+
+    dispatch({
+      type: 'updateCurrentNetwork',
+      currentNetwork: network
+    })
+
+    dispatch({
+      type: "updateWeb3",
+      globalWeb3: web3
+    })
+
+    dispatch({
+      type: 'updateShowAuthModal',
+      showAuthModal: false
+    })
+
+  }
+
+  async function checkUser() {
+
+    if (authUser) return;
+
+    const firebase = await loadFirebase()
+    // const user = await firebase.auth().onAuthStateChanged()
+
+    firebase.auth().onAuthStateChanged(async (user) => {
+
+      if (user) {
+        const web3 = await getWeb3()
+        const accounts = await web3.web3.eth.getAccounts()
+        const network = await web3.web3.eth.net.getNetworkType()
+        if (accounts.length > 0) {
+          updateState(web3.web3, accounts[0], network)
+        }
+
+        dispatch({
+          type: "updateAuthUser",
+          authUser: user
+        })
+      }
+      else {
+        dispatch({
+          type: "updateAuthUser",
+          authUser: "none"
+        })
+      }
+
+    })
+
+  }
 
 
   useEffect(() => {
@@ -44,7 +107,11 @@ const Header = (props: HeaderProps) => {
 
   async function logout() {
 
+    const firebase = await loadFirebase()
+
     try {
+
+      await firebase.auth().signOut()
 
       dispatch({
         type: "updateCurrentAccount",
@@ -56,22 +123,9 @@ const Header = (props: HeaderProps) => {
         userInfo: undefined
       })
 
-      dispatch({
-        type: "updateTokenVotes",
-        tokenVotes: undefined
-      })
-
     } catch (error) {
       alert(error)
     }
-
-
-
-
-  }
-
-  if (typeof window !== 'undefined') {
-    console.log('window:', window.location.pathname)
   }
 
   return (
@@ -79,11 +133,8 @@ const Header = (props: HeaderProps) => {
     <div className="headerContainer">
 
       <style jsx>{`
-     
-
+    
       .headerContainer {
-       
-       
           background:white;
           display: flex;
           height:80px;
@@ -234,10 +285,15 @@ const Header = (props: HeaderProps) => {
 
         </div>
 
-        {/*}   <div className="desc">{desc}</div> {*/}
+
 
         <div className="connectButtonContainer">
-          {!currentAccount &&
+
+          {!currentAccount && !authUser &&
+            <div>Loading</div>
+          }
+
+          {!currentAccount && authUser === "none" &&
             <button className="connectButton" style={{ marginLeft: 10 }} onClick={() => {
               dispatch({
                 type: "updateShowAuthModal",
@@ -246,7 +302,7 @@ const Header = (props: HeaderProps) => {
             }}>Connect Wallet</button>
           }
 
-          {currentAccount &&
+          {currentAccount && authUser && authUser !== "none" &&
 
             <Dropdown>
               <Dropdown.Toggle style={{ background: 'none', border: 'none' }} variant="primary" id="dropdown-basic">
@@ -262,9 +318,6 @@ const Header = (props: HeaderProps) => {
 
                 <Dropdown.Item onClick={() => {
                   logout()
-
-
-
                 }}>Logout</Dropdown.Item>
 
               </Dropdown.Menu>
