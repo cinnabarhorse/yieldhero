@@ -1,5 +1,4 @@
 import Layout from '../components/Layout'
-import Header from '../components/Header'
 
 const AboutPage = () => (
   <Layout>
@@ -11,7 +10,7 @@ const AboutPage = () => (
 
 
       <p>
-        Yield Hero is powered by a Balancer pool. You can view details <a href={`${process.env.BALANCER_POOLS_URL}/#/pool/${process.env.POOL_ADDRESS}`}>here.</a>
+        Yield Hero is powered by a Balancer pool. You can view details <a href={`https://${process.env.BALANCER_POOLS_URL}/${process.env.POOL_ADDRESS}`}>here.</a>
       </p>
 
 
