@@ -82,11 +82,11 @@ const Reserves = (props: ReservesProps) => {
                         const liquidityRate = Number(reserve.liquidityRate) / Math.pow(10, 27) * 100
 
                         const availableTokens = [
-                            "USDT", "DAI", "SUSD", "USDC", "TUSD", "BUSD"
+                            "usdt", "dai", "susd", "usdc", "tusd", "busd"
                         ]
 
 
-                        if (!availableTokens.includes(reserve.symbol)) return null
+                        if (!availableTokens.includes(reserve.symbol.toLowerCase())) return null
 
                         return (
                             <button

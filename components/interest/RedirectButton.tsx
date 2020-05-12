@@ -83,7 +83,7 @@ const RedirectButton = (props: SwapButtonProps) => {
 
         //Check if wallet is valid
         try {
-            const address = globalWeb3.utils.toChecksumAddress(selectedCreator.wallet)
+            globalWeb3.utils.toChecksumAddress(selectedCreator.wallet)
 
             setLoading(true)
             setTradeState("waitingConfirm")
@@ -104,6 +104,7 @@ const RedirectButton = (props: SwapButtonProps) => {
                 .on('receipt', async function (receipt) {
 
                     alert("Redirect complete!")
+
                     setTradeState(undefined)
 
                     dispatch({
@@ -116,15 +117,15 @@ const RedirectButton = (props: SwapButtonProps) => {
                         selectedToken: undefined
                     })
 
+                    setLoading(false)
+
                 })
                 .on('error', async function (error) {
 
+                    setLoading(false)
                     setTradeState(undefined)
                     alert(error.message)
                 })
-
-            console.log('erc30:', ERC20)
-
 
         } catch (e) {
             alert(e.message)

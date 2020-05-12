@@ -54,7 +54,7 @@ const IndexPage = () => {
 
 
         {!currentAccount &&
-          <div style={{ fontWeight: 300, fontSize: '18px' }} > Connect your wallet to begin swapping!</div>
+          <div style={{ fontWeight: 300, fontSize: '18px' }} > Connect your wallet to redirect yield!</div>
         }
 
         {showAuthModal &&
