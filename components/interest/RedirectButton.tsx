@@ -74,8 +74,6 @@ const RedirectButton = (props: SwapButtonProps) => {
         //First check if this token is approved
         const ERC20 = new globalWeb3.eth.Contract(ATokenABI, selectedToken.reserve.aToken.id)
 
-        console.log('erc 20:', ERC20)
-
         const allowance = await ERC20.methods.allowance(currentAccount, poolAddress).call({ from: currentAccount })
 
         setAllowance(allowance)
@@ -86,9 +84,6 @@ const RedirectButton = (props: SwapButtonProps) => {
         //Check if wallet is valid
         try {
             const address = globalWeb3.utils.toChecksumAddress(selectedCreator.wallet)
-            console.log('address:', address)
-
-
 
             setLoading(true)
             setTradeState("waitingConfirm")

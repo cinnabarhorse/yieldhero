@@ -22,10 +22,7 @@ const Recipient = (props: RecipientProps) => {
 
     useEffect(() => {
 
-        console.log('supporters:', supporters)
-
         if (supporters && supporters[creator.wallet]) {
-            console.log('supporters:', supporters[creator.wallet])
 
             var totalAmount = 0
 
@@ -35,13 +32,10 @@ const Recipient = (props: RecipientProps) => {
 
                 totalAmount = totalAmount + amountInEth
 
-                console.log('amount in eth:', amountInEth)
+
             });
 
             setSupportAmount((Number(totalAmount) / Math.pow(10, 18)).toFixed(2))
-
-            console.log('total amount:', totalAmount)
-
 
         }
 

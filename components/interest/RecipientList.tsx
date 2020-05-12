@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { USER_RESERVES_INTEREST, RECIPIENT_REDIRECTS } from "../../graphql/queries";
+import { RECIPIENT_REDIRECTS } from "../../graphql/queries";
 import { useStateValue } from "../../State/globalState";
-import { UserReserveType, User, CreatorType } from "../../types";
-import { Col, Row } from "react-bootstrap";
-import { donateGradient, themeBlack } from "../../theme";
+import { UserReserveType, CreatorType } from "../../types";
+import { Col, } from "react-bootstrap";
+import { donateGradient } from "../../theme";
 import ErrorMessage from "../ErrorMessage";
-import ATokenABI from '../../web3/ATokenABI.json'
 import { addresses } from './addresses'
 import Recipient from "./Recipient";
 import NextStyledInput from "../NextStyledInput";
@@ -20,18 +19,34 @@ export default function RecipientList() {
 
     const [supporters, setSupporters] = useState(undefined)
 
+    const [addressArray, setAddressArray] = useState(undefined)
+
+    useEffect(() => {
+        //set addresses
+
+        var addressList = addresses.map((obj) => { return obj.wallet })
+
+        var filteredAddresses = addressList.filter((address) => {
+            return address !== ""
+        })
+
+        setAddressArray(filteredAddresses)
+    }, [])
+
+
+
     const { loading, error, data, refetch } = useQuery(
         RECIPIENT_REDIRECTS,
         {
+            skip: !addressArray ? true : false,
             variables: {
-                addressArray: ["0xc3c2e1cf099bc6e1fa94ce358562bcbd5cc59fe5", "0x94cb5c277fcc64c274bd30847f0821077b231022", "0x51208e5cc9215c6360210c48f81c8270637a5218",
-                    "0x77dcb3ac387f7da0737948ac897d8eadd4ce4264"
-                ]
+                addressArray: addressArray
             },
-            //pollInterval: 5000
+            pollInterval: 10000,
+            fetchPolicy: 'network-only',
+            notifyOnNetworkStatusChange: true
         }
     )
-
 
     useEffect(() => {
 
@@ -52,8 +67,6 @@ export default function RecipientList() {
             });
 
             setSupporters(finalRedirects)
-
-            console.log('final redirects:', finalRedirects)
 
         }
 
