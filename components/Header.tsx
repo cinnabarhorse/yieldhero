@@ -275,8 +275,9 @@ const Header = (props: HeaderProps) => {
               })
 
             })
-          }}><div>⬅︎
-            </div> </button>
+          }}>
+            <div>⬅︎</div>
+          </button>
         }
 
 

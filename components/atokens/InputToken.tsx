@@ -108,6 +108,7 @@ export default function InputToken() {
             return (
 
               <button
+                key={index}
                 style={{ width: '100%' }}
                 className={selectedIn && selectedIn.reserve.symbol === reserve.reserve.symbol ? "buttonSelected" : "buttonUnselected"}
                 onClick={() => {

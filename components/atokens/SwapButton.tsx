@@ -338,6 +338,7 @@ const SwapButton = (props: SwapButtonProps) => {
                         height:60px;
                         margin-right:0;
                     `}
+                    buttonWidth={20}
                     buttonHoverStyle={`
                         text-decoration:none;
                     `}

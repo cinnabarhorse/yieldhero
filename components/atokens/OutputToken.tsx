@@ -77,23 +77,20 @@ const Reserves = (props: ReservesProps) => {
                         </Col>
                     </div>
 
-                    {data && data.reserves && userReserves && highestAPY && data.reserves.map((reserve: Reserve) => {
+                    {data && data.reserves && userReserves && highestAPY && data.reserves.map((reserve: Reserve, index) => {
 
                         const liquidityRate = Number(reserve.liquidityRate) / Math.pow(10, 27) * 100
 
                         const availableTokens = [
-                            "USDT", "DAI", "SUSD", "USDC", "TUSD"
+                            "USDT", "DAI", "SUSD", "USDC", "TUSD", "BUSD"
                         ]
 
 
                         if (!availableTokens.includes(reserve.symbol)) return null
-                        //  if (selectedIn && selectedIn.reserve.symbol === reserve.symbol) return null
-
-                        //    if (!selectedIn || (selectedOut && selectedOut.symbol === reserve.symbol) || (selectedIn && liquidityRate > Number(selectedIn.reserve.liquidityRate) / Math.pow(10, 27) * 100)) {
-
 
                         return (
                             <button
+                                key={index}
                                 style={{ width: '100%', marginTop: 10, marginBottom: 10 }}
 
                                 disabled={selectedIn ? false : true}

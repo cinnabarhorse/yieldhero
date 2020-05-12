@@ -10,6 +10,7 @@ import Router from 'next/router'
 import AuthModal from '../components/AuthModal'
 import { donateGradient, flashGradient, poolGradient, swapGradient, themeBlack } from '../theme'
 import { useEffect } from 'react'
+import Link from 'next/link'
 
 const IndexPage = () => {
 
@@ -30,7 +31,7 @@ const IndexPage = () => {
                 <Col xl={12} lg={12} md={12} sm={12} xs={12}>
                     <div className="descContainer">
                         <div className="desc">
-                            "With great yield comes great responsibility"
+                            Your one-stop tool suite for Defi #yieldhacking
                     </div>
                     </div></Col>
 
@@ -39,51 +40,62 @@ const IndexPage = () => {
 
             <Row>
                 <Col xl={6} lg={6} md={12} sm={12} xs={12}>
-                    <button onClick={() => {
+
+                    <Link href="/swap">
+
+                        <button onClick={() => {
 
 
-                        Router.push("/swap").then(() => {
-                            dispatch({
-                                type: 'updateCurrentHeader',
-                                currentHeader: "Swap aTokens"
+                            Router.push("/swap").then(() => {
+                                dispatch({
+                                    type: 'updateCurrentHeader',
+                                    currentHeader: "Swap aTokens"
+                                })
                             })
-                        })
-                    }
-                    } >
-                        <p>
-                            🤖 Swap aTokens
-                            </p>
+                        }
+                        } >
+                            <p>
+                                🤖 Swap aTokens
+    </p>
 
-                        <div>Easily swap your aTokens for the highest yield</div>
-                    </button>
+                            <div>Easily swap your aTokens for the highest yield</div>
+                        </button>
+                    </Link>
+
                 </Col>
 
                 <Col xl={6} lg={6} md={12} sm={12} xs={12}>
-                    <button onClick={() => {
 
 
-                        Router.push("/redirect").then(() => {
+                    <Link href="/redirect">
+                        <button onClick={() => {
 
-                            window.scrollTo(0, 0)
 
-                            dispatch({
-                                type: 'updateCurrentHeader',
-                                currentHeader: "Redirect Yield"
+                            Router.push("/redirect").then(() => {
+
+                                window.scrollTo(0, 0)
+
+                                dispatch({
+                                    type: 'updateCurrentHeader',
+                                    currentHeader: "Redirect Yield"
+                                })
                             })
-                        })
 
-                    }} style={{ background: donateGradient }}>
-
+                        }} style={{ background: donateGradient }}>
 
 
-                        <p> 😇 Redirect Yield
-                           </p>
+
+                            <p> 😇 Redirect Yield
+   </p>
 
 
-                        <div>Redirect your Aave yield to support OSS</div>
+                            <div>Redirect your Aave yield to support OSS</div>
 
 
-                    </button>
+                        </button>
+                    </Link>
+
+
                 </Col>
 
 

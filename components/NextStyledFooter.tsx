@@ -78,7 +78,9 @@ const Footer = (props: FooterProps) => {
                         <h4>PROJECT</h4>
 
                         <div><Link href="/about"><a>About</a></Link></div>
-                        <div><a href="https://github.com/cinnabarhorse/gobbl"><a>Source Code</a></a></div>
+                        <div>
+                            <a href="https://github.com/cinnabarhorse/gobbl">Source Code</a>
+                        </div>
                         <div>
                             <a href={`https://${process.env.BALANCER_POOLS_URL}/${process.env.POOL_ADDRESS}`}>Pool</a>
                         </div>

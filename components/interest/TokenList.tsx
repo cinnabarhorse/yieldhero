@@ -59,7 +59,7 @@ export default function TokenList() {
 
                         return (
 
-                            <Col>
+                            <Col key={index}>
 
 
                                 <button className={(selectedToken && selectedToken.id === reserve.id) ? "divBGSelected" : "divBG"}
