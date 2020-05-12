@@ -8,11 +8,11 @@ import NextStyledFooter from '../components/NextStyledFooter'
 import TokenList from '../components/interest/TokenList'
 import { useEffect } from 'react'
 import RecipientList from '../components/interest/RecipientList'
-import RedirectButton from '../components/interest/RedirectButton'
+import { usingCorrectNetwork } from '../functions'
 
 const IndexPage = () => {
 
-  const [{ showAuthModal, currentAccount, selectedIn }, dispatch] = useStateValue()
+  const [{ showAuthModal, currentNetwork, currentAccount, selectedIn }, dispatch] = useStateValue()
 
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const IndexPage = () => {
       <App>
 
 
-        {currentAccount && /*&& currentNetwork === "kovan" &&*/
+        {currentAccount && currentNetwork && usingCorrectNetwork(currentNetwork) &&
           <div>
 
 
@@ -57,14 +57,14 @@ const IndexPage = () => {
           <div style={{ fontWeight: 300, fontSize: '18px' }} > Connect your wallet to begin swapping!</div>
         }
 
-
-
-
-
-
         {showAuthModal &&
           <AuthModal />
         }
+
+        {currentAccount && currentNetwork && !usingCorrectNetwork(currentNetwork) &&
+          <div>This dapp currently only works on {process.env.NETWORK} network! You are connected to {currentNetwork}.</div>
+        }
+
 
         <style jsx>
           {`

@@ -11,3 +11,9 @@ export function smartTrim(string, maxLength) {
     return string.substring(0, midpoint - lstrip) + '...'
         + string.substring(midpoint + rstrip);
 }
+
+export function usingCorrectNetwork(currentNetwork) {
+    if (!currentNetwork || currentNetwork === null) return false
+    if (currentNetwork === process.env.NETWORK) return true
+    return false
+}

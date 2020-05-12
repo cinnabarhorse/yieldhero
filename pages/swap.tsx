@@ -8,6 +8,7 @@ import { Row, Col } from 'react-bootstrap'
 import { buttonInactive, themeBlack } from '../theme'
 import NextStyledFooter from '../components/NextStyledFooter'
 import { useEffect } from 'react'
+import { usingCorrectNetwork } from '../functions'
 
 const IndexPage = () => {
 
@@ -20,11 +21,12 @@ const IndexPage = () => {
     })
   }, [])
 
+
   return (
 
     <App>
 
-      {currentAccount &&
+      {currentAccount && currentNetwork && usingCorrectNetwork(currentNetwork) &&
 
 
         <div>
@@ -39,6 +41,10 @@ const IndexPage = () => {
             </Col>
             <OutputToken />
           </Row>
+
+
+          <SwapButton />
+
         </div>
 
 
@@ -52,19 +58,12 @@ const IndexPage = () => {
         <div style={{ marginTop: 20, marginBottom: 500, fontWeight: 300, fontSize: '18px' }}>Connect your wallet to begin swapping!</div>
       }
 
-
-      {
-        currentAccount && /*currentNetwork === "kovan" &&*/
-        <SwapButton />
+      {currentAccount && currentNetwork && !usingCorrectNetwork(currentNetwork) &&
+        <div>This dapp currently only works on {process.env.NETWORK} network! You are connected to {currentNetwork}.</div>
       }
 
 
-      {/*currentAccount && currentNetwork !== "kovan" &&
-        <div>This dapp currently only works on Kovan! You are connected to {currentNetwork}.</div>
-    */}
-
-
-      <style jsx>
+      < style jsx>
         {`
 
         .titleContainer {

@@ -161,7 +161,7 @@ const IndexPage = () => {
                     }
 
                     button {
-                        border-radius:2px;
+                        border-radius:16px;
                         display:flex;
                         flex-direction:column;
                         justify-content:center;
@@ -171,10 +171,12 @@ const IndexPage = () => {
                         margin-bottom:20px;
                         background:${swapGradient};
                         transition:transform 0.2s;
+                        box-shadow:0px 0px 8px rgba(0, 0, 0, 0.3) 
                     }
 
+
                     button:hover {
-                        transform:scale(1.02);
+                        transform:scale(1.01);
                     }
 
                     button > p {
