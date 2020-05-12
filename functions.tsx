@@ -17,3 +17,10 @@ export function usingCorrectNetwork(currentNetwork) {
     if (currentNetwork === process.env.NETWORK) return true
     return false
 }
+
+export function makePlural(word, number) {
+
+    if (number !== 1) return word + "s"
+    return word
+
+}

@@ -5,6 +5,8 @@ import { Row, Col } from "react-bootstrap";
 import { UserReserveType } from '../../types'
 import { themeBlack } from "../../theme";
 import LazyLoad from 'react-lazyload'
+import { makePlural } from "../../functions";
+import { smartTrim } from '../../functions'
 
 interface RecipientProps {
     creator: CreatorType
@@ -15,7 +17,7 @@ const Recipient = (props: RecipientProps) => {
 
 
     const { creator, supporters } = props
-    const [{ selectedCreator, highestAPY, currentAccount, globalWeb3 }, dispatch]:
+    const [{ selectedCreator, currentAccount }, dispatch]:
         [{ userReserves: any, reservePools: any, highestAPY: any, globalWeb3: any, currentAccount: any, selectedCreator: CreatorType }, (type) => void] = useStateValue()
 
     const [supportAmount, setSupportAmount] = useState(undefined)
@@ -43,69 +45,108 @@ const Recipient = (props: RecipientProps) => {
 
     if (currentAccount === creator.wallet) return null;
 
+    function _supporters() {
+        return supporters[creator.wallet]
+    }
+
     return (
-        <button
-            onClick={() => {
+        <div>
 
-                if (selectedCreator && selectedCreator.name === creator.name) {
-                    dispatch({
-                        type: "updateSelectedCreator",
-                        selectedCreator: undefined
-                    })
-                }
+            <button
+                className={(selectedCreator && selectedCreator.name === creator.name) ? "divBGSelected" : "divBG"}
+                // style={{ width: '100%', background: 'none', color: 'black' }}
+                onClick={() => {
 
-                else {
-                    dispatch({
-                        type: "updateSelectedCreator",
-                        selectedCreator: creator
-                    })
-                }
-
-
-            }}
-            className={(selectedCreator && selectedCreator.name === creator.name) ? "divBGSelected" : "divBG"}>
-
-            <Row style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
-
-                <Col xl={2} lg={2} md={3} sm={3} xs={3}>
-                    <LazyLoad height={200}>
-                        <img src={`/images/${creator.img}`} className="profile" />
-                    </LazyLoad>
-
-                </Col>
-
-
-                <Col xl={8} lg={8} md={7} sm={7} xs={7}>
-                    <div className="name">{creator.name}</div>
-
-                    <div style={{ textAlign: 'left' }}>
-                        {creator.bio}
-                    </div>
-
-                    <div className="wallet">
-                        {creator.ens ? creator.ens : creator.wallet}
-                    </div>
-
-                </Col>
-
-                <Col xl={2} lg={2} md={2} sm={2} xs={2}>
-
-                    {supporters && supporters[creator.wallet] !== undefined &&
-
-
-                        <div>
-                            <div className="supporters">
-                                {supporters[creator.wallet].length} 😇
-                    </div>
-
-                            <div className="amount"> {supportAmount ? supportAmount + " Ξ" : "0"}</div>
-                        </div>
-
+                    if (selectedCreator && selectedCreator.name === creator.name) {
+                        dispatch({
+                            type: "updateSelectedCreator",
+                            selectedCreator: undefined
+                        })
                     }
 
-                </Col>
+                    else {
+                        dispatch({
+                            type: "updateSelectedCreator",
+                            selectedCreator: creator
+                        })
+                    }
 
-            </Row>
+
+                }}
+            // className={(selectedCreator && selectedCreator.name === creator.name) ? "divBGSelected" : "divBG"}
+            >
+
+                <Row style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
+
+                    <Col xl={2} lg={2} md={3} sm={3} xs={3}>
+                        <LazyLoad height={200}>
+                            <img src={`/images/${creator.img}`} className="profile" />
+                        </LazyLoad>
+
+                    </Col>
+
+
+                    <Col xl={8} lg={8} md={7} sm={7} xs={7}>
+                        <div className="name">{creator.name}</div>
+
+                        <div style={{ textAlign: 'left' }}>
+                            {creator.bio}
+                        </div>
+
+                        <div className="wallet">
+                            {creator.ens ? creator.ens : creator.wallet}
+                        </div>
+
+                    </Col>
+
+                    <Col xl={2} lg={2} md={2} sm={2} xs={2}>
+
+                        {supporters && _supporters() !== undefined &&
+
+
+                            <div>
+                                <div className="supporters">
+                                    {supporters[creator.wallet].length} <div className="supportersWord"> {makePlural("supporter", supporters[creator.wallet].length)}</div> 😇
+                    </div>
+
+                                <div className="amount"> {supportAmount ? supportAmount + " Ξ" : "0"}</div>
+                            </div>
+
+                        }
+
+                    </Col>
+
+                </Row>
+
+            </button >
+
+            {
+                selectedCreator && selectedCreator.wallet === creator.wallet && supporters && _supporters().length > 0 &&
+                <Row>
+                    <Col>
+
+                        <ul>
+                            {supporters && _supporters().map((supporter: UserReserveType, index) => {
+
+                                return (
+                                    <li key={index} style={{ display: 'flex', flexDirection: 'row' }}>
+                                        <div>  {supporter.user.id.toLowerCase() === currentAccount.toLowerCase() ? "You" : smartTrim(supporter.user.id, 15)}</div>
+                                        <div style={{ marginLeft: 4, marginRight: 4 }}>
+                                            redirected   {(Number(supporter.principalATokenBalance) / Math.pow(10, supporter.reserve.decimals)).toFixed(2)}
+
+                                        </div>
+                                        <div>{supporter.reserve.symbol}</div>
+
+
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                    </Col>
+                </Row>
+
+            }
+
 
             <style jsx>
                 {`
@@ -155,22 +196,38 @@ const Recipient = (props: RecipientProps) => {
                     }
 
                     .supporters {
+                        display:flex;
+                        flex-direction:row;
+                        justify-content:flex-end;
                         text-align:right;
                         font-size:18px;
                     }
 
+                    .supportersWord {
+                        display:block;
+                        margin-left:5px;
+                        margin-right:5px;
+                    }
+
                     .amount {
                         text-align:right;
-                        font-size:14px;
+                        font-size:12px;
                     }
 
                     .wallet {
                         text-align:left;
                     }
+
+                    @media screen and (max-width: 768px) {
+                        .supportersWord {
+                            display:none;
+                        }
+                    }
                 `}
             </style>
 
-        </button>
+
+        </div >
 
     );
 }

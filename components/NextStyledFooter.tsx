@@ -3,6 +3,7 @@ import Col from "react-bootstrap/Col";
 import Row from 'react-bootstrap/Row'
 import Container from 'react-bootstrap/Container'
 import Link from "next/link";
+import { DiscordSVG, TwitterSVG } from "../icons";
 
 
 interface FooterProps {
@@ -79,14 +80,14 @@ const Footer = (props: FooterProps) => {
 
                         <div><Link href="/about"><a>About</a></Link></div>
                         <div>
-                            <a href="https://github.com/cinnabarhorse/gobbl">Source Code</a>
+                            <a href="https://github.com/cinnabarhorse/yieldhero">Source Code</a>
                         </div>
                         <div>
                             <a href={`https://${process.env.BALANCER_POOLS_URL}/${process.env.POOL_ADDRESS}`}>Pool</a>
                         </div>
 
                         <div>
-                            <a href="https://testnet.aave.com/faucet">Get aTokens</a>
+                            <a href={process.env.NETWORK === "kovan" ? "https://testnet.aave.com/faucet" : "https://app.aave.com"}>Get aTokens</a>
                         </div>
 
 
@@ -106,13 +107,11 @@ const Footer = (props: FooterProps) => {
 
                         <h4>Follow Us</h4>
 
-                        <div>
-                            Twitter: <a href="https://twitter.com/coderdannn">@coderdannn</a>
-                        </div>
+                        <a className="social-icon" target="_blank" href="https://www.twitter.com/yieldhero">{TwitterSVG(25, "black")}</a>
 
-                        <div>
-                            Github: <a href="https://github.com/cinnabarhorse">cinnabarhorse</a>
-                        </div>
+                        <a className="social-icon" href="https://discord.gg/Hm9UFkb">{DiscordSVG(25, "black")}</a>
+
+
 
 
 

@@ -66,6 +66,8 @@ export default function RecipientList() {
 
             });
 
+            console.log('final redirects:', finalRedirects)
+
             setSupporters(finalRedirects)
 
         }

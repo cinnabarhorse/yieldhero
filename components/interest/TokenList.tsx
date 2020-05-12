@@ -86,7 +86,7 @@ export default function TokenList() {
 
                                 >
 
-                                    <img className="coinImage" src={`/coins/${reserve.reserve.symbol.toLowerCase()}.webp`} />
+                                    <img className="coinImage" src={`/coins/${reserve.reserve.symbol.toLowerCase()}.svg`} />
 
                                     <div className="name" style={{ textAlign: 'left' }}>{name}</div>
 
