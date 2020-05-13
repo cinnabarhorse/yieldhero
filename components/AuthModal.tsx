@@ -114,7 +114,8 @@ Connect with Metamask
                     //Doesn't exist, add new user
                     else {
                         firebase.firestore().collection("users").doc(account).set({
-                            createdOn: firebase.firestore.Timestamp.now()
+                            createdOn: firebase.firestore.Timestamp.now(),
+                            network: process.env.NETWORK
                         })
                             .then(() => {
                                 /*  dispatch({
