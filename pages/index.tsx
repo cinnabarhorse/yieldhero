@@ -105,11 +105,15 @@ const IndexPage = () => {
 
 
                 <Col xl={6} lg={6} md={12} sm={12} xs={12}>
-                    <button style={{ background: poolGradient }}>
-                        <p> 🏊‍♂️ Join Pool
+                    <button
+
+                        onClick={() => window.open(`https://${process.env.BALANCER_POOLS_URL}/${process.env.POOL_ADDRESS}`)}
+                        style={{ background: poolGradient }}>
+
+                        <p>💦 Join Balancer Pool
                            </p>
 
-                        <div>Coming soon!</div>
+                        <div>Become an aToken Pool Liquidity Provider</div>
                     </button>
                 </Col>
 

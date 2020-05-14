@@ -5,6 +5,7 @@ module.exports = {
         NETWORK: process.env.NETWORK,
         AAVE_URI: process.env.AAVE_URI,
         POOL_ADDRESS: process.env.POOL_ADDRESS,
+        BALANCER_POOLS_URL: process.env.BALANCER_POOLS_URL,
         //firebase
 
         FIREBASE_APIKEY: process.env.FIREBASE_APIKEY,

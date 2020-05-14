@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useStateValue } from "../../State/globalState";
 import { UserReserveType, ReserveType, TradeState, CreatorType } from "../../types";
 import { Row, Col } from "react-bootstrap";
-import { buttonInactive, themeBlack, donateGradient } from "../../theme";
+import { buttonInactive, themeBlack, donateGradient, flashGradient } from "../../theme";
 
 import NextStyledInput from "../NextStyledInput";
 import ATokenABI from '../../web3/ATokenABI.json'
@@ -175,7 +175,7 @@ const RedirectButton = (props: SwapButtonProps) => {
                 {`
                     button {
                      
-                        background:${donateGradient};
+                        background:${flashGradient};
                         display:flex;
                         align-items:center;
                         justify-content:center;

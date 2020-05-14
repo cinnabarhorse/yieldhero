@@ -43,7 +43,6 @@ const Recipient = (props: RecipientProps) => {
 
     }, [supporters])
 
-    if (currentAccount === creator.wallet) return null;
 
     function _supporters() {
         return supporters[creator.wallet]

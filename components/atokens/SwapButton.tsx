@@ -211,7 +211,7 @@ const SwapButton = (props: SwapButtonProps) => {
 
 
 
-            const approveValue = new BigNumber(2 ** 256 - 1) // new BigNumber(swapAmount * Math.pow(10, selectedIn.reserve.decimals)).toString()
+            const approveValue = new BigNumber(2 ** 256 - 1).toFixed() // new BigNumber(swapAmount * Math.pow(10, selectedIn.reserve.decimals)).toString()
             console.log('approve value:', approveValue)
 
             setTradeState("waitingConfirm")
