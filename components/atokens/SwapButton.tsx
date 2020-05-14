@@ -201,11 +201,17 @@ const SwapButton = (props: SwapButtonProps) => {
 
         const poolAddress = process.env.POOL_ADDRESS
 
-        if (Number(allowance) === 0) {
+        console.log('allowance:', allowance)
+        console.log('spend:', swapAmount)
+        console.log('spend decimal:', swapAmount * Math.pow(10, selectedIn.reserve.decimals))
+
+        if (Number(allowance) === 0 || Number(allowance) < new Number(swapAmount * Math.pow(10, selectedIn.reserve.decimals))) {
 
             const ERC20 = new globalWeb3.eth.Contract(ATokenABI, selectedIn.reserve.aToken.id)
 
-            const approveValue = new BigNumber(swapAmount * Math.pow(10, selectedIn.reserve.decimals)).toString()
+
+
+            const approveValue = new BigNumber(2 ** 256 - 1) // new BigNumber(swapAmount * Math.pow(10, selectedIn.reserve.decimals)).toString()
             console.log('approve value:', approveValue)
 
             setTradeState("waitingConfirm")
@@ -286,7 +292,7 @@ const SwapButton = (props: SwapButtonProps) => {
 
         if (oneSelected()) return <div>Select a pair to swap</div>
         else if (bothSelected() && !swapAmount || Number(swapAmount) <= 0) return <div>Input amount to swap</div>
-        else if (!tradeState && bothSelected() && currentSwap && !loading && !sameSelected() && Number(allowance) <= 0) return (
+        else if (!tradeState && bothSelected() && currentSwap && !loading && !sameSelected() && (Number(allowance) <= 0 || Number(allowance) < new Number(swapAmount * Math.pow(10, selectedIn.reserve.decimals)))) return (
             <div>Unlock {selectedIn.reserve.symbol} to swap</div>
         )
         else if (!tradeState && bothSelected() && currentSwap && !loading && !sameSelected() && Number(allowance) > 0) return (

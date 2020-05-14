@@ -98,12 +98,18 @@ export default function InputToken() {
             </Col>
           </div>
 
-          {data && data.user !== null && data.user.reserves && data.user.reserves !== null && data.user.reserves.map((reserve, index) => {
+          {data && data.user !== null && data.user.reserves && data.user.reserves !== null && data.user.reserves.map((reserve: UserReserveType, index) => {
 
             const name = "a" + reserve.reserve.symbol
             const amount = (Number(reserve.principalATokenBalance) / Math.pow(10, reserve.reserve.decimals))
             const amountInEth = convertFromPower(reserve.reserve.price.priceInEth, 18) * amount
 
+            const availableTokens = [
+              "usdt", "dai", "susd", "usdc", "tusd", "busd"
+            ]
+
+
+            if (!availableTokens.includes(reserve.reserve.symbol.toLowerCase())) return null
 
             return (
 
