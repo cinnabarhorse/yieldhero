@@ -110,10 +110,10 @@ const IndexPage = () => {
                         onClick={() => window.open(`https://${process.env.BALANCER_POOLS_URL}/${process.env.POOL_ADDRESS}`)}
                         style={{ background: poolGradient }}>
 
-                        <p>💦 Join Balancer Pool
+                        <p style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}><img src={"/coins/aDAI.svg"} width={44} style={{ marginRight: 8 }} /> Join aToken Pool
                            </p>
 
-                        <div>Become an aToken Pool Liquidity Provider</div>
+                        <div>Earn fees by providing aToken Liquidity</div>
                     </button>
                 </Col>
 
