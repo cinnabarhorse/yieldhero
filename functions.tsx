@@ -24,3 +24,23 @@ export function makePlural(word, number) {
     return word
 
 }
+
+export async function resolveAddress(ens, address) {
+
+    console.log('ens:', ens)
+
+    console.log('address:', address)
+
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            const name = await ens.reverse(address).name()
+            resolve(name);
+        } catch (error) {
+            reject(error)
+        }
+
+
+    })//.catch(alert); // Error: Whoops!
+
+}

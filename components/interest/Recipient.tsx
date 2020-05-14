@@ -7,6 +7,7 @@ import { themeBlack } from "../../theme";
 import LazyLoad from 'react-lazyload'
 import { makePlural } from "../../functions";
 import { smartTrim } from '../../functions'
+import ENSAddress from "../ENSAddress";
 
 interface RecipientProps {
     creator: CreatorType
@@ -129,7 +130,7 @@ const Recipient = (props: RecipientProps) => {
 
                                 return (
                                     <li key={index} style={{ display: 'flex', flexDirection: 'row' }}>
-                                        <div>  {supporter.user.id.toLowerCase() === currentAccount.toLowerCase() ? "You" : smartTrim(supporter.user.id, 15)}</div>
+                                        <div>  {supporter.user.id.toLowerCase() === currentAccount.toLowerCase() ? "You" : <ENSAddress address={supporter.user.id} />}</div>
                                         <div style={{ marginLeft: 4, marginRight: 4 }}>
                                             redirected   {(Number(supporter.principalATokenBalance) / Math.pow(10, supporter.reserve.decimals)).toFixed(2)}
 

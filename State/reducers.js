@@ -5,6 +5,7 @@ export const reducer = (state, action) => {
     case "updateAuthUser":
       return {
         ...state,
+
         authUser: action.authUser
       }
 
@@ -25,6 +26,13 @@ export const reducer = (state, action) => {
         ...state,
         reservePools: action.reservePools
       };
+
+
+    case "updateEnsProvider":
+      return {
+        ...state,
+        ensProvider: action.ensProvider
+      }
 
     case "updateHighestAPY":
       return {

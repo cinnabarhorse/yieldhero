@@ -15,6 +15,15 @@ const AuthModal = () => {
     const [loadingFortmatic, setLoadingFortmatic] = useState(false)
 
     function updateState(web3, address, network) {
+
+        var ENS = require('ethereum-ens');
+        var ens = new ENS(web3);
+
+        dispatch({
+            type: "updateEnsProvider",
+            ensProvider: ens
+        })
+
         dispatch({
             type: "updateCurrentAccount",
             currentAccount: address
@@ -99,7 +108,7 @@ Connect with Metamask
                 })
 
                 //Add anonymous user with wallet address as doc ID
-                firebase.firestore().collection("users").doc(account).onSnapshot((snapshot) => {
+                firebase.firestore().collection("users").doc(`${account}_${process.env.NETWORK}`).onSnapshot((snapshot) => {
                     if (snapshot.exists) {
                         /*  dispatch({
                               type: "updateUserInfo",
@@ -113,7 +122,7 @@ Connect with Metamask
 
                     //Doesn't exist, add new user
                     else {
-                        firebase.firestore().collection("users").doc(account).set({
+                        firebase.firestore().collection("users").doc(`${account}_${process.env.NETWORK}`).set({
                             createdOn: firebase.firestore.Timestamp.now(),
                             network: process.env.NETWORK
                         })

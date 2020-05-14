@@ -42,7 +42,7 @@ export default function RecipientList() {
             variables: {
                 addressArray: addressArray
             },
-            pollInterval: 10000,
+            pollInterval: process.env.NETWORK === "kovan" ? 0 : 10000,
             fetchPolicy: 'network-only',
             notifyOnNetworkStatusChange: true
         }
@@ -66,7 +66,6 @@ export default function RecipientList() {
 
             });
 
-            console.log('final redirects:', finalRedirects)
 
             setSupporters(finalRedirects)
 

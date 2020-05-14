@@ -8,13 +8,13 @@ import { Row, Col } from 'react-bootstrap'
 import NextStyledFooter from '../components/NextStyledFooter'
 import Router from 'next/router'
 import AuthModal from '../components/AuthModal'
-import { donateGradient, flashGradient, poolGradient, swapGradient, themeBlack } from '../theme'
+import { donateGradient, poolGradient, swapGradient, themeBlack } from '../theme'
 import { useEffect } from 'react'
 import Link from 'next/link'
 
 const IndexPage = () => {
 
-    const [{ currentAccount, showAuthModal, currentNetwork }, dispatch] = useStateValue()
+    const [{ showAuthModal }, dispatch] = useStateValue()
 
     useEffect(() => {
         dispatch({
@@ -27,18 +27,10 @@ const IndexPage = () => {
 
         <div>
 
-            <Row>
-                <Col xl={12} lg={12} md={12} sm={12} xs={12}>
-                    <div className="descContainer">
-                        <div className="desc">
-                            Your one-stop tool suite for Aave #yieldhacking
-                    </div>
-                    </div></Col>
 
-            </Row>
+            <header>🛠 Created by YieldHero</header>
 
-
-            <Row>
+            <Row style={{ marginTop: 30 }}>
                 <Col xl={6} lg={6} md={12} sm={12} xs={12}>
 
                     <Link href="/swap">
@@ -133,19 +125,28 @@ const IndexPage = () => {
 
 
 
+
+            <header>🤲 Partner dApps</header>
+
+            <div>Feature your #yieldhack dApp here! <a target="_blank" href=" https://discord.gg/Hm9UFkb">Join</a> our discord to apply.</div>
             {
                 showAuthModal &&
                 <AuthModal />
             }
 
-
-            {/*
-                currentAccount && currentNetwork !== "kovan" &&
-                <div>This dapp currently only works on Kovan! You are connected to {currentNetwork}.</div>
-            */}
-
             <style jsx>
                 {`
+
+                    header {
+                        margin-top:20px;
+                        margin-bottom:20px;
+                        font-size:18px;
+                        color:${themeBlack};
+                        text-align:left;
+                        text-transform:uppercase;
+                        letter-spacing:1px;
+                        font-weight:800;
+                    }
 
                     .descContainer {
                         display:flex;

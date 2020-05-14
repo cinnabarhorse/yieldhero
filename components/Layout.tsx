@@ -6,11 +6,11 @@ export default ({ children }) => (
     {children}
     <style jsx global>{`
       * {
-        font-family: Lato, Menlo, Monaco, 'Lucida Console', 'Liberation Mono',
-          'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New',
+        font-family: Lato, 'Courier New',
           monospace, serif;
       }
       body {
+
         margin: 0;
       }
       a {
