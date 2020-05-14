@@ -16,7 +16,6 @@ export default ({ children }) => (
       }
       a {
         color:${themeBlack};
-        text-decoration:underline;
       }
 
       a:hover {

@@ -4,7 +4,7 @@ import { useStateValue } from '../State/globalState'
 
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { themeBlack } from '../theme'
+import { themeBlack, themeLightGray } from '../theme'
 import Router from 'next/router'
 import { superHero } from '../icons'
 import loadFirebase from '../firebase'
@@ -184,6 +184,7 @@ const Header = (props: HeaderProps) => {
 
       .desc {
         margin-top:-6px;
+        color:${themeLightGray};
         margin-left:44px;
         font-size:14px;
         text-align:center;

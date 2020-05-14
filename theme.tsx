@@ -1,4 +1,5 @@
 export const themeBlack = "#303952"
+export const themeLightGray = "#95a5a6"
 export const swapGradient = "linear-gradient(258deg,#b6509e,#12CBC4)"
 export const donateGradient = 'linear-gradient(to right, rgb(15, 12, 41), rgb(48, 43, 99), rgb(36, 36, 62))'
 export const poolGradient = "linear-gradient(to right, rgb(142, 45, 226), rgb(74, 0, 224))"
