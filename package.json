@@ -12,10 +12,14 @@
     "@apollo/react-hooks": "3.1.3",
     "@apollo/react-ssr": "3.1.3",
     "@balancer-labs/sor": "^0.2.6",
+    "@portis/web3": "^2.0.0-beta.55",
+    "@toruslabs/torus-embed": "^1.4.2",
     "@types/react": "^16.9.34",
+    "@walletconnect/web3-provider": "^1.0.0-beta.47",
     "apollo-cache-inmemory": "1.6.5",
     "apollo-client": "2.6.8",
     "apollo-link-http": "1.5.16",
+    "authereum": "0.0.4-beta.141",
     "bignumber.js": "^9.0.0",
     "bootstrap": "^4.4.1",
     "env-cmd": "^10.1.0",
@@ -33,8 +37,10 @@
     "react-dom": "^16.7.0",
     "react-jazzicon": "^0.1.3",
     "react-lazyload": "^2.6.7",
+    "squarelink": "^1.1.4",
     "typescript": "^3.8.3",
-    "web3": "^1.2.7"
+    "web3": "^1.2.7",
+    "web3modal": "^1.6.3"
   },
   "license": "ISC",
   "devDependencies": {
