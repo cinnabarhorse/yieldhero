@@ -15,6 +15,15 @@ const AuthModal = () => {
     const [loadingFortmatic, setLoadingFortmatic] = useState(false)
 
     function updateState(web3, address, network) {
+
+        var ENS = require('ethereum-ens');
+        var ens = new ENS(web3);
+
+        dispatch({
+            type: "updateEnsProvider",
+            ensProvider: ens
+        })
+
         dispatch({
             type: "updateCurrentAccount",
             currentAccount: address

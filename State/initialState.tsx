@@ -10,6 +10,7 @@ export const initialState = {
   currentAccount: undefined,
   currentNetwork: undefined,
   showAuthModal: false,
+  ensProvider: undefined,
 
   //Swap aTokens
   selectedIn: undefined,

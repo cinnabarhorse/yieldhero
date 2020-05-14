@@ -5,5 +5,6 @@ export const poolGradient = "linear-gradient(to right, rgb(142, 45, 226), rgb(74
 export const flashGradient = 'linear-gradient(to right, rgb(255, 65, 108), rgb(255, 75, 43))'
 
 export const buttonActive = themeBlack
+export const linkColor = "#b6509e"
 export const buttonHover = ""
 export const buttonInactive = "#d1d8e0";

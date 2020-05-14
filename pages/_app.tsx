@@ -41,8 +41,8 @@ class MyApp extends App {
 
 
                         <NextReusableHead
-                            title="Yield Hero - One-stop tool suite for Aave #yieldhacking"
-                            description="Your one-stop tool suite for Aave #yieldhacking"
+                            title="Yield Hero - Curated tool suite for Aave #yieldhacking"
+                            description="Curated tool suite for Aave #yieldhacking"
                             siteName="YieldHero"
                             url="https://yieldhero.app"
                             image="/yieldhack.jpg"
@@ -56,7 +56,7 @@ class MyApp extends App {
 
                         <Header
                             title="Yield Hero"
-                            desc="Your one-stop tool suite for Aave #yieldhacking" />
+                            desc="Curated tool suite for Aave #yieldhacking" />
 
 
 

@@ -6,8 +6,7 @@ import { UserReserveType, User } from "../../types";
 import { Col } from "react-bootstrap";
 import { donateGradient } from "../../theme";
 import ErrorMessage from "../ErrorMessage";
-import { smartTrim } from "../../functions";
-import ATokenABI from '../../web3/ATokenABI.json'
+import { smartTrim, resolveAddress } from "../../functions";
 
 
 
@@ -16,8 +15,8 @@ export default function UsersByRedirectBalance() {
     const unusedAddresses = ["0x5ae7e199ec6acfe1d7ee28401637a0ae897818c1"]
 
 
-    const [{ currentAccount, globalWeb3 }, dispatch]:
-        [{ globalWeb3: any, currentAccount: any, }, (type) => void] = useStateValue()
+    const [{ currentAccount, ensProvider, globalWeb3 }, dispatch]:
+        [{ globalWeb3: any, ensProvider: any, currentAccount: any, }, (type) => void] = useStateValue()
 
     const [resolvedAddresses, setResolvedAddresses] = useState(undefined)
 
@@ -84,28 +83,7 @@ export default function UsersByRedirectBalance() {
         setResolvedAddresses(finalArray)
     }
 
-    async function resolveAddress(ens, address) {
 
-
-        try {
-            var name = await ens.reverse(address).name()
-
-            // console.log('name:', name)
-            // Check to be sure the reverse record is correct.
-            // if (address != await ens.resolver(name).addr()) {
-            //     name = null;
-            // }
-
-            // console.log('name:', name)
-
-            return name
-
-        } catch (error) {
-            return undefined
-        }
-
-
-    }
 
     function _ensName(address: string) {
 

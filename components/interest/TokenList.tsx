@@ -8,6 +8,7 @@ import { donateGradient, themeBlack } from "../../theme";
 import ErrorMessage from "../ErrorMessage";
 import { smartTrim } from "../../functions";
 import ATokenABI from '../../web3/ATokenABI.json'
+import ENSAddress from "../ENSAddress";
 
 
 
@@ -113,7 +114,10 @@ export default function TokenList() {
                                         {reserve.interestRedirectionAddress === "0x0000000000000000000000000000000000000000" ?
                                             <div>No Redirect</div>
                                             :
-                                            smartTrim(reserve.interestRedirectionAddress, 12)
+
+                                            <ENSAddress address={reserve.interestRedirectionAddress} />
+
+
                                         }
 
 

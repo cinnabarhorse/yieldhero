@@ -11,10 +11,12 @@ export default ({ children }) => (
           monospace, serif;
       }
       body {
+
         margin: 0;
       }
       a {
         color:${themeBlack};
+        text-decoration:underline;
       }
 
       a:hover {

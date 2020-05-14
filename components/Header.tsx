@@ -28,6 +28,15 @@ const Header = (props: HeaderProps) => {
   }, [authUser])
 
   function updateState(web3, address, network) {
+
+    var ENS = require('ethereum-ens');
+    var ens = new ENS(web3);
+
+    dispatch({
+      type: "updateEnsProvider",
+      ensProvider: ens
+    })
+
     dispatch({
       type: "updateCurrentAccount",
       currentAccount: address
@@ -174,7 +183,8 @@ const Header = (props: HeaderProps) => {
       }
 
       .desc {
-        margin-left:15px;
+        margin-top:-6px;
+        margin-left:44px;
         font-size:14px;
         text-align:center;
       }
@@ -251,7 +261,8 @@ const Header = (props: HeaderProps) => {
         }
 
         .desc {
-          display:none;
+          margin-top:0px;
+         margin-left:0px;
         }
       }
 
@@ -283,6 +294,11 @@ const Header = (props: HeaderProps) => {
 
         <div className="textContainer">
           <span className="headerTitle"> {currentHeader}</span>
+
+          {typeof window !== 'undefined' && window.location.pathname === "/" &&
+            <span className="desc"> {desc}</span>
+          }
+
 
         </div>
 
