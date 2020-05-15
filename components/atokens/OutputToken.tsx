@@ -34,6 +34,8 @@ const Reserves = (props: ReservesProps) => {
         }
     )
 
+    console.log('error:', error, data)
+
     useEffect(() => {
 
         if (data && !reservePools) {
@@ -77,7 +79,7 @@ const Reserves = (props: ReservesProps) => {
                         </Col>
                     </div>
 
-                    {data && data.reserves && userReserves && highestAPY && data.reserves.map((reserve: Reserve, index) => {
+                    {data && data.reserves && data.reserves.map((reserve: Reserve, index) => {
 
                         const liquidityRate = Number(reserve.liquidityRate) / Math.pow(10, 27) * 100
 

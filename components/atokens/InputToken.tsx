@@ -20,8 +20,6 @@ const aaveRateDecimals = 27
 
 export default function InputToken() {
 
-  const [ens, setEns] = useState(undefined)
-
   const [{ userReserves, highestAPY, currentAccount, selectedIn, globalWeb3 }, dispatch]:
     [{ userReserves: any, reservePools: any, highestAPY: any, globalWeb3: any, currentAccount: any, selectedIn: UserReserveType }, (type) => void] = useStateValue()
 
@@ -34,6 +32,9 @@ export default function InputToken() {
       pollInterval: 1000
     }
   )
+
+  console.log('error:', error)
+  console.log('data:', data)
 
   useEffect(() => {
 
@@ -186,8 +187,8 @@ export default function InputToken() {
 
           })}
 
-          {data && data.user !== null && data.user.reserves.length <= 0 &&
-            <div>You don't have any aTokens!</div>
+          {data && data.user === null &&
+            <div style={{ margin: 10 }}> You don't have any aTokens!</div>
           }
 
 

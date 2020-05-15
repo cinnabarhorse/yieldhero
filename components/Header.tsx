@@ -8,7 +8,13 @@ import { themeBlack, themeLightGray } from '../theme'
 import Router from 'next/router'
 import { superHero } from '../icons'
 import loadFirebase from '../firebase'
-import getWeb3 from '../web3/getWeb3'
+import Web3 from 'web3'
+
+import { smartTrim } from '../functions'
+import { getWeb3Modal } from '../web3/web3'
+
+
+
 
 
 interface HeaderProps {
@@ -64,17 +70,39 @@ const Header = (props: HeaderProps) => {
     if (authUser) return;
 
     const firebase = await loadFirebase()
-    // const user = await firebase.auth().onAuthStateChanged()
 
     firebase.auth().onAuthStateChanged(async (user) => {
 
       if (user) {
-        const web3 = await getWeb3()
-        const accounts = await web3.web3.eth.getAccounts()
-        const network = await web3.web3.eth.net.getNetworkType()
-        if (accounts.length > 0) {
-          updateState(web3.web3, accounts[0], network)
-        }
+
+        const web3Modal = getWeb3Modal()
+
+        web3Modal.on("close", function () {
+          dispatch({
+            type: "updateShowAuthModal",
+            showAuthModal: false
+          })
+        })
+
+
+        web3Modal.connect()
+          .then(async (provider) => {
+
+            const web3 = new Web3(provider);
+
+            const accounts = await web3.eth.getAccounts()
+            const network = await web3.eth.net.getNetworkType()
+            if (accounts.length > 0) {
+              updateState(web3, accounts[0], network)
+            }
+
+          })
+          .catch((err) => {
+            //   web3Modal.toggleModal()
+            console.log('err:', err)
+          })
+
+
 
         dispatch({
           type: "updateAuthUser",
@@ -121,6 +149,14 @@ const Header = (props: HeaderProps) => {
     try {
 
       await firebase.auth().signOut()
+
+
+      const web3Modal = getWeb3Modal()
+
+      web3Modal.clearCachedProvider()
+
+
+      console.log('cached:', web3Modal.cachedProvider)
 
       dispatch({
         type: "updateCurrentAccount",
@@ -313,6 +349,9 @@ const Header = (props: HeaderProps) => {
 
           {!currentAccount && authUser === "none" &&
             <button className="connectButton" style={{ marginLeft: 10 }} onClick={() => {
+
+              console.log('go go go')
+
               dispatch({
                 type: "updateShowAuthModal",
                 showAuthModal: true
@@ -328,6 +367,14 @@ const Header = (props: HeaderProps) => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
+
+                <Dropdown.Item onClick={() => {
+
+                  navigator.clipboard.writeText(currentAccount)
+                    .then(() => alert("Wallet address copied!"))
+                }}>
+                  {currentAccount ? smartTrim(currentAccount, 12) : ""}
+                </Dropdown.Item>
 
 
                 <Dropdown.Item>

@@ -136,6 +136,10 @@ export default function TokenList() {
 
                     })}
 
+                    {data && data.user === null &&
+                        <div style={{ height: 120 }}>You don't have any aTokens!</div>
+                    }
+
 
 
                     <style jsx>{`
