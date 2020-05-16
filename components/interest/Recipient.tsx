@@ -89,7 +89,7 @@ const Recipient = (props: RecipientProps) => {
                     <Col xl={8} lg={8} md={7} sm={7} xs={7}>
                         <div className="name">{creator.name}</div>
 
-                        <div style={{ textAlign: 'left' }}>
+                        <div className="bio" style={{ textAlign: 'left' }}>
                             {creator.bio}
                         </div>
 
@@ -187,12 +187,19 @@ const Recipient = (props: RecipientProps) => {
                         width:100%;
                         border-radius:1000px;
                         max-width:100px;
+                        width:100px;
+                        height:100px;
                     }
 
                     .name {
                         text-align:left;
                         font-size:21px;
                         font-weight:bold;
+                    }
+
+                    .bio {
+                        font-size:16px;
+                        font-weight:300;
                     }
 
                     .supporters {
@@ -216,11 +223,38 @@ const Recipient = (props: RecipientProps) => {
 
                     .wallet {
                         text-align:left;
+                        margin-top:8px;
+                        font-size:12px;
+                        text-transform:uppercase;
                     }
 
                     @media screen and (max-width: 768px) {
                         .supportersWord {
                             display:none;
+                        }
+
+                        .name {
+                            font-size:16px;
+                        }
+
+                        .bio {
+                            font-size:12px;
+                        }
+
+                        .wallet {
+
+                        }
+
+                        .profile {
+                            width:70px;
+                            height:70px;
+                        }
+                    }
+
+                    @media screen and (max-width:375px) {
+                        .profile {
+                            width:50px;
+                            height:50px;
                         }
                     }
                 `}

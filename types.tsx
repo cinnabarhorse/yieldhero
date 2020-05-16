@@ -45,4 +45,5 @@ export interface CreatorType {
     wallet: string
     ens: string
     img: string
+    twitter?: string
 }
