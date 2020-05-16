@@ -11,6 +11,7 @@ import AuthModal from '../components/AuthModal'
 import { donateGradient, poolGradient, swapGradient, themeBlack } from '../theme'
 import { useEffect } from 'react'
 import Link from 'next/link'
+import DiscordHoverButton from '../components/DiscordHoverButton'
 
 const IndexPage = () => {
 
@@ -208,6 +209,8 @@ const IndexPage = () => {
                 `}
             </style>
 
+
+            <DiscordHoverButton />
 
 
             <NextStyledFooter />
