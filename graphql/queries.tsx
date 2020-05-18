@@ -88,7 +88,7 @@ export const USERS_BY_REDIRECT_BALANCE = gql`
 
 {
   userReserves(orderBy:principalATokenBalance, orderDirection:desc, where: {
-      interestRedirectionAddress_not:"0x0000000000000000000000000000000000000000"
+      interestRedirectionAddress_not_in: ["0x0000000000000000000000000000000000000000","0x5ae7e199ec6acfe1d7ee28401637a0ae897818c1"]
   }) {
     id
     user{

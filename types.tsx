@@ -47,3 +47,9 @@ export interface CreatorType {
     img: string
     twitter?: string
 }
+
+export interface LeaderboardUser {
+    address: string
+    amount: number
+    user: UserReserveType[]
+}

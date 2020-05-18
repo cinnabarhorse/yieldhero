@@ -37,10 +37,6 @@ const ENSAddress = (props: ENSAddressProps) => {
 
     if (!ensProvider || process.env.NETWORK === "kovan") return <div>{smartTrim(address, trim ? trim : 12)}</div>
 
-    return (
-        <div>
-            {ensAddress ? ensAddress : smartTrim(address, trim ? trim : 12)}
-        </div>
-    );
+    return ensAddress ? ensAddress : smartTrim(address, trim ? trim : 12)
 }
 export default ENSAddress;

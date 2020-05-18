@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { RECIPIENT_REDIRECTS } from "../../graphql/queries";
+import { RECIPIENT_REDIRECTS, RECIPIENT_LEADERBOARD } from "../../graphql/queries";
 import { useStateValue } from "../../State/globalState";
 import { UserReserveType, CreatorType } from "../../types";
-import { Col, } from "react-bootstrap";
+import { Col, Row, } from "react-bootstrap";
 import { donateGradient } from "../../theme";
 import ErrorMessage from "../ErrorMessage";
 import { addresses } from './addresses'
 import Recipient from "./Recipient";
 import NextStyledInput from "../NextStyledInput";
+import YieldLeaderboard from "./YieldLeaderboard";
 
 
 
 export default function RecipientList() {
 
-    const [{ selectedCreator, highestAPY, currentAccount, globalWeb3 }, dispatch]:
+    const [{ selectedCreator }, dispatch]:
         [{ userReserves: any, reservePools: any, highestAPY: any, globalWeb3: any, currentAccount: any, selectedCreator: CreatorType }, (type) => void] = useStateValue()
 
     const [supporters, setSupporters] = useState(undefined)
 
     const [addressArray, setAddressArray] = useState(undefined)
+    const [page, setPage] = useState<"set" | "leaderboard">("leaderboard")
 
     useEffect(() => {
         //set addresses
@@ -35,7 +37,7 @@ export default function RecipientList() {
 
 
 
-    const { loading, error, data, refetch } = useQuery(
+    const { loading, error, data, } = useQuery(
         RECIPIENT_REDIRECTS,
         {
             skip: !addressArray ? true : false,
@@ -80,62 +82,84 @@ export default function RecipientList() {
             <Col style={{ background: 'ghostwhite', borderRadius: '2px', overflow: 'hidden', boxShadow: '0 2px 4px 0 rgba(136,144,195,0.2), 0 5px 15px 0 rgba(37,44,97,0.15)', padding: 0 }}>
 
 
-                <h2 style={{ textAlign: 'center', background: donateGradient, color: 'white' }}>Select a Yield Recipient</h2>
+
+                <div style={{ borderTopLeftRadius: 30, borderTopRightRadius: 30, background: donateGradient }}>
+
+                    <Row>
+                        <Col></Col>
+                        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 60 }}> <h2 style={{ color: 'white', textAlign: 'center', padding: 0, margin: 0 }}>{page === "set" ? "Select a Yield Recipient" : "Yield Heroes"}</h2></Col>
+                        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                            <button
+                                className="actionButton"
+                                onClick={() => setPage(page === "set" ? "leaderboard" : "set")}>
+                                {page === "set" ? "View Leaderboard" : "Send yield"}
+                            </button>
+                        </Col>
+                    </Row>
+
+
+
+                </div>
+
+
 
                 <div style={{ display: 'block', padding: 10 }}>
 
-                    <div className="customContainer">
+                    {page === "set" &&
+                        <div className="customContainer">
 
-                        <NextStyledInput
-                            inputLabel="Custom Address"
-                            placeHolderText="Input a valid Ethereum address"
-                            onChangeText={(text) => {
+                            <NextStyledInput
+                                inputLabel="Custom Address"
+                                placeHolderText="Input a valid Ethereum address"
+                                onChangeText={(text) => {
 
-                                console.log('text:', text)
+                                    console.log('text:', text)
 
-                                if (text === "" || text === undefined) {
+                                    if (text === "" || text === undefined) {
 
-                                    console.log('empty!')
-                                    dispatch({
-                                        type: "updateSelectedCreator",
-                                        selectedCreator: undefined
-                                    })
-                                }
-
-
-                                else {
-                                    dispatch({
-                                        type: "updateSelectedCreator",
-                                        selectedCreator: {
-                                            name: undefined,
-                                            bio: undefined,
-                                            wallet: text,
-                                            ens: undefined,
-                                            img: undefined
-                                        }
-                                    })
-                                }
+                                        console.log('empty!')
+                                        dispatch({
+                                            type: "updateSelectedCreator",
+                                            selectedCreator: undefined
+                                        })
+                                    }
 
 
+                                    else {
+                                        dispatch({
+                                            type: "updateSelectedCreator",
+                                            selectedCreator: {
+                                                name: undefined,
+                                                bio: undefined,
+                                                wallet: text,
+                                                ens: undefined,
+                                                img: undefined
+                                            }
+                                        })
+                                    }
 
 
 
-                            }}
-                            value={selectedCreator ? selectedCreator.wallet : undefined}
-                            inputFieldStyles={`
-                            width:100%;
-                            height:60px;
-                            background:white;
-                            font-size:16px;
-                            box-shadow:0px 0px 4px rgba(0, 0, 0, 0.18) !important;
-                            border:none;
-                           
-                        `}
-                        />
 
-                    </div>
 
-                    {addresses.map((creator: CreatorType) => {
+                                }}
+                                value={selectedCreator ? selectedCreator.wallet : undefined}
+                                inputFieldStyles={`
+                                    width:100%;
+                                    height:60px;
+                                    background:white;
+                                    font-size:16px;
+                                    box-shadow:0px 0px 4px rgba(0, 0, 0, 0.18) !important;
+                                    border:none;
+                 
+              `}
+                            />
+
+                        </div>
+
+                    }
+
+                    {page === "set" && addresses.map((creator: CreatorType) => {
 
                         return (
 
@@ -146,6 +170,10 @@ export default function RecipientList() {
 
                     })}
 
+                    {page === "leaderboard" &&
+                        <YieldLeaderboard />
+                    }
+
 
 
 
@@ -153,6 +181,23 @@ export default function RecipientList() {
 
                 <style>
                     {`
+
+                        .actionButton {
+                            background: none;
+                            padding: 8px;
+                            margin-right: 30px;
+                            color:white;
+                            font-size:14px;
+                            letter-spacing:1.2px;
+                            text-transform:uppercase;
+                            opacity:0.8;
+                            transition:opacity 0.2s;
+                        }
+
+                        .actionButton:hover {
+                            opacity:1;
+                        }
+
                         .customContainer {
                             width:100%;
                             height:100px;

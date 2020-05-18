@@ -31,6 +31,7 @@ const IndexPage = () => {
 
 
         {currentAccount && currentNetwork && usingCorrectNetwork(currentNetwork) &&
+
           <div>
 
 
@@ -43,6 +44,7 @@ const IndexPage = () => {
 
 
             </Row>
+
 
             <Row style={{ marginTop: 50 }}>
               <RecipientList />
