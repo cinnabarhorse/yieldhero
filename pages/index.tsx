@@ -20,7 +20,7 @@ const IndexPage = () => {
     useEffect(() => {
         dispatch({
             type: 'updateCurrentHeader',
-            currentHeader: "🦸‍♂️ Yield Hero"
+            currentHeader: "Yield Hero"
         })
     }, [])
 

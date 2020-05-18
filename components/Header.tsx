@@ -12,6 +12,7 @@ import Web3 from 'web3'
 
 import { smartTrim } from '../functions'
 import { getWeb3Modal } from '../web3/web3'
+import Link from 'next/link'
 
 
 
@@ -211,6 +212,7 @@ const Header = (props: HeaderProps) => {
       }
 
       .headerTitle {
+        margin-top:-4px;
         font-size:32px;
         font-weight:800;
     
@@ -219,11 +221,10 @@ const Header = (props: HeaderProps) => {
       }
 
       .desc {
-        margin-top:-6px;
+        margin-top:-8px;
         color:${themeLightGray};
-        margin-left:44px;
         font-size:14px;
-        text-align:center;
+        text-align:left;
       }
 
 
@@ -312,6 +313,13 @@ const Header = (props: HeaderProps) => {
 
       <div className="navInnerContainer">
 
+        <Link href="/">
+          <a className="headerLogo">
+            <img src="/yieldherologo.svg" width="100%" height="100%" />
+          </a>
+        </Link>
+
+
 
         {typeof window !== 'undefined' && window.location.pathname !== "/" &&
           <button className="backButton" onClick={() => {
@@ -330,7 +338,7 @@ const Header = (props: HeaderProps) => {
 
 
         <div className="textContainer">
-          <span className="headerTitle"> {currentHeader}</span>
+          <span className="headerTitle">{currentHeader}</span>
 
           {typeof window !== 'undefined' && window.location.pathname === "/" &&
             <span className="desc"> {desc}</span>
@@ -350,7 +358,6 @@ const Header = (props: HeaderProps) => {
           {!currentAccount && authUser === "none" &&
             <button className="connectButton" style={{ marginLeft: 10 }} onClick={() => {
 
-              console.log('go go go')
 
               dispatch({
                 type: "updateShowAuthModal",
@@ -397,9 +404,17 @@ const Header = (props: HeaderProps) => {
 
       <style jsx>
         {`
-          .backButton {
-           
+
+          .headerLogo {
+            width:50px;
+            height:50px;
+            border-radius: 25px;
+            margin-right: 12px;
+            padding:0;
+            overflow:hidden;
+          }
         
+          .backButton {
            font-size 50px;
           margin-right: 10px;
           justify-items:center;

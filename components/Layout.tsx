@@ -6,7 +6,7 @@ export default ({ children }) => (
     {children}
     <style jsx global>{`
       * {
-        font-family: Lato, 'Courier New',
+        font-family: Lato,
           monospace, serif;
       }
       body {

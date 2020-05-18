@@ -19,7 +19,7 @@ export const initialState = {
   availableSwaps: undefined,
 
   //Header
-  currentHeader: "🦸‍♂️ Yield Hero",
+  currentHeader: "Yield Hero",
 
   //Redirect Yield
   selectedToken: undefined,
