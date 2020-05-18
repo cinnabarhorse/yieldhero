@@ -210,6 +210,16 @@ export default function TokenList() {
                         margin-top:20px;
                     }
 
+                    @media screen and (max-width:375px) {
+                        .divBG {
+                            max-width:unset;
+                        }
+
+                        .divBGSelected {
+                            max-width:unset;
+                        }
+                    }
+
            
            
           `}</style>

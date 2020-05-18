@@ -256,6 +256,7 @@ const Recipient = (props: RecipientProps) => {
                             width:50px;
                             height:50px;
                         }
+                      
                     }
                 `}
             </style>

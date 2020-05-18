@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { RECIPIENT_LEADERBOARD, USERS_BY_REDIRECT_BALANCE } from "../../graphql/queries";
+import { USERS_BY_REDIRECT_BALANCE } from "../../graphql/queries";
 import { useQuery } from "@apollo/react-hooks";
 import { UserReserveType, LeaderboardUser } from "../../types";
 import LeaderboardItem from "./LeaderboardItem";
@@ -18,7 +18,7 @@ const YieldLeaderboard = (props: YieldLeaderboardProps) => {
     const { loading, error, data, refetch } = useQuery(
         USERS_BY_REDIRECT_BALANCE,
         {
-            pollInterval: process.env.NETWORK === "kovan" ? 0 : 10000,
+            //pollInterval: process.env.NETWORK === "kovan" ? 0 : 10000,
             fetchPolicy: 'network-only',
             notifyOnNetworkStatusChange: true
         }
@@ -83,16 +83,37 @@ const YieldLeaderboard = (props: YieldLeaderboardProps) => {
 
     }, [data])
 
-    if (loading || (!loading && data && !sorted && !sortedByAmount)) return <div style={{ height: 150, margin: 10 }}>Loading...</div>
-
 
     return (
         <div>
+
+            <h3>Who's contributing the most to open-source Web3 development?
+               </h3>
+
+
+            {(loading || (!loading && data && !sorted && !sortedByAmount)) &&
+                <div style={{ height: 150, margin: 10 }}>Loading...</div>
+            }
+
+
             {data && sortedByAmount && sortedByAmount.map((user: LeaderboardUser, index) => {
 
                 if (!user) return null
                 return <LeaderboardItem user={user} index={index} />
             })}
+
+            <style jsx>
+                {`
+                    h3 {
+                        margin:15px;
+                        margin-bottom:25px;
+                        font-size:18px;
+                        font-weight:300;
+                        text-align:center;
+                    }
+                `}
+            </style>
+
         </div>
     );
 }

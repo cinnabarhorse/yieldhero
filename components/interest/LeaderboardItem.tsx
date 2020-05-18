@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { UserReserveType, LeaderboardUser } from "../../types";
 import ENSAddress from "../ENSAddress";
 import Jazzicon, { jsNumberForAddress } from 'react-jazzicon'
-import { themeBlack } from "../../theme";
+import { themeBlack, themeLightGray } from "../../theme";
 import { makePlural } from "../../functions";
+import { useStateValue } from "../../State/globalState";
+import { Row, Col } from "react-bootstrap";
 
 interface LeaderboardItemProps {
     user: LeaderboardUser
@@ -11,6 +13,8 @@ interface LeaderboardItemProps {
 }
 
 const LeaderboardItem = (props: LeaderboardItemProps) => {
+
+    const [{ selectedLeaderboard, currentAccount }, dispatch] = useStateValue()
 
     const { user, index } = props
 
@@ -23,30 +27,91 @@ const LeaderboardItem = (props: LeaderboardItemProps) => {
 
     return (
 
+        <div>
 
-        <button className="divBG">
+
+            <button onClick={() => {
 
 
-            <div className="jazzicon">
-                <Jazzicon diameter={44} seed={jsNumberForAddress(user.address)} />
-            </div>
 
-            <div style={{ display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
-                <div className="address">
-                    <ENSAddress trim={20} address={user.address} />
+                if (selectedLeaderboard && selectedLeaderboard === user.address) {
+                    dispatch({
+                        type: "updateSelectedLeaderboard",
+                        selectedLeaderboard: undefined
+                    })
+                }
+
+                else {
+                    dispatch({
+                        type: "updateSelectedLeaderboard",
+                        selectedLeaderboard: user.address
+                    })
+                }
+
+
+            }}
+
+                className={selectedLeaderboard === user.address ? "divBGSelected" : "divBG"}>
+
+
+                <div className="jazzicon">
+                    <Jazzicon diameter={44} seed={jsNumberForAddress(user.address)} />
                 </div>
 
-                <div className="redirecting">
-                    {user.user.length} {makePlural("redirect", user.user.length).toUpperCase()}, total {user.amount && Number(user.amount).toFixed(4)} ETH
+                <div style={{ display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <div className="address">
+                        <ENSAddress trim={20} address={user.address} />
+                    </div>
+
+                    <div className="redirecting">
+                        {user.user.length} {makePlural("redirect", user.user.length).toUpperCase()}, total {user.amount && Number(user.amount).toFixed(4)} ETH
                 </div>
 
 
-            </div>
+                </div>
 
-            <div className="medal">
-                {index + 1}
-            </div>
+                <div className="medal">
+                    {index + 1}
+                </div>
 
+
+            </button>
+
+            {
+                selectedLeaderboard && selectedLeaderboard === user.address && user.user.length > 0 &&
+                <Row>
+                    <Col>
+
+                        <ul>
+                            {user.user.map((recipient: UserReserveType, index) => {
+
+                                return (
+                                    <li key={index} style={{ display: 'flex', flexDirection: 'row' }}>
+
+                                        <div style={{ fontWeight: 700 }}>
+                                            {(Number(recipient.principalATokenBalance) / Math.pow(10, recipient.reserve.decimals)).toFixed(2)}
+                                        </div>
+                                        <div style={{ fontWeight: 700, marginLeft: 4, marginRight: 4 }}>{recipient.reserve.symbol}</div>
+
+                                        <div style={{ marginLeft: 0, marginRight: 4, fontWeight: 300 }}>
+                                            redirected to
+                                        </div>
+
+
+                                        <div>
+                                            <ENSAddress address={recipient.interestRedirectionAddress} />
+                                        </div>
+
+
+
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                    </Col>
+                </Row>
+
+            }
 
 
             <style jsx>
@@ -81,6 +146,11 @@ const LeaderboardItem = (props: LeaderboardItemProps) => {
                       margin-bottom:10px;
                       transition:background 0.2s, color:0.2s, border 0.2s, opacity 0.2s;
                         
+                    }
+
+                    li > div {
+                        font-size:14px;
+                        text-transform:uppercase;
                     }
 
                     .jazzicon {
@@ -153,8 +223,8 @@ const LeaderboardItem = (props: LeaderboardItemProps) => {
             </style>
 
 
-        </button>
 
+        </div>
 
 
 

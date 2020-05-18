@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
-import { RECIPIENT_REDIRECTS, RECIPIENT_LEADERBOARD } from "../../graphql/queries";
+import { RECIPIENT_REDIRECTS } from "../../graphql/queries";
 import { useStateValue } from "../../State/globalState";
 import { UserReserveType, CreatorType } from "../../types";
 import { Col, Row, } from "react-bootstrap";
@@ -21,7 +21,7 @@ export default function RecipientList() {
     const [supporters, setSupporters] = useState(undefined)
 
     const [addressArray, setAddressArray] = useState(undefined)
-    const [page, setPage] = useState<"set" | "leaderboard">("leaderboard")
+    const [page, setPage] = useState<"set" | "leaderboard">("set")
 
     useEffect(() => {
         //set addresses
@@ -86,8 +86,8 @@ export default function RecipientList() {
                 <div style={{ borderTopLeftRadius: 30, borderTopRightRadius: 30, background: donateGradient }}>
 
                     <Row>
-                        <Col></Col>
-                        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 60 }}> <h2 style={{ color: 'white', textAlign: 'center', padding: 0, margin: 0 }}>{page === "set" ? "Select a Yield Recipient" : "Yield Heroes"}</h2></Col>
+                        <Col xl={4} lg={4} md={4} sm={1} xs={0}></Col>
+                        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 60 }}> <h2 style={{ color: 'white', textAlign: 'center', padding: 0, margin: 0 }}>{page === "set" ? "SELECT A YIELD RECIPIENT" : "YIELD HERO LEADERBOARD"}</h2></Col>
                         <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
                             <button
                                 className="actionButton"
@@ -182,7 +182,15 @@ export default function RecipientList() {
                 <style>
                     {`
 
+                        h2 {
+                            font-size:17px;
+                            font-weight:300;
+                            letter-spacing:1px;
+                            text-transform:uppercase;
+                        }
+
                         .actionButton {
+                            font-weight:700;
                             background: none;
                             padding: 8px;
                             margin-right: 30px;

@@ -8,7 +8,7 @@ import { Row, Col } from 'react-bootstrap'
 import NextStyledFooter from '../components/NextStyledFooter'
 import Router from 'next/router'
 import AuthModal from '../components/AuthModal'
-import { donateGradient, poolGradient, swapGradient, themeBlack } from '../theme'
+import { donateGradient, poolGradient, swapGradient, themeBlack, deflastGradient, furucomboGradient } from '../theme'
 import { useEffect } from 'react'
 import Link from 'next/link'
 import DiscordHoverButton from '../components/DiscordHoverButton'
@@ -78,7 +78,7 @@ const IndexPage = () => {
 
 
 
-                            <p> 😇 Redirect Yield
+                            <p> 😇 Become a Yield Hero
    </p>
 
 
@@ -110,18 +110,6 @@ const IndexPage = () => {
                     </button>
                 </Col>
 
-                {/*} <Col xl={6} lg={6} md={12} sm={12} xs={12}>
-                    <button style={{ background: flashGradient }}>
-
-                        <p>
-                            Flash Loans
-                        </p>
-                        <div>
-                            Coming soon!
-                        </div>
-                    </button>
-                </Col>
-                {*/}
             </Row>
 
 
@@ -130,6 +118,59 @@ const IndexPage = () => {
             <header>🤲 Partner dApps</header>
 
             <div>Feature your #yieldhack dApp here! <a target="_blank" href=" https://discord.gg/Hm9UFkb">Join</a> our discord to apply.</div>
+
+
+
+            <Row style={{ marginTop: 30 }}>
+                <Col xl={6} lg={6} md={12} sm={12} xs={12}>
+
+
+                    <button style={{ background: furucomboGradient }} onClick={() => {
+                        window.open("https://furucombo.app")
+                    }
+                    } >
+                        <p>
+                            {/*<img width="100%" src="/images/partners/furucombo.svg" />
+                            {*/}
+                            Furucombo
+                        </p>
+
+                        <div>Build your own DeFi legos into one transaction without knowing how to code.</div>
+                    </button>
+
+
+                </Col>
+
+                <Col xl={6} lg={6} md={12} sm={12} xs={12}>
+
+
+
+                    <button onClick={() => {
+
+                        window.open("https://deflast.finance")
+
+                    }} style={{ background: deflastGradient }}>
+
+
+
+                        <p>    <img width="100%" height="50" src="/images/partners/deflast.svg" />
+                        </p>
+
+
+                        <div>Instantly swap your collateral on Compound</div>
+
+
+                    </button>
+
+
+
+                </Col>
+
+            </Row>
+
+
+
+
             {
                 showAuthModal &&
                 <AuthModal />
@@ -141,7 +182,7 @@ const IndexPage = () => {
                     header {
                         margin-top:20px;
                         margin-bottom:20px;
-                        font-size:18px;
+                        font-size:24px;
                         color:${themeBlack};
                         text-align:left;
                         text-transform:uppercase;
@@ -173,16 +214,15 @@ const IndexPage = () => {
                         justify-content:center;
                         align-items:center;
                         width:100%;
-                        height:200px;
+                        height:180px;
                         margin-bottom:20px;
                         background:${swapGradient};
-                        transition:transform 0.2s;
+                        transition:box-shadow 0.2s;
                         box-shadow:0px 0px 8px rgba(0, 0, 0, 0.3) 
                     }
 
-
                     button:hover {
-                        transform:scale(1.01);
+                        box-shadow:0px 0px 16px rgba(0, 0, 0, 0.4);
                     }
 
                     button > p {
@@ -193,6 +233,8 @@ const IndexPage = () => {
                     button > div {
                         font-size:16px;
                         font-weight:300;
+                        margin-left:30px;
+                        margin-right:30px;
                     }
 
                     @media screen and (max-width:991px) {

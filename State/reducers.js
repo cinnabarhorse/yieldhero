@@ -106,6 +106,13 @@ export const reducer = (state, action) => {
         ...state,
         selectedCreator: action.selectedCreator
       }
+
+    case "updateSelectedLeaderboard":
+      return {
+        ...state,
+        selectedLeaderboard: action.selectedLeaderboard
+      }
+
     default:
       return state;
   }

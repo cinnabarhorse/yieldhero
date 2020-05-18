@@ -9,3 +9,7 @@ export const buttonActive = themeBlack
 export const linkColor = "#b6509e"
 export const buttonHover = ""
 export const buttonInactive = "#d1d8e0";
+
+//partners
+export const furucomboGradient = "#1B1B21"
+export const deflastGradient = "linear-gradient(258deg,#001C34,#0075DE)"

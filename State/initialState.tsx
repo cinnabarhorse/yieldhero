@@ -23,5 +23,6 @@ export const initialState = {
 
   //Redirect Yield
   selectedToken: undefined,
-  selectedCreator: undefined
+  selectedCreator: undefined,
+  selectedLeaderboard: undefined
 };
