@@ -9,6 +9,7 @@ import TokenList from '../components/interest/TokenList'
 import { useEffect } from 'react'
 import RecipientList from '../components/interest/RecipientList'
 import { usingCorrectNetwork } from '../functions'
+import NextReusableHead from '../components/NextReusableHead'
 
 const IndexPage = () => {
 
@@ -28,6 +29,16 @@ const IndexPage = () => {
 
 
       <App>
+
+        <NextReusableHead
+          title="Yield Hero - Redirect your yield to support Ethereum open source"
+          description="Redirect your yield to support Ethereum open source"
+          siteName="YieldHero"
+          url="https://yieldhero.app/redirect"
+          image="/yieldhack.jpg"
+          faviconPath="/favicon.ico"
+
+        />
 
 
         {currentAccount && currentNetwork && usingCorrectNetwork(currentNetwork) &&

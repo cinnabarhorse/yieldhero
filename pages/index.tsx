@@ -1,4 +1,4 @@
-import App from '../components/Layout'
+
 import { withApollo } from '../lib/apollo'
 
 import { useStateValue } from '../State/globalState'
@@ -8,7 +8,7 @@ import { Row, Col } from 'react-bootstrap'
 import NextStyledFooter from '../components/NextStyledFooter'
 import Router from 'next/router'
 import AuthModal from '../components/AuthModal'
-import { donateGradient, poolGradient, swapGradient, themeBlack, deflastGradient, furucomboGradient } from '../theme'
+import { donateGradient, poolGradient, swapGradient, themeBlack, deflastGradient, furucomboGradient, linkColor } from '../theme'
 import { useEffect } from 'react'
 import Link from 'next/link'
 import DiscordHoverButton from '../components/DiscordHoverButton'
@@ -117,7 +117,7 @@ const IndexPage = () => {
 
             <header>🤲 Partner dApps</header>
 
-            <div>Feature your #yieldhack dApp here! <a target="_blank" href=" https://discord.gg/Hm9UFkb">Join</a> our discord to apply.</div>
+            <div>Feature your #yieldhack dApp here! <a style={{ color: linkColor }} target="_blank" href=" https://discord.gg/Hm9UFkb">Join</a> our discord to apply.</div>
 
 
 
@@ -130,9 +130,9 @@ const IndexPage = () => {
                     }
                     } >
                         <p>
-                            {/*<img width="100%" src="/images/partners/furucombo.svg" />
-                            {*/}
-                            Furucombo
+                            <img width="100%" src="/images/partners/furucombo.svg" />
+
+
                         </p>
 
                         <div>Build your own DeFi legos into one transaction without knowing how to code.</div>
