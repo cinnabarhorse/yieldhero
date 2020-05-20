@@ -106,7 +106,7 @@ const YieldLeaderboard = (props: YieldLeaderboardProps) => {
                 {`
                     h3 {
                         margin:15px;
-                        color:white;
+                     
                         margin-bottom:25px;
                         font-size:18px;
                         font-weight:300;

@@ -126,19 +126,20 @@ const LeaderboardItem = (props: LeaderboardItemProps) => {
                       margin-bottom:10px;
                       transition:background 0.2s;
                       border-radius:16px;
-                      opacity:0.8;
+                      border:solid 3px white;
                       box-shadow:0px 0px 4px rgba(0, 0, 0, 0.18) !important;
                       
                     }
 
                     .divBGSelected {
-                        opacity:1;
+                      
                         color:${themeBlack};
                         width:100%;
                         padding-top:15px;
                         padding-bottom:15px;
                         border-radius:16px;
                         background:white;
+                        border:solid 3px ${themeBlack};
                         box-shadow:0px 0px 4px rgba(0, 0, 0, 0.4) !important;
                        
                        
@@ -150,7 +151,6 @@ const LeaderboardItem = (props: LeaderboardItemProps) => {
 
                     li > div {
                         font-size:14px;
-                        color:white;
                         text-transform:uppercase;
                     }
 

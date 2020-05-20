@@ -89,7 +89,7 @@ const Recipient = (props: RecipientProps) => {
 
         return <span>
             <span style={{ fontSize: 18 }}>{array[0]}.</span>
-            <span style={{ fontSize: 10 }}>{array[1]}</span>
+            <span style={{ fontSize: 11 }}>{array[1]}</span>
         </span>
     }
 
@@ -236,19 +236,20 @@ const Recipient = (props: RecipientProps) => {
                       margin-bottom:10px;
                       transition:background 0.2s;
                       border-radius:16px;
-                      opacity:0.8;
+                      border:solid 3px white;
                       box-shadow:0px 0px 4px rgba(0, 0, 0, 0.18) !important;
                       
                     }
 
                     .divBGSelected {
-                        opacity:1;
+                      
                         color:${themeBlack};
                         width:100%;
                         padding-top:15px;
                         padding-bottom:15px;
                         border-radius:16px;
                         background:white;
+                        border:solid 3px ${themeBlack};
                         box-shadow:0px 0px 4px rgba(0, 0, 0, 0.4) !important;
                        
                        
@@ -262,7 +263,6 @@ const Recipient = (props: RecipientProps) => {
 
                     li > div {
                         font-size:14px;
-                        color:white;
                         text-transform:uppercase;
                     }
 
