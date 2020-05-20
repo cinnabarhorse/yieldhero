@@ -7,6 +7,7 @@ module.exports = {
         POOL_ADDRESS: process.env.POOL_ADDRESS,
         BALANCER_POOLS_URL: process.env.BALANCER_POOLS_URL,
         INFURA_ID: process.env.INFURA_ID,
+        BATCHBALANCE_ADDRESS: process.env.BATCHBALANCE_ADDRESS,
         //firebase
 
         FIREBASE_APIKEY: process.env.FIREBASE_APIKEY,

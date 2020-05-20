@@ -53,3 +53,10 @@ export interface LeaderboardUser {
     amount: number
     user: UserReserveType[]
 }
+
+export interface SupporterType {
+    creator: CreatorType
+    address: string
+    supporters: any
+    totalRedirect: number
+}

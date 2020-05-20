@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { RECIPIENT_REDIRECTS } from "../../graphql/queries";
 import { useStateValue } from "../../State/globalState";
-import { UserReserveType, CreatorType } from "../../types";
+import { UserReserveType, CreatorType, SupporterType } from "../../types";
 import { Col, Row, } from "react-bootstrap";
 import { donateGradient } from "../../theme";
 import ErrorMessage from "../ErrorMessage";
@@ -10,6 +10,7 @@ import { addresses } from './addresses'
 import Recipient from "./Recipient";
 import NextStyledInput from "../NextStyledInput";
 import YieldLeaderboard from "./YieldLeaderboard";
+import { aTokenETHAmount } from "../../functions";
 
 
 
@@ -50,26 +51,44 @@ export default function RecipientList() {
         }
     )
 
+
+    //Sort the recipients by highest amoount of redirect they're receiving
     useEffect(() => {
 
         if (data) {
 
             const dataObject: UserReserveType[] = data.userReserves
-            var finalRedirects = {}
+            var finalRedirects: SupporterType[] = []
 
-            addresses.forEach((address, index) => {
+            addresses.forEach((creator: CreatorType, index) => {
+                //Group redirects by their destination address
                 const redirects = dataObject.filter((obj) => {
-
-                    return obj.interestRedirectionAddress.toLowerCase() === address.wallet.toLowerCase()
+                    return obj.interestRedirectionAddress.toLowerCase() === creator.wallet.toLowerCase()
                 })
 
-                finalRedirects[address.wallet] = redirects
+                //In ETH
+                let totalRedirect = 0
 
+                //Calculate amount in Ether
+                redirects.forEach((redirect) => {
+                    const ethAmount = aTokenETHAmount(redirect.principalATokenBalance, redirect.reserve.decimals, redirect.reserve.price.priceInEth)
+                    totalRedirect = totalRedirect + ethAmount
 
+                });
+
+                finalRedirects.push({
+                    creator: creator,
+                    address: creator.wallet,
+                    supporters: redirects,
+                    totalRedirect: totalRedirect
+                })
             });
 
 
-            setSupporters(finalRedirects)
+            const sortedSupporters = finalRedirects.sort(function (a, b) { return b.totalRedirect - a.totalRedirect });
+
+
+            setSupporters(sortedSupporters)
 
         }
 
@@ -79,11 +98,11 @@ export default function RecipientList() {
     function _box() {
 
         return (
-            <Col style={{ background: 'ghostwhite', borderRadius: '2px', overflow: 'hidden', boxShadow: '0 2px 4px 0 rgba(136,144,195,0.2), 0 5px 15px 0 rgba(37,44,97,0.15)', padding: 0 }}>
+            <Col style={{ borderRadius: 30, background: donateGradient, overflow: 'hidden', boxShadow: '0 2px 4px 0 rgba(136,144,195,0.2), 0 5px 15px 0 rgba(37,44,97,0.15)', padding: 0 }}>
 
 
 
-                <div style={{ borderTopLeftRadius: 30, borderTopRightRadius: 30, background: donateGradient }}>
+                <div>
 
                     <Row>
                         <Col xl={4} lg={4} md={4} sm={1} xs={0}></Col>
@@ -110,6 +129,9 @@ export default function RecipientList() {
 
                             <NextStyledInput
                                 inputLabel="Custom Address"
+                                inputLabelStyles={`
+                                    color:white;
+                                `}
                                 placeHolderText="Input a valid Ethereum address"
                                 onChangeText={(text) => {
 
@@ -159,11 +181,13 @@ export default function RecipientList() {
 
                     }
 
-                    {page === "set" && addresses.map((creator: CreatorType) => {
+                    {page === "set" && supporters && supporters.map((redirect: SupporterType) => {
 
                         return (
 
-                            <Recipient supporters={supporters} creator={creator} />
+                            <Recipient supporters={supporters.find((supporter: SupporterType) => {
+                                return redirect.address.toLowerCase() === supporter.address.toLowerCase()
+                            })} creator={redirect.creator} />
                         )
 
 

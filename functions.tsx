@@ -41,6 +41,14 @@ export async function resolveAddress(ens, address) {
         }
 
 
-    })//.catch(alert); // Error: Whoops!
+    })
 
+}
+
+export function aTokenETHAmount(balance, decimals, ethPrice, ) {
+    const principalBalance = Number(Number(balance) / Math.pow(10, decimals))
+
+    const amount = Number((principalBalance * Number(Number(ethPrice) / Math.pow(10, 18)))) /// Math.pow(10, decimals)
+
+    return amount
 }

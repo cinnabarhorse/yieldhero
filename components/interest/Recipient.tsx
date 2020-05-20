@@ -1,52 +1,96 @@
 import React, { useEffect, useState } from "react";
-import { CreatorType } from "../../types";
+import { CreatorType, SupporterType } from "../../types";
 import { useStateValue } from "../../State/globalState";
 import { Row, Col } from "react-bootstrap";
 import { UserReserveType } from '../../types'
-import { themeBlack } from "../../theme";
+import { themeBlack, themeLightGray } from "../../theme";
 import LazyLoad from 'react-lazyload'
-import { makePlural } from "../../functions";
-import { smartTrim } from '../../functions'
+import { makePlural, aTokenETHAmount } from "../../functions";
 import ENSAddress from "../ENSAddress";
+import useSWR from 'swr'
 
 interface RecipientProps {
     creator: CreatorType
-    supporters: any
+    supporters: SupporterType
 }
 
 const Recipient = (props: RecipientProps) => {
 
 
     const { creator, supporters } = props
-    const [{ selectedCreator, currentAccount }, dispatch]:
+    const [{ selectedCreator, currentAccount, globalWeb3 }, dispatch]:
         [{ userReserves: any, reservePools: any, highestAPY: any, globalWeb3: any, currentAccount: any, selectedCreator: CreatorType }, (type) => void] = useStateValue()
 
-    const [supportAmount, setSupportAmount] = useState(undefined)
-
-    useEffect(() => {
-
-        if (supporters && supporters[creator.wallet]) {
-
-            var totalAmount = 0
-
-            supporters[creator.wallet].forEach((obj: UserReserveType) => {
-                const amount = Number(obj.principalATokenBalance) / Math.pow(10, obj.reserve.decimals)
-                const amountInEth = amount * Number(obj.reserve.price.priceInEth)
-
-                totalAmount = totalAmount + amountInEth
+    const [totalETH, setTotalETH] = useState()
 
 
-            });
 
-            setSupportAmount((Number(totalAmount) / Math.pow(10, 18)).toFixed(2))
+    const { data, error } = useSWR(creator.name, query => getBatchedBalances(), process.env.NETWORK === "main" && {
+        refreshInterval: 5000
+    })
 
-        }
+    async function getBatchedBalances() {
+        const batchBalanceAddress = process.env.BATCHBALANCE_ADDRESS
 
-    }, [supporters])
+        const batchBalanceABI = [
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "owner",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address[]",
+                        "name": "tokens",
+                        "type": "address[]"
+                    }
+                ],
+                "name": "batchBalanceOf",
+                "outputs": [
+                    {
+                        "internalType": "uint256[]",
+                        "name": "",
+                        "type": "uint256[]"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ]
+
+        const batchBalanceContract = new globalWeb3.eth.Contract(batchBalanceABI, batchBalanceAddress)
 
 
-    function _supporters() {
-        return supporters[creator.wallet]
+        var addresses = []
+
+        supporters.supporters.forEach((user: UserReserveType) => {
+            addresses.push(user.reserve.aToken.id)
+        });
+
+        const batchBalances = await batchBalanceContract.methods.batchBalanceOf(creator.wallet, addresses).call()
+
+        var totalEthBalance = 0
+
+        batchBalances.forEach((amount, index) => {
+            const reserve: UserReserveType = supporters.supporters[index]
+
+
+            const ethBalance = aTokenETHAmount(amount, reserve.reserve.decimals, reserve.reserve.price.priceInEth)
+
+            totalEthBalance = totalEthBalance + ethBalance
+        });
+        return totalEthBalance;
+    }
+
+    function _totalBalance() {
+        const array = data.toFixed(10).split(".")
+
+
+        return <span>
+            <span style={{ fontSize: 18 }}>{array[0]}.</span>
+            <span style={{ fontSize: 10 }}>{array[1]}</span>
+        </span>
     }
 
     return (
@@ -80,36 +124,59 @@ const Recipient = (props: RecipientProps) => {
 
                     <Col xl={2} lg={2} md={3} sm={3} xs={3}>
                         <LazyLoad height={200}>
-                            <img src={`/images/${creator.img}`} className="profile" />
+                            <div style={{ display: 'flex', flex: 1, height: '100%', justifyContent: 'center', alignItems: 'center' }}>  <img src={`/images/${creator.img}`} className="profile" />
+
+                            </div>
+
                         </LazyLoad>
 
                     </Col>
 
 
-                    <Col xl={8} lg={8} md={7} sm={7} xs={7}>
+                    <Col xl={7} lg={8} md={5} sm={5} xs={5}>
+
+                        <div className="wallet">
+                            {creator.ens ? creator.ens : creator.wallet}
+                        </div>
+
                         <div className="name">{creator.name}</div>
 
                         <div className="bio" style={{ textAlign: 'left' }}>
                             {creator.bio}
                         </div>
 
-                        <div className="wallet">
-                            {creator.ens ? creator.ens : creator.wallet}
+
+                        <div className="supporters">
+                            {supporters.supporters ? supporters.supporters.length : 0} <div className="supportersWord"> {makePlural("supporter", supporters.supporters ? supporters.supporters.length : 0)}</div>
                         </div>
+
+
 
                     </Col>
 
-                    <Col xl={2} lg={2} md={2} sm={2} xs={2}>
+                    <Col xl={3} lg={2} md={4} sm={4} xs={4}>
 
-                        {supporters && _supporters() !== undefined &&
-
+                        {supporters &&
 
                             <div>
-                                <div className="supporters">
-                                    {supporters[creator.wallet].length} <div className="supportersWord"> {makePlural("supporter", supporters[creator.wallet].length)}</div> 😇
-                    </div>
 
-                                <div className="amount"> {supportAmount ? supportAmount + " Ξ" : "0"}</div>
+                                <p>
+                                    Total Support
+                                </p>
+
+                                <div className="amount"> {supporters.totalRedirect ? (Number(supporters.totalRedirect)).toFixed(2) + " ETH" : "0 ETH"}</div>
+
+                                <p style={{ marginTop: 15 }}>
+                                    Current balance
+                                </p>
+
+
+
+
+                                <div className="totalEth">
+                                    {data && <div>{_totalBalance()}</div>}
+                                </div>
+
                             </div>
 
                         }
@@ -121,12 +188,12 @@ const Recipient = (props: RecipientProps) => {
             </button >
 
             {
-                selectedCreator && selectedCreator.wallet === creator.wallet && supporters && _supporters().length > 0 &&
+                selectedCreator && selectedCreator.wallet === creator.wallet && supporters && supporters.supporters && supporters.supporters.length > 0 &&
                 <Row>
                     <Col>
 
                         <ul>
-                            {supporters && _supporters().map((supporter: UserReserveType, index) => {
+                            {supporters && supporters.supporters.map((supporter: UserReserveType, index) => {
 
                                 return (
                                     <li key={index} style={{ display: 'flex', flexDirection: 'row' }}>
@@ -150,6 +217,15 @@ const Recipient = (props: RecipientProps) => {
 
             <style jsx>
                 {`
+                        p {
+                            text-align:right;
+                            font-size:12px;
+                            text-transform:uppercase;
+                            color:rgb(48, 43, 99);
+                            margin-bottom:0;
+                            font-weight:300;
+                        }
+
                       .divBG {
                         width:100%;
                         padding-top:15px;
@@ -160,7 +236,7 @@ const Recipient = (props: RecipientProps) => {
                       margin-bottom:10px;
                       transition:background 0.2s;
                       border-radius:16px;
-                      opacity:0.7;
+                      opacity:0.8;
                       box-shadow:0px 0px 4px rgba(0, 0, 0, 0.18) !important;
                       
                     }
@@ -182,6 +258,14 @@ const Recipient = (props: RecipientProps) => {
                         
                     }
 
+                   
+
+                    li > div {
+                        font-size:14px;
+                        color:white;
+                        text-transform:uppercase;
+                    }
+
 
                     .profile {
                         width:100%;
@@ -200,14 +284,18 @@ const Recipient = (props: RecipientProps) => {
                     .bio {
                         font-size:16px;
                         font-weight:300;
+                        margin-right:10px;
+                        overflow-wrap:anywhere;
                     }
 
                     .supporters {
                         display:flex;
                         flex-direction:row;
-                        justify-content:flex-end;
-                        text-align:right;
-                        font-size:18px;
+                        margin-top:10px;
+                        justify-content:flex-start;
+                       
+                        font-size:12px;
+                        text-transform:uppercase;
                     }
 
                     .supportersWord {
@@ -218,7 +306,13 @@ const Recipient = (props: RecipientProps) => {
 
                     .amount {
                         text-align:right;
-                        font-size:12px;
+                        font-size:16px;
+                    }
+                    
+                    .totalEth {
+                       
+                        text-align:right;
+                        font-size:16px;
                     }
 
                     .wallet {
@@ -229,10 +323,11 @@ const Recipient = (props: RecipientProps) => {
                     }
 
                     @media screen and (max-width: 768px) {
-                        .supportersWord {
-                            display:none;
-                        }
 
+                        p {
+                            font-size:9px;
+                        }
+                      
                         .name {
                             font-size:16px;
                         }
@@ -242,7 +337,7 @@ const Recipient = (props: RecipientProps) => {
                         }
 
                         .wallet {
-
+                            font-size:10px;
                         }
 
                         .profile {

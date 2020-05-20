@@ -124,6 +124,9 @@ query getUserReserves(
   reserve {
     id
     symbol
+    aToken {
+      id
+    }
     price {
       id
       priceInEth
