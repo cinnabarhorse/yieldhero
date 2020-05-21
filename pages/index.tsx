@@ -82,7 +82,7 @@ const IndexPage = () => {
    </p>
 
 
-                            <div>Redirect your Aave yield to support OSS</div>
+                            <div>Redirect your Aave yield to support Ethereum open-source #buidlers</div>
 
 
                         </button>

@@ -31,8 +31,8 @@ const IndexPage = () => {
       <App>
 
         <NextReusableHead
-          title="Yield Hero - Redirect your yield to support Ethereum open source"
-          description="Redirect your yield to support Ethereum open source"
+          title="Yield Hero - Redirect your Aave yield to support Ethereum open-source #buidlers"
+          description="Redirect your Aave yield to support Ethereum open-source #buidlers"
           siteName="YieldHero"
           url="https://yieldhero.app/redirect"
           image="/yieldhack.jpg"
@@ -46,7 +46,7 @@ const IndexPage = () => {
           <div>
 
 
-            <div style={{ fontWeight: 300, fontSize: '18px' }}>Redirect your Aave yield to support OSS development</div>
+            <div style={{ fontWeight: 300, fontSize: '18px' }}>Redirect your Aave yield to support Ethereum open-source #buidlers</div>
 
             <Row style={{ marginTop: 20 }}>
 

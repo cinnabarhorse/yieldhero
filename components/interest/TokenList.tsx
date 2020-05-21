@@ -155,19 +155,21 @@ export default function TokenList() {
                       
                         color:black;
                         background:white;
-                        opacity:0.5;
+                      
                         border-radius:16px;
+                        border:solid 3px white;
                        
                         box-shadow:0px 0px 4px rgba(0, 0, 0, 0.18) !important;
                         margin-bottom:15px;
                     }
 
                     .divBGSelected {
+                        border:solid 3px ${themeBlack};
                         min-width:150px;
                         max-width:200px;
                         width:100%;
                         border-radius:16px;
-                      opacity:1;
+                      
                         display:flex;
                         align-items:center;
                         flex:1;
