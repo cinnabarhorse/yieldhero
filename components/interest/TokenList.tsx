@@ -2,12 +2,10 @@ import React, { useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { USER_RESERVES_INTEREST } from "../../graphql/queries";
 import { useStateValue } from "../../State/globalState";
-import { UserReserveType, User } from "../../types";
+import { UserReserveType } from "../../types";
 import { Col } from "react-bootstrap";
 import { donateGradient, themeBlack } from "../../theme";
 import ErrorMessage from "../ErrorMessage";
-import { smartTrim } from "../../functions";
-import ATokenABI from '../../web3/ATokenABI.json'
 import ENSAddress from "../ENSAddress";
 
 
@@ -17,7 +15,6 @@ export default function TokenList() {
     const [{
         selectedToken,
         currentAccount,
-        globalWeb3,
     }, dispatch]:
         [{ selectedToken: UserReserveType, globalWeb3: any, currentAccount: any }, (type) => void] = useStateValue()
 
@@ -42,7 +39,7 @@ export default function TokenList() {
                 style={{ background: 'ghostwhite', borderRadius: '2px', overflow: 'hidden', boxShadow: '0 2px 4px 0 rgba(136,144,195,0.2), 0 5px 15px 0 rgba(37,44,97,0.15)', padding: 0 }}>
 
 
-                <h2 style={{ textAlign: 'center', background: donateGradient, color: 'white', borderTopLeftRadius: 30, borderTopRightRadius: 30 }}>Select a Token</h2>
+                <h2 style={{ textAlign: 'center', background: donateGradient, color: 'white', borderTopLeftRadius: 30, borderTopRightRadius: 30 }}><strong>Step 1)</strong> Select Token to Redirect</h2>
 
                 <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', padding: 10 }}>
 
@@ -177,14 +174,9 @@ export default function TokenList() {
                        color:${themeBlack};
                     
                         box-shadow:0px 0px 4px rgba(0, 0, 0, 0.25) !important;
-
-                     background:white;
-                    
+                         background:white;
                         transition:background 0.2s, border 0.2s;
-                       
-                        
                     }
-
 
                     .name {
                         margin-top:10px;

@@ -32,6 +32,39 @@ const IndexPage = () => {
             <header>🛠 Created by YieldHero</header>
 
             <Row style={{ marginTop: 30 }}>
+                <Col>
+                    <Link href="/redirect">
+                        <button onClick={() => {
+
+
+                            Router.push("/redirect").then(() => {
+
+                                window.scrollTo(0, 0)
+
+                                dispatch({
+                                    type: 'updateCurrentHeader',
+                                    currentHeader: "Redirect Yield"
+                                })
+                            })
+
+                        }} style={{ background: donateGradient }}>
+
+
+
+                            <p> <img src="/yieldherologo.svg" width="40" style={{ borderRadius: 20, marginTop: -8 }} /> Become a Yield Hero
+   </p>
+
+
+                            <div>Redirect your Aave yield to support Ethereum open-source #buidlers</div>
+
+
+                        </button>
+                    </Link>
+                </Col>
+            </Row>
+
+            <Row style={{ marginTop: 10 }}>
+
                 <Col xl={6} lg={6} md={12} sm={12} xs={12}>
 
                     <Link href="/swap">
@@ -56,45 +89,6 @@ const IndexPage = () => {
                     </Link>
 
                 </Col>
-
-                <Col xl={6} lg={6} md={12} sm={12} xs={12}>
-
-
-                    <Link href="/redirect">
-                        <button onClick={() => {
-
-
-                            Router.push("/redirect").then(() => {
-
-                                window.scrollTo(0, 0)
-
-                                dispatch({
-                                    type: 'updateCurrentHeader',
-                                    currentHeader: "Redirect Yield"
-                                })
-                            })
-
-                        }} style={{ background: donateGradient }}>
-
-
-
-                            <p> 😇 Become a Yield Hero
-   </p>
-
-
-                            <div>Redirect your Aave yield to support Ethereum open-source #buidlers</div>
-
-
-                        </button>
-                    </Link>
-
-
-                </Col>
-
-
-
-
-                <div style={{ marginTop: 20 }}></div>
 
 
                 <Col xl={6} lg={6} md={12} sm={12} xs={12}>

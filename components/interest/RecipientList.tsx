@@ -106,7 +106,8 @@ export default function RecipientList() {
 
                     <Row>
                         <Col xl={4} lg={4} md={4} sm={1} xs={0}></Col>
-                        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 60 }}> <h2 style={{ color: 'white', textAlign: 'center', padding: 0, margin: 0 }}>{page === "set" ? "SELECT A YIELD RECIPIENT" : "YIELD HERO LEADERBOARD"}</h2></Col>
+                        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 60 }}> <h2 style={{ color: 'white', textAlign: 'center', padding: 0, margin: 0 }}>{page === "set" ? <div><strong>STEP 2)</strong> SELECT A YIELD RECIPIENT
+                            </div> : "YIELD HERO LEADERBOARD"}</h2></Col>
                         <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
                             <button
                                 className="actionButton"

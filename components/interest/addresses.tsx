@@ -35,8 +35,17 @@ export const addresses: CreatorType[] = [
         img: "daveytea.jpg",
         twitter: "@daveytea"
     },
+    {
+        name: "Austin Griffith",
+        bio: "Hacker, breaker, builder, etc. Creator of eth.build, xdai.io",
+        wallet: "0x34aA3F359A9D614239015126635CE7732c18fDF3",
+        ens: "austingriffith.eth",
+        img: "austingriffith.jpg",
+        twitter: "@austingriffith"
+    },
 
-    //New addresses (not verified)
+
+
     {
         name: "Sam Sun",
         bio: "White Hat Ethereum hacker",
