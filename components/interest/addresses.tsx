@@ -44,7 +44,14 @@ export const addresses: CreatorType[] = [
         twitter: "@austingriffith"
     },
 
-
+    {
+        name: "Julien Bouteloup",
+        bio: "Developer. Blockchain. Security Audits. Arbitrage. White hacker. Ex Trader. DeFi BA. I break things 🔥",
+        wallet: "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
+        ens: "bneiluj.eth",
+        img: "bneiluj.jpg",
+        twitter: "@bneiluj"
+    },
 
     {
         name: "Sam Sun",

@@ -101,7 +101,7 @@ const TweetModal = (props: TweetModalProps) => {
                     <ShareIcon
                         type="twitter"
                         currentURL="https://yieldhero.app"
-                        message={`Hey world, look how generous I am! I just redirected my @AaveAave $a${selectedToken && selectedToken.reserve.symbol} yield to support ${selectedCreator && selectedCreator.name} ${selectedCreator && selectedCreator.twitter}! Via`}
+                        message={`Hey world, look how generous I am! I just redirected my @AaveAave $a${selectedToken && selectedToken.reserve.symbol} yield to support ${selectedCreator && selectedCreator.name} ${selectedCreator && selectedCreator.twitter}! Via @yieldhero`}
                         //icon={faTwitter*}
                         icon=""
                         iconColor="white"
