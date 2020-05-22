@@ -8,7 +8,8 @@ module.exports = {
         BALANCER_POOLS_URL: process.env.BALANCER_POOLS_URL,
         INFURA_ID: process.env.INFURA_ID,
         BATCHBALANCE_ADDRESS: process.env.BATCHBALANCE_ADDRESS,
-        //firebase
+        BASE_URL: process.env.BASE_URL
+        ,        //firebase
 
         FIREBASE_APIKEY: process.env.FIREBASE_APIKEY,
         FIREBASE_AUTHDOMAIN: process.env.FIREBASE_AUTHDOMAIN,

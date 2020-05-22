@@ -13,3 +13,6 @@ export const buttonInactive = "#d1d8e0";
 //partners
 export const furucomboGradient = "#1B1B21"
 export const deflastGradient = "linear-gradient(258deg,#001C34,#0075DE)"
+
+export const twitterLogoBlue = "#00acee"
+export const twitterDarkBlue = "#0084b4"

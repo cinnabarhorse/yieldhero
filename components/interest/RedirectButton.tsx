@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useStateValue } from "../../State/globalState";
-import { UserReserveType, ReserveType, TradeState, CreatorType } from "../../types";
-import { Row, Col } from "react-bootstrap";
-import { buttonInactive, themeBlack, donateGradient, flashGradient } from "../../theme";
+import { UserReserveType, TradeState, CreatorType } from "../../types";
+import { buttonInactive, flashGradient } from "../../theme";
 
-import NextStyledInput from "../NextStyledInput";
 import ATokenABI from '../../web3/ATokenABI.json'
 import { smartTrim } from "../../functions";
 
@@ -19,12 +17,14 @@ const RedirectButton = (props: SwapButtonProps) => {
         globalWeb3,
         currentAccount,
         selectedCreator,
-        selectedToken
+        selectedToken,
+        showTweetModal
     }, dispatch]: [{
         globalWeb3: any,
         currentAccount: string,
         selectedCreator: CreatorType,
-        selectedToken: UserReserveType
+        selectedToken: UserReserveType,
+        showTweetModal: boolean
     }, (type) => void] = useStateValue()
 
     const [loading, setLoading] = useState(false)
@@ -32,10 +32,6 @@ const RedirectButton = (props: SwapButtonProps) => {
 
     const [swapAmount, setSwapAmount] = useState(undefined)
     const [tradeState, setTradeState] = useState<TradeState>(undefined)
-
-    const [allowance, setAllowance] = useState(undefined)
-
-
 
     function bothSelected() {
         return selectedCreator && selectedToken
@@ -57,28 +53,6 @@ const RedirectButton = (props: SwapButtonProps) => {
 
     }, [selectedToken, selectedCreator, swapAmount])
 
-
-    useEffect(() => {
-
-        if (selectedToken) {
-            fetchAllowance()
-        }
-
-
-    }, [selectedToken])
-
-    async function fetchAllowance() {
-
-        const poolAddress = process.env.POOL_ADDRESS
-
-        //First check if this token is approved
-        const ERC20 = new globalWeb3.eth.Contract(ATokenABI, selectedToken.reserve.aToken.id)
-
-        const allowance = await ERC20.methods.allowance(currentAccount, poolAddress).call({ from: currentAccount })
-
-        setAllowance(allowance)
-    }
-
     async function performRedirect() {
 
         //Check if wallet is valid
@@ -99,6 +73,13 @@ const RedirectButton = (props: SwapButtonProps) => {
 
                     setTradeState("trading")
 
+                    dispatch({
+                        type: "updateShowTweetModal",
+                        showTweetModal: true
+                    })
+
+
+
                 })
 
                 .on('receipt', async function (receipt) {
@@ -106,17 +87,6 @@ const RedirectButton = (props: SwapButtonProps) => {
                     alert("Redirect complete!")
 
                     setTradeState(undefined)
-
-                    dispatch({
-                        type: "updateSelectedCreator",
-                        selectedCreator: undefined
-                    })
-
-                    dispatch({
-                        type: 'updatedSelectedToken',
-                        selectedToken: undefined
-                    })
-
                     setLoading(false)
 
                 })

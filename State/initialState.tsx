@@ -9,7 +9,7 @@ export const initialState = {
   //web3
   currentAccount: undefined,
   currentNetwork: undefined,
-  showAuthModal: false,
+
   ensProvider: undefined,
 
   //Swap aTokens
@@ -24,5 +24,10 @@ export const initialState = {
   //Redirect Yield
   selectedToken: undefined,
   selectedCreator: undefined,
-  selectedLeaderboard: undefined
+  selectedLeaderboard: undefined,
+
+  //modals
+  showAuthModal: false,
+  showTweetModal: false
+
 };

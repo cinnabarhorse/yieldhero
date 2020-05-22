@@ -64,6 +64,12 @@ export const reducer = (state, action) => {
         showAuthModal: action.showAuthModal
       }
 
+    case "updateShowTweetModal":
+      return {
+        ...state,
+        showTweetModal: action.showTweetModal
+      }
+
     case "updateSelectedIn":
       return {
         ...state,

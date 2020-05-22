@@ -10,6 +10,7 @@ import { useEffect } from 'react'
 import RecipientList from '../components/interest/RecipientList'
 import { usingCorrectNetwork } from '../functions'
 import NextReusableHead from '../components/NextReusableHead'
+import TweetModal from '../components/TweetModal'
 
 const IndexPage = () => {
 
@@ -34,8 +35,8 @@ const IndexPage = () => {
           title="Yield Hero - Redirect your Aave yield to support Ethereum open-source #buidlers"
           description="Redirect your Aave yield to support Ethereum open-source #buidlers"
           siteName="YieldHero"
-          url="https://yieldhero.app/redirect"
-          image="/yieldhack.jpg"
+          url={`${process.env.BASE_URL}/redirect`}
+          image={`${process.env.BASE_URL}/yieldherologo.png`}
           faviconPath="/favicon.ico"
 
         />
@@ -114,6 +115,8 @@ const IndexPage = () => {
           }
         `}
         </style>
+
+        <TweetModal />
 
         <NextStyledFooter />
 

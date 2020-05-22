@@ -40,17 +40,15 @@ class MyApp extends App {
                         </Head>
 
 
+
                         <NextReusableHead
                             title="Yield Hero - Curated tool suite for Aave #yieldhacking"
                             description="Curated tool suite for Aave #yieldhacking"
                             siteName="YieldHero"
-                            url="https://yieldhero.app"
-                            image="/yieldhack.jpg"
+                            url={`${process.env.BASE_URL}/redirect`}
+                            image={`${process.env.BASE_URL}/yieldherologo.png`}
                             faviconPath="/favicon.ico"
-
                         />
-
-
 
 
 
