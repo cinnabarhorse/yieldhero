@@ -54,6 +54,29 @@ export const addresses: CreatorType[] = [
     },
 
     {
+        name: "Amadeo Brands",
+        bio: "CO-Founder @DigitalEoi, building DeFi 201 video course",
+        wallet: "0x2482Dc04AC628a4b2700c071BFEe557Fd86C91EA",
+        ens: "amadeobrands.eth",
+        img: "amadeobrands.jpg",
+        twitter: "@amadeobrands"
+    },
+
+
+    {
+        name: "Lola Haz3lstar",
+        bio: "Co-founder of @TheBlockCafe & Administrative Hierophant @Kleros_io",
+        wallet: "0x1ea92ad34f3efb10bab072176d9789807222d9e5",
+        ens: "hazelstar.eth",
+        img: "lola.jpg",
+        twitter: "@Haz3lstar"
+    },
+
+
+
+
+
+    {
         name: "Sam Sun",
         bio: "White Hat Ethereum hacker",
         wallet: "0xc95C558dAA63b1A79331B2AB4a2a7af375384d3B",
