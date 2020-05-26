@@ -70,7 +70,7 @@ const IndexPage = () => {
                     <HomepageLink
                         background={swapGradient}
                         href="/swap"
-                        icon="🤖"
+                        icon={<p style={{ fontSize: 32 }}>🤖</p>}
                         title="Swap aTokens"
                         subtitle="Easily swap your aTokens for the highest yield"
                         newHeader="Swap aTokens"
