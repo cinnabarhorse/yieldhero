@@ -7,6 +7,7 @@ import { Col } from "react-bootstrap";
 import { donateGradient, themeBlack } from "../../theme";
 import ErrorMessage from "../ErrorMessage";
 import ENSAddress from "../ENSAddress";
+import Box from "../Box";
 
 
 
@@ -23,6 +24,7 @@ export default function TokenList() {
     const { loading, error, data, refetch } = useQuery(
         USER_RESERVES_INTEREST,
         {
+            skip: !currentAccount ? true : false,
             variables: {
                 id: currentAccount ? currentAccount.toLowerCase() : undefined
             },
@@ -33,113 +35,119 @@ export default function TokenList() {
 
     function _box() {
 
-        // if (!data) return <div>Loading</div>
         return (
-            <Col
-                style={{ background: 'ghostwhite', borderRadius: '2px', overflow: 'hidden', boxShadow: '0 2px 4px 0 rgba(136,144,195,0.2), 0 5px 15px 0 rgba(37,44,97,0.15)', padding: 0 }}>
 
+            <Box
+                title={<div>
+                    <strong>Step 1)</strong> Select Token to Redirect
+                </div>}
+                background={donateGradient}
 
-                <h2 style={{ textAlign: 'center', background: donateGradient, color: 'white', borderTopLeftRadius: 30, borderTopRightRadius: 30 }}><strong>Step 1)</strong> Select Token to Redirect</h2>
+            >
 
-                <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', padding: 10 }}>
-
-                    {!data && loading &&
-                        <div style={{ height: 120 }}>Loading your tokens...</div>
-                    }
-
-
-                    {data && data.user !== null && data.user.reserves && data.user.reserves !== null && data.user.reserves.map((reserve: UserReserveType, index) => {
-
-                        const name = "a" + reserve.reserve.symbol
-                        const amount = Number(reserve.principalATokenBalance) / Math.pow(10, reserve.reserve.decimals)
-                        const amountInEth = Number(Number(reserve.reserve.price.priceInEth) / Math.pow(10, 18)) * amount
-
-
-                        return (
-
-                            <Col key={index}>
-
-
-                                <button className={(selectedToken && selectedToken.id === reserve.id) ? "divBGSelected" : "divBG"}
-
-                                    onClick={() => {
-
-                                        if (selectedToken && reserve.reserve.symbol === selectedToken.reserve.symbol) {
-                                            dispatch({
-                                                type: "updateSelectedToken",
-                                                selectedToken: undefined
-                                            })
-                                        }
-
-                                        else {
-                                            dispatch({
-                                                type: "updateSelectedToken",
-                                                selectedToken: reserve
-                                            })
-                                        }
-
-                                    }}
+                {!loading && !data &&
+                    <div style={{ height: 120 }}>Connect your wallet to redirect yield!</div>
+                }
 
 
 
-                                >
-
-                                    <img className="coinImage" src={`/coins/${reserve.reserve.symbol.toLowerCase()}.svg`} />
-
-                                    <div className="name" style={{ textAlign: 'left' }}>{name}</div>
+                {!data && loading &&
+                    <div style={{ height: 120 }}>Loading your tokens...</div>
+                }
 
 
+                {data && data.user !== null && data.user.reserves && data.user.reserves !== null && data.user.reserves.map((reserve: UserReserveType, index) => {
 
-                                    <div className="amountContainer">
+                    const name = "a" + reserve.reserve.symbol
+                    const amount = Number(reserve.principalATokenBalance) / Math.pow(10, reserve.reserve.decimals)
+                    const amountInEth = Number(Number(reserve.reserve.price.priceInEth) / Math.pow(10, 18)) * amount
 
 
-                                        <div className="amount">
-                                            <span style={{ fontSize: '21px' }}>{amount.toFixed(4).split(".")[0]}</span>
-                                            <span style={{ fontSize: '10px' }}>.{amount.toFixed(4).split(".")[1]}
-                                            </span>
-                                        </div>
-                                        <div style={{ fontSize: '10px' }}>
-                                            ({amountInEth.toFixed(4)} ETH)
+                    return (
+
+                        <Col key={index}>
+
+
+                            <button className={(selectedToken && selectedToken.id === reserve.id) ? "divBGSelected" : "divBG"}
+
+                                onClick={() => {
+
+                                    if (selectedToken && reserve.reserve.symbol === selectedToken.reserve.symbol) {
+                                        dispatch({
+                                            type: "updateSelectedToken",
+                                            selectedToken: undefined
+                                        })
+                                    }
+
+                                    else {
+                                        dispatch({
+                                            type: "updateSelectedToken",
+                                            selectedToken: reserve
+                                        })
+                                    }
+
+                                }}
+
+
+
+                            >
+
+                                <img className="coinImage" src={`/coins/${reserve.reserve.symbol.toLowerCase()}.svg`} />
+
+                                <div className="name" style={{ textAlign: 'left' }}>{name}</div>
+
+
+
+                                <div className="amountContainer">
+
+
+                                    <div className="amount">
+                                        <span style={{ fontSize: '21px' }}>{amount.toFixed(4).split(".")[0]}</span>
+                                        <span style={{ fontSize: '10px' }}>.{amount.toFixed(4).split(".")[1]}
+                                        </span>
+                                    </div>
+                                    <div style={{ fontSize: '10px' }}>
+                                        ({amountInEth.toFixed(4)} ETH)
                       </div>
-                                    </div>
+                                </div>
 
 
 
 
 
-                                    <div className="wallet">
-                                        {reserve.interestRedirectionAddress === "0x0000000000000000000000000000000000000000" ?
-                                            <div>No Redirect</div>
-                                            :
+                                <div className="wallet">
+                                    {reserve.interestRedirectionAddress === "0x0000000000000000000000000000000000000000" ?
+                                        <div>No Redirect</div>
+                                        :
 
-                                            <ENSAddress address={reserve.interestRedirectionAddress} />
-
-
-                                        }
+                                        <ENSAddress address={reserve.interestRedirectionAddress} />
 
 
-                                    </div>
+                                    }
 
 
-
-
-                                </button>
-
-
-                            </Col>
-                        )
+                                </div>
 
 
 
-                    })}
 
-                    {data && data.user === null &&
-                        <div style={{ height: 120 }}>You don't have any aTokens!</div>
-                    }
+                            </button>
 
 
+                        </Col>
+                    )
 
-                    <style jsx>{`
+
+
+                })}
+
+                {data && data.user === null &&
+                    <div style={{ height: 120 }}>You don't have any aTokens!</div>
+                }
+
+
+
+                <style jsx>{`
 
                     .divBG {
                       width:100%;
@@ -218,15 +226,16 @@ export default function TokenList() {
            
           `}</style>
 
-                </div>
-            </Col >
+            </Box>
+
         )
+
+
     }
 
 
 
     if (error) return <ErrorMessage message="Error loading posts." />
-
 
     return _box()
 }

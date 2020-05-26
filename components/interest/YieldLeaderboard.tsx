@@ -85,7 +85,7 @@ const YieldLeaderboard = (props: YieldLeaderboardProps) => {
 
 
     return (
-        <div>
+        <div style={{ width: '100%' }}>
 
             <h3>Who's contributing the most to open-source Web3 development?
                </h3>

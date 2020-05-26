@@ -6,12 +6,13 @@ import { useStateValue } from '../State/globalState'
 import { Row, Col } from 'react-bootstrap'
 
 import NextStyledFooter from '../components/NextStyledFooter'
-import Router from 'next/router'
+
 import AuthModal from '../components/AuthModal'
 import { donateGradient, poolGradient, swapGradient, themeBlack, deflastGradient, furucomboGradient, linkColor } from '../theme'
 import { useEffect } from 'react'
-import Link from 'next/link'
 import DiscordHoverButton from '../components/DiscordHoverButton'
+import HomepageLink from '../components/HomepageLink'
+import HomepageButton from '../components/HomepageButton'
 
 const IndexPage = () => {
 
@@ -32,34 +33,33 @@ const IndexPage = () => {
             <header>🛠 Created by YieldHero</header>
 
             <Row style={{ marginTop: 30 }}>
-                <Col>
-                    <Link href="/redirect">
-                        <button onClick={() => {
+                <Col xl={8} lg={8} md={12} sm={12} xs={12}>
+                    <HomepageLink
+                        background={donateGradient}
+                        href="/redirect"
+                        icon={<p>
+                            <img src="/yieldherologo.svg" width="40" style={{ borderRadius: 20 }} />
+                        </p>}
+                        title="Become a Yield Hero"
+                        subtitle="Redirect your Aave yield to support Ethereum open-source #buidlers"
+                        newHeader="Redirect Yield"
+
+                    />
 
 
-                            Router.push("/redirect").then(() => {
-
-                                window.scrollTo(0, 0)
-
-                                dispatch({
-                                    type: 'updateCurrentHeader',
-                                    currentHeader: "Redirect Yield"
-                                })
-                            })
-
-                        }} style={{ background: donateGradient }}>
+                </Col>
 
 
+                <Col xl={4} lg={4} md={12} sm={12} xs={12}>
+                    <HomepageLink
+                        background={donateGradient}
+                        href="/leaderboard"
+                        icon={<p style={{ fontSize: 32 }}>👑</p>}
+                        title="YH Leaderboard"
+                        subtitle="See who's contributing the most to open-source Web3 development"
+                        newHeader="Leaderboard"
 
-                            <p> <img src="/yieldherologo.svg" width="40" style={{ borderRadius: 20, marginTop: -8 }} /> Become a Yield Hero
-   </p>
-
-
-                            <div>Redirect your Aave yield to support Ethereum open-source #buidlers</div>
-
-
-                        </button>
-                    </Link>
+                    />
                 </Col>
             </Row>
 
@@ -67,41 +67,27 @@ const IndexPage = () => {
 
                 <Col xl={6} lg={6} md={12} sm={12} xs={12}>
 
-                    <Link href="/swap">
+                    <HomepageLink
+                        background={swapGradient}
+                        href="/swap"
+                        icon="🤖"
+                        title="Swap aTokens"
+                        subtitle="Easily swap your aTokens for the highest yield"
+                        newHeader="Swap aTokens"
 
-                        <button onClick={() => {
-
-
-                            Router.push("/swap").then(() => {
-                                dispatch({
-                                    type: 'updateCurrentHeader',
-                                    currentHeader: "Swap aTokens"
-                                })
-                            })
-                        }
-                        } >
-                            <p>
-                                🤖 Swap aTokens
-    </p>
-
-                            <div>Easily swap your aTokens for the highest yield</div>
-                        </button>
-                    </Link>
+                    />
 
                 </Col>
 
 
                 <Col xl={6} lg={6} md={12} sm={12} xs={12}>
-                    <button
-
-                        onClick={() => window.open(`https://${process.env.BALANCER_POOLS_URL}/${process.env.POOL_ADDRESS}`)}
-                        style={{ background: poolGradient }}>
-
-                        <p style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}><img src={"/coins/aDAI.svg"} width={44} style={{ marginRight: 8 }} /> Join aToken Pool
-                           </p>
-
-                        <div>Earn fees by providing aToken Liquidity</div>
-                    </button>
+                    <HomepageButton
+                        url={`https://${process.env.BALANCER_POOLS_URL}/${process.env.POOL_ADDRESS}`}
+                        title={<p style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', fontSize: 32, fontWeight: 'bold' }}><img src={"/coins/aDAI.svg"} width={44} style={{ marginRight: 8 }} />
+                            Join aToken Pool </p>}
+                        subtitle="Earn fees by providing aToken Liquidity"
+                        background={poolGradient}
+                    />
                 </Col>
 
             </Row>
@@ -119,18 +105,13 @@ const IndexPage = () => {
                 <Col xl={6} lg={6} md={12} sm={12} xs={12}>
 
 
-                    <button style={{ background: furucomboGradient }} onClick={() => {
-                        window.open("https://furucombo.app")
-                    }
-                    } >
-                        <p>
-                            <img width="100%" src="/images/partners/furucombo.svg" />
+                    <HomepageButton
+                        url="https://furucombo.app"
+                        background={furucomboGradient}
+                        title={<img width="80%" src="/images/partners/furucombo.svg" />}
+                        subtitle="Build your own DeFi legos into one transaction without knowing how to code."
+                    />
 
-
-                        </p>
-
-                        <div>Build your own DeFi legos into one transaction without knowing how to code.</div>
-                    </button>
 
 
                 </Col>
@@ -138,24 +119,12 @@ const IndexPage = () => {
                 <Col xl={6} lg={6} md={12} sm={12} xs={12}>
 
 
-
-                    <button onClick={() => {
-
-                        window.open("https://deflast.finance")
-
-                    }} style={{ background: deflastGradient }}>
-
-
-
-                        <p>    <img width="100%" height="50" src="/images/partners/deflast.svg" />
-                        </p>
-
-
-                        <div>Instantly swap your collateral on Compound</div>
-
-
-                    </button>
-
+                    <HomepageButton
+                        url="https://deflast.finance"
+                        background={deflastGradient}
+                        title={<img width="100%" height="50" src="/images/partners/deflast.svg" />}
+                        subtitle="Instantly swap your collateral on Compound"
+                    />
 
 
                 </Col>
@@ -201,35 +170,7 @@ const IndexPage = () => {
                         font-size:21px;
                     }
 
-                    button {
-                        border-radius:16px;
-                        display:flex;
-                        flex-direction:column;
-                        justify-content:center;
-                        align-items:center;
-                        width:100%;
-                        height:180px;
-                        margin-bottom:20px;
-                        background:${swapGradient};
-                        transition:box-shadow 0.2s;
-                        box-shadow:0px 0px 8px rgba(0, 0, 0, 0.3) 
-                    }
-
-                    button:hover {
-                        box-shadow:0px 0px 16px rgba(0, 0, 0, 0.4);
-                    }
-
-                    button > p {
-                        font-weight:bold;
-                        font-size:32px;
-                    }
-
-                    button > div {
-                        font-size:16px;
-                        font-weight:300;
-                        margin-left:30px;
-                        margin-right:30px;
-                    }
+                
 
                     @media screen and (max-width:991px) {
 

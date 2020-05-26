@@ -3,14 +3,14 @@ import { useQuery } from "@apollo/react-hooks";
 import { RECIPIENT_REDIRECTS } from "../../graphql/queries";
 import { useStateValue } from "../../State/globalState";
 import { UserReserveType, CreatorType, SupporterType } from "../../types";
-import { Col, Row, } from "react-bootstrap";
 import { donateGradient } from "../../theme";
 import ErrorMessage from "../ErrorMessage";
 import { addresses } from './addresses'
 import Recipient from "./Recipient";
 import NextStyledInput from "../NextStyledInput";
-import YieldLeaderboard from "./YieldLeaderboard";
 import { aTokenETHAmount } from "../../functions";
+import Box from "../Box";
+import Router from "next/router";
 
 
 
@@ -22,7 +22,7 @@ export default function RecipientList() {
     const [supporters, setSupporters] = useState(undefined)
 
     const [addressArray, setAddressArray] = useState(undefined)
-    const [page, setPage] = useState<"set" | "leaderboard">("set")
+
 
     useEffect(() => {
         //set addresses
@@ -98,73 +98,59 @@ export default function RecipientList() {
     function _box() {
 
         return (
-            <Col style={{ background: 'ghostwhite', borderRadius: '2px', overflow: 'hidden', boxShadow: '0 2px 4px 0 rgba(136,144,195,0.2), 0 5px 15px 0 rgba(37,44,97,0.15)', padding: 0 }}>
+
+            <Box
+                buttonRight="View Leaderboard"
+                buttonRightAction={() => Router.push("/leaderboard")}
+                title={<div>
+                    <strong>Step 2)</strong> Select a yield recipient
+
+                </div>}
+                background={donateGradient}
+            >
+
+                <div style={{ display: 'block', padding: 10, width: '100%' }}>
 
 
+                    <div className="customContainer">
 
-                <div style={{ borderTopLeftRadius: 30, borderTopRightRadius: 30, background: donateGradient }}>
+                        <NextStyledInput
+                            inputLabel="Custom Address"
+                            placeHolderText="Input a valid Ethereum address"
+                            onChangeText={(text) => {
 
-                    <Row>
-                        <Col xl={4} lg={4} md={4} sm={1} xs={0}></Col>
-                        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 60 }}> <h2 style={{ color: 'white', textAlign: 'center', padding: 0, margin: 0 }}>{page === "set" ? <div><strong>STEP 2)</strong> SELECT A YIELD RECIPIENT
-                            </div> : "YIELD HERO LEADERBOARD"}</h2></Col>
-                        <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                            <button
-                                className="actionButton"
-                                onClick={() => setPage(page === "set" ? "leaderboard" : "set")}>
-                                {page === "set" ? "View Leaderboard" : "Send yield"}
-                            </button>
-                        </Col>
-                    </Row>
+                                console.log('text:', text)
 
+                                if (text === "" || text === undefined) {
 
-
-                </div>
+                                    console.log('empty!')
+                                    dispatch({
+                                        type: "updateSelectedCreator",
+                                        selectedCreator: undefined
+                                    })
+                                }
 
 
-
-                <div style={{ display: 'block', padding: 10 }}>
-
-                    {page === "set" &&
-                        <div className="customContainer">
-
-                            <NextStyledInput
-                                inputLabel="Custom Address"
-                                placeHolderText="Input a valid Ethereum address"
-                                onChangeText={(text) => {
-
-                                    console.log('text:', text)
-
-                                    if (text === "" || text === undefined) {
-
-                                        console.log('empty!')
-                                        dispatch({
-                                            type: "updateSelectedCreator",
-                                            selectedCreator: undefined
-                                        })
-                                    }
-
-
-                                    else {
-                                        dispatch({
-                                            type: "updateSelectedCreator",
-                                            selectedCreator: {
-                                                name: undefined,
-                                                bio: undefined,
-                                                wallet: text,
-                                                ens: undefined,
-                                                img: undefined
-                                            }
-                                        })
-                                    }
+                                else {
+                                    dispatch({
+                                        type: "updateSelectedCreator",
+                                        selectedCreator: {
+                                            name: undefined,
+                                            bio: undefined,
+                                            wallet: text,
+                                            ens: undefined,
+                                            img: undefined
+                                        }
+                                    })
+                                }
 
 
 
 
 
-                                }}
-                                value={selectedCreator ? selectedCreator.wallet : undefined}
-                                inputFieldStyles={`
+                            }}
+                            value={selectedCreator ? selectedCreator.wallet : undefined}
+                            inputFieldStyles={`
                                     width:100%;
                                     height:60px;
                                     background:white;
@@ -173,13 +159,13 @@ export default function RecipientList() {
                                     border:none;
                  
               `}
-                            />
+                        />
 
-                        </div>
+                    </div>
 
-                    }
 
-                    {page === "set" && supporters && supporters.map((redirect: SupporterType) => {
+
+                    {supporters && supporters.map((redirect: SupporterType) => {
 
                         return (
 
@@ -192,49 +178,9 @@ export default function RecipientList() {
 
                     })}
 
-                    {page === "leaderboard" &&
-                        <YieldLeaderboard />
-                    }
-
-
-
-
                 </div>
 
-                <style>
-                    {`
-
-                        h2 {
-                            font-size:17px;
-                            font-weight:300;
-                            letter-spacing:1px;
-                            text-transform:uppercase;
-                        }
-
-                        .actionButton {
-                            font-weight:700;
-                            background: none;
-                            padding: 8px;
-                            margin-right: 30px;
-                            color:white;
-                            font-size:14px;
-                            letter-spacing:1.2px;
-                            text-transform:uppercase;
-                            opacity:0.8;
-                            transition:opacity 0.2s;
-                        }
-
-                        .actionButton:hover {
-                            opacity:1;
-                        }
-
-                        .customContainer {
-                            width:100%;
-                            height:100px;
-                        }
-                    `}
-                </style>
-            </Col >
+            </Box>
         )
     }
 
