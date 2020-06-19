@@ -152,7 +152,7 @@ export default function InputToken() {
 
                 <Col>
                   <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                    <img style={{ height: 40, marginLeft: -10, marginRight: 8 }} src={`/coins/${reserve.reserve.symbol.toLowerCase()}.svg`} />
+                    <img style={{ height: 40, marginLeft: -10, marginRight: 8 }} src={`/coins/a${reserve.reserve.symbol.toUpperCase()}.svg`} />
                     <div style={{ textAlign: 'left' }}>{name}</div>
                   </div>
 
