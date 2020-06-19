@@ -32,6 +32,7 @@ export default function TokenList() {
         }
     )
 
+    console.log('data:', data)
 
     function _box() {
 
@@ -62,6 +63,7 @@ export default function TokenList() {
                     const amount = Number(reserve.principalATokenBalance) / Math.pow(10, reserve.reserve.decimals)
                     const amountInEth = Number(Number(reserve.reserve.price.priceInEth) / Math.pow(10, 18)) * amount
 
+                    console.log('name:', name)
 
                     return (
 
@@ -92,7 +94,7 @@ export default function TokenList() {
 
                             >
 
-                                <img className="coinImage" src={`/coins/${reserve.reserve.symbol.toLowerCase()}.svg`} />
+                                <img className="coinImage" src={`/coins/${name.toUpperCase()}.svg`} />
 
                                 <div className="name" style={{ textAlign: 'left' }}>{name}</div>
 
