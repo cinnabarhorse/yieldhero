@@ -2,6 +2,14 @@ import { CreatorType } from "../../types";
 
 export const addresses: CreatorType[] = [
     {
+        name: "Crypto for Black Lives",
+        bio: "Gitcoin grants for Black lives matters movement",
+        wallet: "0xc544BEbE22563CEB78D597c1bd0B8Cf2DC858B13",
+        ens: "cryptoforblacklives.eth",
+        img: "BLM.jpg",
+        twitter: "@gitcoin"
+    },
+    {
         name: "Coder Dan",
         bio: "Creator of Yield Hero, lead dev at bullionix.io",
         wallet: "0xC3c2e1Cf099Bc6e1fA94ce358562BCbD5cc59FE5",
@@ -143,13 +151,6 @@ export const addresses: CreatorType[] = [
         img: "karlfloersch.jpg",
         twitter: "@karl_dot_tech"
     },
-    {
-        name:"Crypto for Black Lives",
-        bio:"Gitcoin grants for Black lives matters movement",
-        wallet: "0xc544BEbE22563CEB78D597c1bd0B8Cf2DC858B13",
-        ens: "",
-        img: "BLM.jpg",
-        twitter: "@gitcoin"
-    }
+
 
 ]
