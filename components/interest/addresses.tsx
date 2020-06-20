@@ -137,13 +137,19 @@ export const addresses: CreatorType[] = [
     },
     {
         name: "Karl Floersch",
-        bio: "Loving Ethereum, Layer 2, Optimism, Casper / Karl.Tech"
-        ,
+        bio: "Loving Ethereum, Layer 2, Optimism, Casper / Karl.Tech",
         wallet: "0xce5a1239CD800aE5f59c89f889321DADeC0F0a22",
         ens: "Karl.floersch.eth",
         img: "karlfloersch.jpg",
         twitter: "@karl_dot_tech"
     },
-
+    {
+        name:"Crypto for Black Lives",
+        bio:"Gitcoin grants for Black lives matters movement",
+        wallet: "0xc544BEbE22563CEB78D597c1bd0B8Cf2DC858B13",
+        ens: "",
+        img: "BLM.jpg",
+        twitter: "@gitcoin"
+    }
 
 ]
