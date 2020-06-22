@@ -20,6 +20,7 @@ export default function RecipientList() {
         [{ userReserves: any, reservePools: any, highestAPY: any, globalWeb3: any, currentAccount: any, selectedCreator: CreatorType }, (type) => void] = useStateValue()
 
     const [supporters, setSupporters] = useState(undefined)
+    const [pinned, setPinned] = useState(undefined)
 
     const [addressArray, setAddressArray] = useState(undefined)
 
@@ -59,6 +60,8 @@ export default function RecipientList() {
 
             const dataObject: UserReserveType[] = data.userReserves
             var finalRedirects: SupporterType[] = []
+            var pinnedRedirects: SupporterType[] = []
+
 
             addresses.forEach((creator: CreatorType, index) => {
                 //Group redirects by their destination address
@@ -76,12 +79,24 @@ export default function RecipientList() {
 
                 });
 
-                finalRedirects.push({
-                    creator: creator,
-                    address: creator.wallet,
-                    supporters: redirects,
-                    totalRedirect: totalRedirect
-                })
+                if (creator.pinned) {
+                    pinnedRedirects.push({
+                        creator: creator,
+                        address: creator.wallet,
+                        supporters: redirects,
+                        totalRedirect: totalRedirect
+                    })
+                }
+                else {
+                    finalRedirects.push({
+                        creator: creator,
+                        address: creator.wallet,
+                        supporters: redirects,
+                        totalRedirect: totalRedirect
+                    })
+                }
+
+
             });
 
 
@@ -89,6 +104,7 @@ export default function RecipientList() {
 
 
             setSupporters(sortedSupporters)
+            setPinned(pinnedRedirects)
 
         }
 
@@ -163,6 +179,14 @@ export default function RecipientList() {
 
                     </div>
 
+
+                    {pinned && pinned.map((redirect: SupporterType) => {
+                        return (
+                            <Recipient supporters={pinned.find((supporter: SupporterType) => {
+                                return redirect.address.toLowerCase() === supporter.address.toLowerCase()
+                            })} creator={redirect.creator} />
+                        )
+                    })}
 
 
                     {supporters && supporters.map((redirect: SupporterType) => {

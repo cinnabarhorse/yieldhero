@@ -7,7 +7,8 @@ export const addresses: CreatorType[] = [
         wallet: "0xc544BEbE22563CEB78D597c1bd0B8Cf2DC858B13",
         ens: "cryptoforblacklives.eth",
         img: "BLM.jpg",
-        twitter: "@gitcoin"
+        twitter: "@gitcoin",
+        pinned: true
     },
     {
         name: "Coder Dan",

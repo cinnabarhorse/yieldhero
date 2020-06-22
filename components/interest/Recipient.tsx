@@ -21,9 +21,6 @@ const Recipient = (props: RecipientProps) => {
     const [{ selectedCreator, currentAccount, globalWeb3 }, dispatch]:
         [{ userReserves: any, reservePools: any, highestAPY: any, globalWeb3: any, currentAccount: any, selectedCreator: CreatorType }, (type) => void] = useStateValue()
 
-    const [totalETH, setTotalETH] = useState()
-
-
 
     const { data, error } = useSWR(creator.name, query => getBatchedBalances(), process.env.NETWORK === "main" && {
         refreshInterval: 5000
@@ -98,7 +95,7 @@ const Recipient = (props: RecipientProps) => {
 
             <button
                 className={(selectedCreator && selectedCreator.name === creator.name) ? "divBGSelected" : "divBG"}
-                // style={{ width: '100%', background: 'none', color: 'black' }}
+                style={creator.pinned ? { background: 'lightyellow' } : undefined}
                 onClick={() => {
 
                     if (selectedCreator && selectedCreator.name === creator.name) {
@@ -123,6 +120,12 @@ const Recipient = (props: RecipientProps) => {
                 <Row style={{ marginLeft: 0, marginRight: 0, width: '100%' }}>
 
                     <Col xl={2} lg={2} md={3} sm={3} xs={3}>
+
+                        {creator.pinned &&
+                            <div style={{ fontSize: '10px' }}>PINNED</div>
+                        }
+
+
                         <LazyLoad height={200}>
                             <div style={{ display: 'flex', flex: 1, height: '100%', justifyContent: 'center', alignItems: 'center' }}>  <img src={`/images/${creator.img}`} className="profile" />
 

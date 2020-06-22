@@ -46,6 +46,7 @@ export interface CreatorType {
     ens: string
     img: string
     twitter?: string
+    pinned?: boolean
 }
 
 export interface LeaderboardUser {
