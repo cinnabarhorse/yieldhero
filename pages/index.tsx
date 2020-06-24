@@ -134,6 +134,30 @@ const IndexPage = () => {
 
 
 
+            <Row style={{ marginTop: 30 }}>
+                <Col xl={6} lg={6} md={12} sm={12} xs={12}>
+
+
+                    <HomepageButton
+                        url="https://zapper.fi"
+                        background="white"
+                        title={<img width="80%" src="/images/partners/zapper.svg" />}
+                        subtitle="Manage your DeFi assets and liabilities in one simple interface."
+                        subtitleColor={"black"}
+                    />
+
+
+
+                </Col>
+
+
+
+            </Row>
+
+
+
+
+
             {
                 showAuthModal &&
                 <AuthModal />

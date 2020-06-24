@@ -5,11 +5,12 @@ interface HomepageButtonProps {
     background: string
     title: string | JSX.Element
     subtitle: string
+    subtitleColor?: string
 }
 
 const HomepageButton = (props: HomepageButtonProps) => {
 
-    const { url, background, title, subtitle } = props
+    const { url, background, title, subtitle, subtitleColor } = props
 
     return (
         <button
@@ -19,7 +20,7 @@ const HomepageButton = (props: HomepageButtonProps) => {
 
             {title}
 
-            <div>{subtitle}</div>
+            <div style={{ color: subtitleColor }}>{subtitle}</div>
 
             <style jsx>
                 {`
