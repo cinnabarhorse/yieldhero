@@ -63,6 +63,15 @@ export const addresses: CreatorType[] = [
     },
 
     {
+        name: "Blockchain 4 Humanity",
+        bio: "B4H is a non-profit Foundation for helping out Social Impact projects to reach scalability and sustainability",
+        wallet: "0x1506c4717416e811aeb34ffd9b914ee97f429708",
+        ens: "",
+        img: "b4h.png",
+        twitter: "@b4_humanity"
+    },
+
+    {
         name: "Amadeo Brands",
         bio: "CO-Founder @DigitalEoi, building DeFi 201 video course",
         wallet: "0x2482Dc04AC628a4b2700c071BFEe557Fd86C91EA",
