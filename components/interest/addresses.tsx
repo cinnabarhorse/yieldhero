@@ -70,6 +70,14 @@ export const addresses: CreatorType[] = [
         img: "b4h.png",
         twitter: "@b4_humanity"
     },
+    {
+        name: "Farmer Defi",
+        bio: "$FARMER is a Roll social currency that will be used to incentivize participation in a meme network. This will start with @farmerdefi’s network on twitter and expand over time.",
+        wallet: "0x5DeBCec5430BdBEEe1A8dd15E45986B6F468BE4C",
+        ens: "farmerdefi.eth",
+        img: "farmer.jpg",
+        twitter: "@farmerdefi"
+    },
 
     {
         name: "Amadeo Brands",
