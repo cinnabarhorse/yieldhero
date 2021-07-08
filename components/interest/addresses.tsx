@@ -169,6 +169,14 @@ export const addresses: CreatorType[] = [
         img: "karlfloersch.jpg",
         twitter: "@karl_dot_tech"
     },
+    {
+        name: "Real Code Camp",
+        bio: "Ethereum 2.0 BootCamp Education",
+        wallet: "0xd1a8Dd23e356B9fAE27dF5DeF9ea025A602EC81e",
+        ens: "",
+        img: "https://pbs.twimg.com/profile_images/1234675558652375043/3k4x0BoH_400x400.png",
+        twitter: "@RealCodeCamp"
+    },
 
 
 ]
